@@ -1,0 +1,125 @@
+.theme-header {
+  position: fixed;
+  top: 0;
+  height: 100px;
+  width: 100%;
+  background-color: transparent;
+  transition: height .4s ease-out;
+}
+.theme-header h1 {
+  position: absolute;
+  bottom: 25px;
+  font-size: 28px;
+  font-weight: normal;
+  transition: font-size .4s ease-out, bottom .4s ease-out;
+}
+
+.theme-header h1 a,
+.theme-header h1 a:active,
+.theme-header h1 a:visited {
+  display: block;
+  cursor: pointer;
+  padding: 2px 0 0 1px;
+  text-decoration: none;
+  text-align: right;
+  color: #000;
+}
+
+.theme-header h1 a:active {
+  padding-left: 0px;
+  text-decoration: none;
+  font-weight: bolder;
+  color: #000;
+}
+
+
+.theme-menu {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100px;
+  padding: 10px 40px 0 0;
+  margin: 0;
+  font-size: 24px;
+  list-style: none;
+  text-align: right;
+  background-color: #fff;
+}
+
+.theme-menu li {
+  display: inline-block;
+  padding: 0;
+  margin: 0 0 0 20px;
+}
+
+.theme-menu li a,
+.theme-menu li a:active,
+.theme-menu li a:visited {
+  display: block;
+  text-transform: lowercase;
+  cursor: pointer;
+  padding: 2px 0 0 1px;
+  text-decoration: none;
+  text-align: right;
+  color: #000;
+}
+
+.theme-menu li a:active,
+.theme-menu li a.active {
+  padding-left: 0px;
+  text-decoration: none;
+  font-weight: bolder;
+  color: #000;
+}
+
+.theme-menu li div {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+  left: 40px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.theme-menu li div ul {
+  padding: 0;
+  display: inline-block;
+  width: auto;
+  transform: translateX(100%);
+  transition: transform .8s ease;
+  pointer-events: none;
+}
+
+.theme-menu li div ul.active {
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+
+
+/* BOTTOM ORIENTATION */
+
+.theme-header--below-content {
+  top: 0;
+  height: 100vh;
+}
+
+.theme-header--below-content h1 {
+  bottom: 40px;
+  font-size: 48px;
+}
+.theme-header--below-content.theme-header--menu-open h1 {
+  bottom: 90px;
+}
+
+.theme-header--below-content .theme-menu {
+  height: 50px;
+  padding-top: 6px;
+  overflow: hidden;
+  transition: height .4s ease-out;
+}
+.theme-header--below-content.theme-header--menu-open .theme-menu {
+  height: 100px;
+}

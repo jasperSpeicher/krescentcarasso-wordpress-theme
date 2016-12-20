@@ -1,0 +1,42 @@
+h2{
+  margin-bottom: 0.2em;
+  font-size: 52px;
+  line-height: 1em;
+  font-weight: normal;
+}
+
+.theme-hero-image {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+}
+
+.theme-page-body{
+  max-width: 1600px;
+  padding-top: 40px;
+}
+
+.theme-body-text {
+  padding-bottom: 40px;
+  font-size: 20px;
+  font-family: Muli;
+}
+
+.theme-collection {
+
+}
+
+.theme-collection img {
+  width: 100%;
+  height: auto;
+}
+
+.theme-collection__one-image div,
+.theme-collection__two-images div {
+  padding-bottom: 10px;
+}

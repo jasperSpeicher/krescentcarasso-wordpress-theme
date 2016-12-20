@@ -1,0 +1,56 @@
+<div *ngIf="page" class="theme-page">
+
+  <!--hero image-->
+  <div *ngIf="page.acf?.hero_image" class="theme-hero-image"
+       [style.background-image]="'url('+page.acf.hero_image?.url+')'">
+  </div>
+
+  <!--[style.width]="image.sizes['medium_large-width']"-->
+  <!--[style.height]="image.sizes['medium_large-height']"-->
+
+  <!--gallery-->
+  <div *ngIf="page.acf?.gallery" class="theme-gallery">
+    <!--<div class="theme-gallery__gutter-sizer">-->
+    <!--</div>-->
+    <template ngFor let-image let-sizer="first" [ngForOf]="page.acf.gallery">
+      <img class="theme-gallery__image"
+           src="{{ image.sizes.medium_large }}"
+           [ngClass]="{ 'theme-gallery__sizer': sizer }">
+    </template>
+  </div>
+
+
+  <div *ngIf="!page.acf?.gallery" class="theme-page-body container-fluid">
+
+    <h2>{{ page.title.rendered }}</h2>
+
+    <div [innerHTML]="page.content.rendered" class="theme-body-text">
+    </div>
+
+    <!-- collection -->
+    <div *ngIf="page.acf.collection" class="theme-collection">
+      <template ngFor let-layout [ngForOf]="page.acf.collection">
+        <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
+          <div class="col-sm-12">
+            <img src="{{ layout.image.url }}">
+          </div>
+        </div>
+        <div *ngIf="layout.acf_fc_layout == 'two_images'" class="theme-collection__two-images row">
+          <div class="col-sm-6">
+            <img src="{{ layout.image_one.url }}">
+          </div>
+          <div class="col-sm-6">
+            <img src="{{ layout.image_two.url }}">
+          </div>
+        </div>
+      </template>
+    </div>
+
+
+  </div>
+
+</div>
+
+<div *ngIf="!page">
+  <!--loading...-->
+</div>

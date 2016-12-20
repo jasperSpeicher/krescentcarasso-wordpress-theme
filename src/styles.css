@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import "bootstrap.min.css";
+
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+.container-fluid {
+  padding-left: 40px;
+  padding-right: 40px;
+}

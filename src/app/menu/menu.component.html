@@ -1,0 +1,35 @@
+<div class="theme-header"
+     [class.theme-header--below-content]="belowContent"
+     [class.theme-header--menu-open]="menu.activeParent">
+  <div class="container-fluid">
+
+    <ul class="theme-menu">
+      <li *ngFor="let parent of menu?.items">
+        <a *ngIf="parent.object==='custom'"
+           (click)="showChildren(parent)"
+           [class.active]="menu.activeParent === parent.object_slug"
+           [class.childActive]="menu.activeParent === parent.object_slug">
+          {{ parent.title }}
+        </a>
+        <a *ngIf="parent.object==='page'"
+          routerLink="{{ path(parent) }}" routerLinkActive="active">
+          {{ parent.title }}
+        </a>
+        <div>
+          <ul [class.active]="menu.activeParent === parent.object_slug">
+            <li *ngFor="let child of parent.children">
+              <a routerLink="{{ path(parent,child) }}" routerLinkActive="active">
+                {{ child.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+    <h1>
+      <a routerLink="/"><ng-content></ng-content></a>
+    </h1>
+
+  </div>
+</div>

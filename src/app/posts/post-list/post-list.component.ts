@@ -26,7 +26,7 @@ export class PostListComponent implements OnInit {
   ngOnInit() {
     this.getPosts();
   }
- 
+
   selectPost(slug) {
   	this.router.navigate([slug]);
   }

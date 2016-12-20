@@ -1,0 +1,84 @@
+h2 {
+  margin-bottom: 0.2em;
+  font-size: 52px;
+  line-height: 1em;
+  font-weight: normal;
+}
+
+.theme-hero-image {
+  padding-top: 45.5%;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+}
+
+.theme-page {
+  padding-top: 100px;
+}
+
+.theme-page-body {
+  max-width: 1600px;
+  padding-top: 40px;
+}
+
+.theme-body-text {
+  padding-bottom: 40px;
+  font-size: 20px;
+  font-family: Muli;
+}
+
+.theme-collection {
+
+}
+
+.theme-collection img {
+  width: 100%;
+  height: auto;
+}
+
+.theme-collection__one-image div,
+.theme-collection__two-images div {
+  padding-bottom: 10px;
+}
+
+/* gallery */
+
+/* ---- grid ---- */
+
+.theme-gallery {
+  width: 100%;
+  background-color: #000;
+}
+
+/* clear fix */
+.theme-gallery:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+/* height of 1 row */
+.theme-gallery__sizer,
+.theme-gallery__image {
+  width: 25%;
+  height: auto;
+  /*transition: width .4s;*/
+}
+
+.theme-gallery__image--large {
+  width: 50%;
+  height: auto;
+}
+
+.theme-gallery__gutter-sizer {
+  width: 1%;
+  height: 1%;
+}
+
+.theme-gallery__image,
+.theme-gallery__gutter-sizer {
+  display: block;
+  float: left;
+}

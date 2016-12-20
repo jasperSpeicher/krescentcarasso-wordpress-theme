@@ -1,4 +1,8 @@
-<h1>
-  {{title}}
-</h1>
-<router-outlet></router-outlet>
+
+<ng2-page-transition>
+  <router-outlet></router-outlet>
+</ng2-page-transition>
+
+<theme-menu slug="main-navigation">
+  {{ title }}
+</theme-menu>

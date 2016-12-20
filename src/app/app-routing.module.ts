@@ -2,17 +2,25 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostSingleComponent } from './posts/post-single/post-single.component';
+import { PageSingleComponent } from "./pages/page-single/page-single.component";
+import { PageHomeComponent } from "./pages/page-home/page-home.component";
 
 const routes: Routes = [
+
   {
-    path: '',
-    component: PostListComponent,
-    pathMatch: 'full'
+    path: ':parent/:slug',
+    component: PageSingleComponent,
   },
   {
     path: ':slug',
-    component: PostSingleComponent
+    component: PageSingleComponent,
+  },
+  {
+    path: '',
+    component: PageHomeComponent,
+    pathMatch: 'full'
   }
+
 ];
 
 @NgModule({

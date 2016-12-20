@@ -1,0 +1,10 @@
+<div *ngIf="page">
+
+  <div *ngIf="page.acf" class="theme-hero-image" [style.background-image]="'url('+page.acf.hero_image?.url+')'">
+  </div>
+
+</div>
+
+<div *ngIf="!page">
+  <!--loading...-->
+</div>
