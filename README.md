@@ -1,6 +1,6 @@
-# WPNG2
+# Krescent Carasso Wordpress Theme
 
-A WordPress theme that runs off of an Angular 2 app. Built for the tutorial http://doppiaeast.com/article/angular-2-wordpress-theme-setup/.
+A WordPress theme that runs off of an Angular 2 app. Adapted from the tutorial http://doppiaeast.com/article/angular-2-wordpress-theme-setup/.
 
 To use this as a theme, you must have the WP REST API version 2 plugin installed.
 
