@@ -41,7 +41,7 @@ var AppComponent = (function () {
     return AppComponent;
     var _a;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/app.component.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/app.component.js.map
 
 /***/ },
 
@@ -106,7 +106,7 @@ var PageHomeComponent = (function () {
     return PageHomeComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/page-home.component.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/page-home.component.js.map
 
 /***/ },
 
@@ -237,7 +237,7 @@ var PageSingleComponent = (function () {
     return PageSingleComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/page-single.component.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/page-single.component.js.map
 
 /***/ },
 
@@ -251,7 +251,7 @@ var Page = (function () {
     }
     return Page;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/page.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/page.js.map
 
 /***/ },
 
@@ -300,7 +300,7 @@ var PagesService = (function () {
     return PagesService;
     var _a;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/pages.service.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/pages.service.js.map
 
 /***/ },
 
@@ -347,7 +347,7 @@ var PostsService = (function () {
     return PostsService;
     var _a;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/posts.service.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/posts.service.js.map
 
 /***/ },
 
@@ -384,7 +384,7 @@ if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment *
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["enableProdMode"])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_4__app___["a" /* AppModule */]);
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/main.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/main.js.map
 
 /***/ },
 
@@ -438,7 +438,7 @@ var Wpng2RoutingModule = (function () {
     ], Wpng2RoutingModule);
     return Wpng2RoutingModule;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/app-routing.module.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/app-routing.module.js.map
 
 /***/ },
 
@@ -508,7 +508,7 @@ var AppModule = (function () {
     ], AppModule);
     return AppModule;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/app.module.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/app.module.js.map
 
 /***/ },
 
@@ -550,7 +550,7 @@ var AppService = (function () {
     return AppService;
     var _a;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/app.service.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/app.service.js.map
 
 /***/ },
 
@@ -564,7 +564,7 @@ var AppService = (function () {
 /* harmony namespace reexport (by used) */ __webpack_require__.d(exports, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__app_module__["a"]; });
 
 
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/index.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/index.js.map
 
 /***/ },
 
@@ -646,7 +646,7 @@ var MenuComponent = (function () {
     return MenuComponent;
     var _a, _b;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/menu.component.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/menu.component.js.map
 
 /***/ },
 
@@ -709,7 +709,7 @@ var MenuService = (function () {
     return MenuService;
     var _a;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/menu.service.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/menu.service.js.map
 
 /***/ },
 
@@ -764,7 +764,7 @@ var PostListComponent = (function () {
     return PostListComponent;
     var _a, _b;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/post-list.component.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/post-list.component.js.map
 
 /***/ },
 
@@ -820,7 +820,7 @@ var PostSingleComponent = (function () {
     return PostSingleComponent;
     var _a, _b;
 }());
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/post-single.component.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/post-single.component.js.map
 
 /***/ },
 
@@ -836,7 +836,7 @@ var PostSingleComponent = (function () {
 var environment = {
     production: false
 };
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/environment.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/environment.js.map
 
 /***/ },
 
@@ -892,7 +892,7 @@ var environment = {
 
 
 
-//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/angular2-wp-theme/src/polyfills.js.map
+//# sourceMappingURL=/Applications/MAMP/htdocs/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme/src/polyfills.js.map
 
 /***/ },
 
