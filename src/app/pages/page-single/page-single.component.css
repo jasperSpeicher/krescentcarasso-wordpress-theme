@@ -45,13 +45,13 @@ h2 {
 
 /* ---- grid ---- */
 
-.theme-gallery {
+.theme-image-grid {
   width: 100%;
   background-color: #000;
 }
 
 /* clear fix */
-.theme-gallery:after {
+.theme-image-grid:after {
   content: '';
   display: block;
   clear: both;
@@ -60,25 +60,25 @@ h2 {
 /* ---- .grid-item ---- */
 
 /* height of 1 row */
-.theme-gallery__sizer,
-.theme-gallery__image {
+.theme-image-grid__sizer,
+.theme-image-grid__image {
   width: 25%;
   height: auto;
   /*transition: width .4s;*/
 }
 
-.theme-gallery__image--large {
+.theme-image-grid__image--large {
   width: 50%;
   height: auto;
 }
 
-.theme-gallery__gutter-sizer {
+.theme-image-grid__gutter-sizer {
   width: 1%;
   height: 1%;
 }
 
-.theme-gallery__image,
-.theme-gallery__gutter-sizer {
+.theme-image-grid__image,
+.theme-image-grid__gutter-sizer {
   display: block;
   float: left;
 }

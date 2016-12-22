@@ -7,56 +7,54 @@ import 'rxjs/add/operator/filter';
 @Component({
   selector: 'theme-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
-  providers: [MenuService]
+  styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
 
   @Input() slug:string;
 
-  menu:Menu = {
-    activeParent: null
-  };
+  menu:Menu;
+
   belowContent = false;
 
   constructor(private menuService:MenuService, private router:Router) {
-  }
-
-  getMenu(slug:string) {
-
-    this.menuService
-      .getMenu(slug)
-      .subscribe(res => {
-        Object.assign(this.menu, res);
-      });
-
-    this.menuService
-      .getMediaCategoryTerms()
-      .subscribe(res => {
-        this.menu.mediaCategoryTerms = res;
-        console.log(this.menu.mediaCategoryTerms);
-      });
 
   }
 
-  path(parent:any, child:any) {
-    return parent.object_slug + (child !== undefined ? '/' + child.object_slug : '');
+  // TODO move router into the menu service and make active parent observable rather than listening to url
+  getMenu() {
+    this.menuService
+      .getMenuObservable()
+      .subscribe((menu:Menu) => {
+        this.menu = menu;
+        this.parseUrl(this.router.url);
+        this.router.events
+          .filter(event => event instanceof NavigationStart && this.menu !== null)
+          .forEach((event:NavigationEvent) => {
+            this.parseUrl(event.url);
+          });
+      });
+  }
+
+  parseUrl(url:string) {
+    this.menu.activeParent = url.split('/')[1];
+    this.belowContent = url === '/';
+  }
+
+  path(parentSlug:string, childSlug:string) {
+    return parentSlug + (childSlug !== undefined ? '/' + childSlug : '');
   }
 
   showChildren(parent:any) {
     this.menu.activeParent = parent.object_slug;
   }
 
+  showCategoryTerm(term:any) {
+    this.menu.activeTerm = term.slug;
+  }
+
   ngOnInit() {
-
-    this.getMenu(this.slug);
-
-    this.router.events
-      .filter(event => event instanceof NavigationStart && this.menu !== undefined)
-      .forEach((event:NavigationEvent) => {
-        this.menu.activeParent = event.url.split('/')[1];
-        this.belowContent = event.url === '/';
-      });
+    this.getMenu();
   }
 
 }

@@ -8,14 +8,14 @@
   <!--[style.width]="image.sizes['medium_large-width']"-->
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
-  <!--gallery-->
-  <div *ngIf="page.acf?.gallery" class="theme-gallery">
-    <!--<div class="theme-gallery__gutter-sizer">-->
+  <!--imageGrid-->
+  <div *ngIf="page.acf?.gallery" class="theme-image-grid">
+    <!--<div class="theme-image-grid__gutter-sizer">-->
     <!--</div>-->
     <template ngFor let-image let-sizer="first" [ngForOf]="page.acf.gallery">
-      <img class="theme-gallery__image"
+      <img class="theme-image-grid__image"
            src="{{ image.sizes.medium_large }}"
-           [ngClass]="{ 'theme-gallery__sizer': sizer }">
+           [ngClass]="{ 'theme-image-grid__sizer': sizer }">
     </template>
   </div>
 

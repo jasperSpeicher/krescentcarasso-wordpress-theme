@@ -1,6 +1,6 @@
 webpackJsonp([1,4],{
 
-/***/ 361:
+/***/ 372:
 /***/ function(module, exports) {
 
 /*
@@ -57,16 +57,16 @@ module.exports = function() {
 
 /***/ },
 
-/***/ 379:
+/***/ 392:
 /***/ function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(644);
+var content = __webpack_require__(667);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(681)(content, {});
+var update = __webpack_require__(702)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -84,12 +84,12 @@ if(false) {
 
 /***/ },
 
-/***/ 644:
+/***/ 667:
 /***/ function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(361)();
+exports = module.exports = __webpack_require__(372)();
 // imports
-exports.i(__webpack_require__(645), "");
+exports.i(__webpack_require__(668), "");
 
 // module
 exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\n\nbody {\n  font-family: \"Josefin Sans\", sans-serif;\n}\n\nhtml {\n  overflow-y: scroll;\n}\n\n.container-fluid {\n  padding-left: 40px;\n  padding-right: 40px;\n}\n", ""]);
@@ -99,10 +99,10 @@ exports.push([module.i, "/* You can add global styles to this file, and also imp
 
 /***/ },
 
-/***/ 645:
+/***/ 668:
 /***/ function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(361)();
+exports = module.exports = __webpack_require__(372)();
 // imports
 
 
@@ -114,7 +114,7 @@ exports.push([module.i, "/*!\n * Bootstrap v3.3.7 (http://getbootstrap.com)\n * 
 
 /***/ },
 
-/***/ 681:
+/***/ 702:
 /***/ function(module, exports) {
 
 /*
@@ -367,13 +367,13 @@ function updateLink(linkElement, obj) {
 
 /***/ },
 
-/***/ 685:
+/***/ 706:
 /***/ function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(379);
+module.exports = __webpack_require__(392);
 
 
 /***/ }
 
-},[685]);
+},[706]);
 //# sourceMappingURL=styles.bundle.map

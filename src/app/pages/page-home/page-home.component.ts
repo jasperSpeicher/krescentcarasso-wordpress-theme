@@ -21,20 +21,14 @@ export class PageHomeComponent implements OnInit /*, OnDestroy, AfterViewChecked
       .getPage(slug)
       .subscribe(res => {
         this.page = res[0];
-
       });
   }
 
   ngOnInit() {
-    console.log('init home');
-    console.log(this.route.params);
-
     this.route.params.forEach((params:Params) => {
-      console.log('foreach');
       this.page = null;
       this.getPage('home')
     });
-
   }
 
   //ngOnDestroy() {

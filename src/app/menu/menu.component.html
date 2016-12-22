@@ -1,6 +1,7 @@
 <div class="theme-header"
      [class.theme-header--below-content]="belowContent"
-     [class.theme-header--menu-open]="menu.activeParent">
+     [class.theme-header--menu-open]="menu?.activeParent"
+      [style.display]="{ none: menu==null, block: menu!=null }">
   <div class="container-fluid">
 
     <ul class="theme-menu">
@@ -12,23 +13,39 @@
           {{ parent.title }}
         </a>
         <a *ngIf="parent.object==='page'"
-          routerLink="{{ path(parent) }}" routerLinkActive="active">
+           routerLink="{{ path(parent.object_slug) }}" routerLinkActive="active">
           {{ parent.title }}
         </a>
         <div>
           <ul [class.active]="menu.activeParent === parent.object_slug">
-            <li *ngFor="let child of parent.children">
-              <a routerLink="{{ path(parent,child) }}" routerLinkActive="active">
-                {{ child.title }}
-              </a>
-            </li>
+
+            <!-- show child links if not on explore page -->
+            <template [ngIf]="parent.object_slug!=='explore'">
+              <li *ngFor="let child of parent.children">
+                <a routerLink="{{ path(parent.object_slug,child.object_slug) }}" routerLinkActive="active">
+                  {{ child.title }}
+                </a>
+              </li>
+            </template>
+
+            <!-- show gallery category terms if on explore page -->
+            <template [ngIf]="parent.object_slug==='explore'">
+              <li *ngFor="let term of menu.mediaCategoryTerms">
+                <a routerLink="{{ path(parent.object_slug,term.slug) }}" routerLinkActive="active">
+                  {{ term.name }}
+                </a>
+              </li>
+            </template>
+
           </ul>
         </div>
       </li>
     </ul>
 
     <h1>
-      <a routerLink="/"><ng-content></ng-content></a>
+      <a routerLink="/">
+        <ng-content></ng-content>
+      </a>
     </h1>
 
   </div>

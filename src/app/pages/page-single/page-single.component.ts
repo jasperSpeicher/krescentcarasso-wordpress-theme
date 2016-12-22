@@ -2,6 +2,8 @@ import { Component, Input, OnInit, OnDestroy, AfterViewChecked, OnChanges } from
 import { Page } from '../page';
 import { PagesService } from '../pages.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {MenuService} from "../../menu/menu.service";
+import {Menu} from "../../menu/menu";
 declare var Packery:any;
 
 @Component({
@@ -13,9 +15,9 @@ declare var Packery:any;
 export class PageSingleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   @Input() page:Page;
-  gallery:any = null;
+  imageGrid:any = null;
 
-  constructor(private pagesService:PagesService, private route:ActivatedRoute) {
+  constructor(private pagesService:PagesService, private route:ActivatedRoute, private menuService:MenuService) {
   }
 
   getPage(slug) {
@@ -24,36 +26,58 @@ export class PageSingleComponent implements OnInit, AfterViewChecked, OnChanges 
       .getPage(slug)
       .subscribe(res => {
         this.page = res[0] as Page;
-        console.log(this.page.acf.gallery);
       });
 
   }
 
   ngOnInit() {
-    console.log('new page init');
     this.route.params.forEach((params:Params) => {
+
+      let parent = params['parent'];
       let slug = params['slug'];
-      if (slug !== undefined) {
-        console.log(slug);
+
+      // if the parent is 'explore' then show the explore page
+      // and use the slug for the media category
+      if (parent === 'explore') {
         this.page = null;
         this.getPage(slug)
+        this.menuService.getMenuObservable()
+          .subscribe((menu:Menu)=> {
+            if(menu){
+              menu.getActiveTermObservable().subscribe((termSlug:string)=> {
+                this.filterImageGrid(termSlug);
+              });
+            }
+            if (slug !== undefined) {
+              this.menuService.menu.activeTerm = slug;
+            }
+          });
+      } else {
+        if (slug !== undefined) {
+          this.page = null;
+          this.getPage(slug)
+        }
       }
-    });
 
+    });
   }
 
-  updateGallery() {
+  filterImageGrid(termSlug:string) {
+    console.log('filter ' + termSlug);
+  }
+
+  updateImageGrid() {
 
     let transitionDuration = 800;
-    let galleryElement = document.querySelector('.theme-gallery');
+    let imageGridElement = document.querySelector('.theme-image-grid');
 
-    if (galleryElement) {
+    if (imageGridElement) {
 
-      if (!this.gallery) {
+      if (!this.imageGrid) {
 
-        console.log('init gallery');
-        this.gallery = new Packery(galleryElement, {
-          itemSelector: '.theme-gallery__image',
+        console.log('init imageGrid');
+        this.imageGrid = new Packery(imageGridElement, {
+          itemSelector: '.theme-image-grid__image',
           transitionDuration: transitionDuration + 'ms',
           percentPosition: true
         });
@@ -62,31 +86,31 @@ export class PageSingleComponent implements OnInit, AfterViewChecked, OnChanges 
 
         //zoom images on click
         let _self = this;
-        galleryElement.addEventListener('click', function (event:any) {
+        imageGridElement.addEventListener('click', function (event:any) {
           // filter for grid-item clicks
-          if (!event.target.classList.contains('theme-gallery__image')) {
+          if (!event.target.classList.contains('theme-image-grid__image')) {
             return;
           }
           let largeImages = [].slice.call(
-            document.getElementsByClassName('theme-gallery__image--large')
+            document.getElementsByClassName('theme-image-grid__image--large')
           );
           for (let largeImage of largeImages as any[]) {
             //return any large images to original size before zooming current image
-            largeImage.classList.toggle('theme-gallery__image--large');
+            largeImage.classList.toggle('theme-image-grid__image--large');
           }
-          _self.safeGalleryShiftLayout();
+          _self.safeImageGridShiftLayout();
           setTimeout(()=> {
-            event.target.classList.toggle('theme-gallery__image--large');
-            _self.safeGalleryFitLayout(event.target);
-          }, transitionDuration/4);
+            event.target.classList.toggle('theme-image-grid__image--large');
+            _self.safeImageGridFitLayout(event.target);
+          }, transitionDuration / 4);
         });
 
       } else {
 
-        //this.gallery.reloadItems();
+        //this.imageGrid.reloadItems();
 
         if (Packery.layoutOnViewChecked) {
-          this.safeGalleryLayout();
+          this.safeImageGridLayout();
         }
 
       }
@@ -95,27 +119,27 @@ export class PageSingleComponent implements OnInit, AfterViewChecked, OnChanges 
 
   }
 
-  safeGalleryLayout() {
-    console.log('safe gallery layout');
+  safeImageGridLayout() {
+    console.log('safe imageGrid layout');
     Packery.layoutOnViewChecked = false;
-    this.gallery.layout();
+    this.imageGrid.layout();
   }
 
-  safeGalleryShiftLayout() {
-    console.log('safe gallery shift layout');
+  safeImageGridShiftLayout() {
+    console.log('safe imageGrid shift layout');
     Packery.layoutOnViewChecked = false;
-    this.gallery.shiftLayout();
+    this.imageGrid.shiftLayout();
   }
 
-  safeGalleryFitLayout(element) {
-    console.log('safe gallery fit layout');
+  safeImageGridFitLayout(element) {
+    console.log('safe imageGrid fit layout');
     Packery.layoutOnViewChecked = false;
-    this.gallery.fit(element);
+    this.imageGrid.fit(element);
   }
 
   ngAfterViewChecked() {
     //console.log('avc');
-    this.updateGallery();
+    this.updateImageGrid();
   }
 
   ngOnChanges() {

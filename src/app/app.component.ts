@@ -6,7 +6,7 @@ import {MenuService} from "./menu/menu.service";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [AppService]
+  providers: [AppService, MenuService]
 })
 export class AppComponent implements OnInit {
 
