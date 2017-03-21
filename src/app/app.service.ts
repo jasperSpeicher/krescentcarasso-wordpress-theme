@@ -9,7 +9,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AppService {
 
-  private _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
+  //private _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
+  private _wpBase = "http://krescentcarasso.jasperspeicher.codes/wp-json/";
 
   constructor(private http:Http) {
   }
