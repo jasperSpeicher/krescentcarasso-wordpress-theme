@@ -12,6 +12,7 @@ import { PageHomeComponent } from "./pages/page-home/page-home.component";
 import { MenuComponent } from './menu/menu.component';
 
 import { Ng2PageTransition } from "ng2-page-transition";
+import { PackeryComponent } from './packery/packery.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { Ng2PageTransition } from "ng2-page-transition";
     PageSingleComponent,
     PageHomeComponent,
     MenuComponent,
-    Ng2PageTransition
+    Ng2PageTransition,
+    PackeryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 webpackJsonp([1,4],{
 
-/***/ 372:
+/***/ 373:
 /***/ function(module, exports) {
 
 /*
@@ -57,16 +57,16 @@ module.exports = function() {
 
 /***/ },
 
-/***/ 392:
+/***/ 393:
 /***/ function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(667);
+var content = __webpack_require__(669);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(702)(content, {});
+var update = __webpack_require__(705)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -84,25 +84,25 @@ if(false) {
 
 /***/ },
 
-/***/ 667:
+/***/ 669:
 /***/ function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(372)();
+exports = module.exports = __webpack_require__(373)();
 // imports
-exports.i(__webpack_require__(668), "");
+exports.i(__webpack_require__(670), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\n\nbody {\n  font-family: \"Josefin Sans\", sans-serif;\n}\n\nhtml {\n  overflow-y: scroll;\n}\n\n.container-fluid {\n  padding-left: 40px;\n  padding-right: 40px;\n}\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\n\nbody {\n  font-family: \"Josefin Sans\", sans-serif;\n  width:100%;\n}\n\nhtml {\n  overflow-y: scroll;\n}\n\n.container-fluid {\n  padding-left: 40px;\n  padding-right: 40px;\n}\n", ""]);
 
 // exports
 
 
 /***/ },
 
-/***/ 668:
+/***/ 670:
 /***/ function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(372)();
+exports = module.exports = __webpack_require__(373)();
 // imports
 
 
@@ -114,7 +114,7 @@ exports.push([module.i, "/*!\n * Bootstrap v3.3.7 (http://getbootstrap.com)\n * 
 
 /***/ },
 
-/***/ 702:
+/***/ 705:
 /***/ function(module, exports) {
 
 /*
@@ -367,13 +367,13 @@ function updateLink(linkElement, obj) {
 
 /***/ },
 
-/***/ 706:
+/***/ 709:
 /***/ function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(392);
+module.exports = __webpack_require__(393);
 
 
 /***/ }
 
-},[706]);
+},[709]);
 //# sourceMappingURL=styles.bundle.map

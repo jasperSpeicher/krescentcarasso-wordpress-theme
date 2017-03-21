@@ -26,10 +26,19 @@ export class PagesService {
   getPage(slug):Observable<Page> {
 
     return this.http
-      .get(this._wpBase + 'wp/v2/pages?slug='+slug)
-      .map((res:Response) =>{
+      .get(this._wpBase + 'wp/v2/pages?slug=' + slug)
+      .map((res:Response) => {
         return res.json();
-      } );
+      });
+
+  }
+
+  getMediaObjects():Observable<any> {
+    return this.http
+      .get(this._wpBase + 'wp/v2/media')
+      .map((res:Response) => {
+        return res.json();
+      });
 
   }
 

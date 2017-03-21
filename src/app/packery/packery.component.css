@@ -1,0 +1,40 @@
+
+/* ---- grid ---- */
+
+.theme-image-grid {
+  width: 100%;
+  background-color: transparent;
+}
+
+/* clear fix */
+.theme-image-grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+/* height of 1 row */
+.theme-image-grid__sizer,
+.theme-image-grid__image {
+  width: 25%;
+  height: auto;
+  /*transition: width .4s;*/
+}
+
+.theme-image-grid__image--large {
+  width: 50%;
+  height: auto;
+}
+
+.theme-image-grid__gutter-sizer {
+  width: 1%;
+  height: 1%;
+}
+
+.theme-image-grid__image,
+.theme-image-grid__gutter-sizer {
+  display: block;
+  float: left;
+}

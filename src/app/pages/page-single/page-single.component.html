@@ -9,14 +9,9 @@
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
   <!--imageGrid-->
-  <div *ngIf="page.acf?.gallery" class="theme-image-grid">
-    <!--<div class="theme-image-grid__gutter-sizer">-->
-    <!--</div>-->
-    <template ngFor let-image let-sizer="first" [ngForOf]="page.acf.gallery">
-      <img class="theme-image-grid__image"
-           src="{{ image.sizes.medium_large }}"
-           [ngClass]="{ 'theme-image-grid__sizer': sizer }">
-    </template>
+  <div *ngIf="page.acf?.gallery">
+    <div [packery]="images">
+    </div>
   </div>
 
 
