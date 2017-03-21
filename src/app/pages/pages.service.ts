@@ -6,11 +6,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Page } from './page';
+import { AppService } from "../app.service";
 
 @Injectable()
 export class PagesService {
 
-  private _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
+  private _wpBase = AppService._wpBase;
 
   constructor(private http:Http) {
   }

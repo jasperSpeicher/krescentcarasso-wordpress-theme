@@ -7,12 +7,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Menu } from './menu';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { AppService } from "../app.service";
 
 @Injectable()
 export class MenuService {
 
-  private _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
+  private _wpBase = AppService._wpBase;
 
   menu:Menu;
   private _menu:BehaviorSubject<Menu> = new BehaviorSubject(null);
@@ -29,8 +30,8 @@ export class MenuService {
     }
     return this._menu.asObservable()
       .filter((menu:Menu)=> {
-      return menu !== null;
-    });
+        return menu !== null;
+      });
   }
 
   fetchMenu(slug:string):Observable<Menu> {

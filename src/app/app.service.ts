@@ -9,8 +9,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AppService {
 
-  //private _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
-  private _wpBase = "http://krescentcarasso.jasperspeicher.codes/wp-json/";
+  //public static _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
+  public static _wpBase = "http://krescentcarasso.jasperspeicher.codes/wp-json/";
 
   constructor(private http:Http) {
   }
@@ -18,7 +18,7 @@ export class AppService {
   getApp():Observable<any> {
 
     return this.http
-      .get(this._wpBase)
+      .get(AppService._wpBase)
       .map((res:Response) => res.json());
 
   }
