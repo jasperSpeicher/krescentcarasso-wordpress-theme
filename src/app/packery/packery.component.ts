@@ -63,10 +63,11 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
   updateVisibleImages() {
     if (this._packery) {
+      document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
       this._images.forEach((image)=> {
         if (image.hidden) {
           if (!image.removed) {
-            image.element.classList.remove('theme-image-grid__image--large')
+            image.element.classList.remove('theme-image-grid__image--large');
             this._packery.remove(image.element);
             image.removed = true;
             this.safeImageGridShiftLayout();
@@ -106,22 +107,26 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     //zoom images on click
     let _self = this;
     this._imageGridElement.addEventListener('click', function (event:any) {
+      var isLarge = event.target.classList.contains('theme-image-grid__image--large');
       // filter for grid-item clicks
       if (!event.target.classList.contains('theme-image-grid__image')) {
         return;
       }
+      document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
       let largeImages = [].slice.call(
         document.getElementsByClassName('theme-image-grid__image--large')
       );
       for (let largeImage of largeImages as any[]) {
         //return any large images to original size before zooming current image
-        largeImage.classList.toggle('theme-image-grid__image--large');
+        largeImage.classList.remove('theme-image-grid__image--large');
       }
       _self.safeImageGridShiftLayout();
-      setTimeout(()=> {
-        event.target.classList.toggle('theme-image-grid__image--large');
-        _self.safeImageGridFitLayout(event.target);
-      }, transitionDuration / 4);
+      if (!isLarge) {
+        setTimeout(()=> {
+          event.target.classList.toggle('theme-image-grid__image--large');
+          _self.safeImageGridFitLayout(event.target);
+        }, transitionDuration / 4);
+      }
     });
 
   }

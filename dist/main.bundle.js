@@ -199,6 +199,7 @@ var PackeryComponent = (function () {
     PackeryComponent.prototype.updateVisibleImages = function () {
         var _this = this;
         if (this._packery) {
+            document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
             this._images.forEach(function (image) {
                 if (image.hidden) {
                     if (!image.removed) {
@@ -237,21 +238,25 @@ var PackeryComponent = (function () {
         //zoom images on click
         var _self = this;
         this._imageGridElement.addEventListener('click', function (event) {
+            var isLarge = event.target.classList.contains('theme-image-grid__image--large');
             // filter for grid-item clicks
             if (!event.target.classList.contains('theme-image-grid__image')) {
                 return;
             }
+            document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
             var largeImages = [].slice.call(document.getElementsByClassName('theme-image-grid__image--large'));
             for (var _i = 0, _a = largeImages; _i < _a.length; _i++) {
                 var largeImage = _a[_i];
                 //return any large images to original size before zooming current image
-                largeImage.classList.toggle('theme-image-grid__image--large');
+                largeImage.classList.remove('theme-image-grid__image--large');
             }
             _self.safeImageGridShiftLayout();
-            setTimeout(function () {
-                event.target.classList.toggle('theme-image-grid__image--large');
-                _self.safeImageGridFitLayout(event.target);
-            }, transitionDuration / 4);
+            if (!isLarge) {
+                setTimeout(function () {
+                    event.target.classList.toggle('theme-image-grid__image--large');
+                    _self.safeImageGridFitLayout(event.target);
+                }, transitionDuration / 4);
+            }
         });
     };
     __decorate([
@@ -1124,7 +1129,7 @@ module.exports = ".theme-header {\n  position: fixed;\n  top: 0;\n  height: 100p
 /***/ 677:
 /***/ function(module, exports) {
 
-module.exports = "\n/* ---- grid ---- */\n\n.theme-image-grid {\n  width: 100%;\n  background-color: transparent;\n}\n\n/* clear fix */\n.theme-image-grid:after {\n  content: '';\n  display: block;\n  clear: both;\n}\n\n/* ---- .grid-item ---- */\n\n/* height of 1 row */\n.theme-image-grid__sizer,\n.theme-image-grid__image {\n  width: 25%;\n  height: auto;\n  /*transition: width .4s;*/\n}\n\n.theme-image-grid__image--large {\n  width: 50%;\n  height: auto;\n}\n\n.theme-image-grid__gutter-sizer {\n  width: 1%;\n  height: 1%;\n}\n\n.theme-image-grid__image,\n.theme-image-grid__gutter-sizer {\n  display: block;\n  float: left;\n}\n"
+module.exports = "/* ---- grid ---- */\n\n.theme-image-grid {\n  width: 100%;\n  background-color: transparent;\n}\n\n/* clear fix */\n.theme-image-grid:after {\n  content: '';\n  display: block;\n  clear: both;\n}\n\n/* ---- .grid-item ---- */\n\n/* height of 1 row */\n.theme-image-grid__sizer,\n.theme-image-grid__image {\n  width: 25%;\n  height: auto;\n  /*transition: width .4s;*/\n}\n\n.theme-image-grid__image--large {\n  width: 50%;\n  height: auto;\n}\n\n.theme-image-grid__gutter-sizer {\n  width: 1%;\n  height: 1%;\n}\n\n.theme-image-grid__image,\n.theme-image-grid__gutter-sizer {\n  display: block;\n  float: left;\n}\n\n/*.theme-image-grid--transitioning-on .theme-image-grid__image {*/\n  /*transition: all 0.8s;*/\n/*}*/\n"
 
 /***/ },
 
