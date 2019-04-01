@@ -1,5 +1,7 @@
 <div *ngIf="page" class="theme-page">
 
+  <h2>{{ page.title.rendered }}</h2>
+
   <!--hero image-->
   <div *ngIf="page.acf?.hero_image" class="theme-hero-image"
        [style.background-image]="'url('+page.acf.hero_image?.url+')'">
@@ -17,7 +19,6 @@
 
   <div *ngIf="!page.acf?.gallery" class="theme-page-body container-fluid">
 
-    <h2>{{ page.title.rendered }}</h2>
 
     <div [innerHTML]="page.content.rendered" class="theme-body-text">
     </div>
