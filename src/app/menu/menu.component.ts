@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
 
   menu: Menu;
 
-  belowContent = false;
+  belowContent = true;
 
   constructor(private menuService: MenuService, private router: Router) {
 
@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
 
   parseUrl(url: string) {
     this.menu.activeParent = url.split('/')[1];
-    this.belowContent = url === '/';
+    // this.belowContent = url === '/';
   }
 
   path(parentSlug: string, childSlug: string) {
