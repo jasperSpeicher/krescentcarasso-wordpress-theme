@@ -8,7 +8,12 @@
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "ng": "ng",
+    "build": "ng build --sourcemaps=false",
+    "build:watch": "npm run build && ng build --watch",
+    "build:prod": "ng build --prod && npm run postbuild",
+    "postbuild": "scp -r ./dist root@jasperspeicher.codes:/var/www/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme"
   },
   "private": true,
   "dependencies": {
