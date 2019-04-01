@@ -4,14 +4,18 @@
   height: 100px;
   width: 100%;
   background-color: transparent;
-  transition: height .4s ease-out;
+  /*transition: height .4s ease-out;*/
+  font-weight: 100;
+  pointer-events: none;
 }
 .theme-header h1 {
   position: absolute;
-  bottom: 25px;
-  font-size: 28px;
-  font-weight: normal;
-  transition: font-size .4s ease-out, bottom .4s ease-out;
+  bottom: 5px;
+  font-size: 32px;
+  /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
+  margin: 0;
+  font-weight: 100;
+  pointer-events: auto;
 }
 
 .theme-header h1 a,
@@ -107,18 +111,18 @@
 }
 
 .theme-header--below-content h1 {
-  bottom: 40px;
-  font-size: 48px;
+  bottom: 9px;
+  font-size: 32px;
 }
 .theme-header--below-content.theme-header--menu-open h1 {
-  bottom: 90px;
+  /*bottom: 90px;*/
 }
 
 .theme-header--below-content .theme-menu {
   height: 50px;
   padding-top: 6px;
   overflow: hidden;
-  transition: height .4s ease-out;
+  /*transition: height .4s ease-out;*/
 }
 .theme-header--below-content.theme-header--menu-open .theme-menu {
   height: 100px;
