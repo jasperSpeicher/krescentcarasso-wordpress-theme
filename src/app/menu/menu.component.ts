@@ -11,13 +11,13 @@ import 'rxjs/add/operator/filter';
 })
 export class MenuComponent implements OnInit {
 
-  @Input() slug:string;
+  @Input() slug: string;
 
-  menu:Menu;
+  menu: Menu;
 
   belowContent = false;
 
-  constructor(private menuService:MenuService, private router:Router) {
+  constructor(private menuService: MenuService, private router: Router) {
 
   }
 
@@ -25,31 +25,31 @@ export class MenuComponent implements OnInit {
   getMenu() {
     this.menuService
       .getMenuObservable()
-      .subscribe((menu:Menu) => {
+      .subscribe((menu: Menu) => {
         this.menu = menu;
         this.parseUrl(this.router.url);
         this.router.events
           .filter(event => event instanceof NavigationStart && this.menu !== null)
-          .forEach((event:NavigationEvent) => {
+          .forEach((event: NavigationStart) => {
             this.parseUrl(event.url);
           });
       });
   }
 
-  parseUrl(url:string) {
+  parseUrl(url: string) {
     this.menu.activeParent = url.split('/')[1];
     this.belowContent = url === '/';
   }
 
-  path(parentSlug:string, childSlug:string) {
+  path(parentSlug: string, childSlug: string) {
     return parentSlug + (childSlug !== undefined ? '/' + childSlug : '');
   }
 
-  showChildren(parent:any) {
+  showChildren(parent: any) {
     this.menu.activeParent = parent.object_slug;
   }
 
-  showCategoryTerm(term:any) {
+  showCategoryTerm(term: any) {
     this.menu.activeTerm = term.slug;
   }
 
