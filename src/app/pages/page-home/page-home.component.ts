@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy, AfterViewChecked, OnChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Page } from '../page';
 import { PagesService } from '../pages.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-page-home',
@@ -11,9 +11,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class PageHomeComponent implements OnInit /*, OnDestroy, AfterViewChecked, OnChanges */ {
 
-  @Input() page:Page;
+  @Input() page: Page;
 
-  constructor(private pagesService:PagesService, private route:ActivatedRoute) {
+  constructor(private pagesService: PagesService, private route: ActivatedRoute) {
   }
 
   getPage(slug) {
@@ -25,24 +25,10 @@ export class PageHomeComponent implements OnInit /*, OnDestroy, AfterViewChecked
   }
 
   ngOnInit() {
-    this.route.params.forEach((params:Params) => {
+    this.route.params.forEach((params: Params) => {
       this.page = null;
-      this.getPage('home')
+      this.getPage('home');
     });
   }
-
-  //ngOnDestroy() {
-  //  console.log('destroy');
-  //
-  //}
-  //
-  //ngAfterViewChecked(){
-  //  console.log('avc');
-  //}
-  //
-  //ngOnChanges(){
-  //  console.log('onchanges');
-  //}
-  //
 
 }
