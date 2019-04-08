@@ -17,7 +17,11 @@
   left: 0;
   right: 0;
   height: 200px;
-  background: linear-gradient(0deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.theme-header.projects:before {
+  display: none;
 }
 
 .theme-header h1 {
@@ -128,7 +132,6 @@
 }
 
 
-
 /* BOTTOM ORIENTATION */
 
 .theme-header--below-content {
@@ -140,6 +143,7 @@
   bottom: 9px;
   font-size: 32px;
 }
+
 .theme-header--below-content.theme-header--menu-open h1 {
   /*bottom: 90px;*/
 }
@@ -150,6 +154,7 @@
   overflow: visible;
   /*transition: height .4s ease-out;*/
 }
+
 .theme-header--below-content.theme-header--menu-open .theme-menu > li > a {
   opacity: 0.3;
 }
