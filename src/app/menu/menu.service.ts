@@ -7,37 +7,37 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { Menu } from './menu';
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { AppService } from "../app.service";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AppService } from '../app.service';
 
 @Injectable()
 export class MenuService {
 
   private _wpBase = AppService._wpBase;
 
-  menu:Menu;
-  private _menu:BehaviorSubject<Menu> = new BehaviorSubject(null);
+  menu: Menu;
+  private _menu: BehaviorSubject<Menu> = new BehaviorSubject(null);
   private slug = 'main-navigation';
 
-  constructor(private http:Http) {
+  constructor(private http: Http) {
   }
 
-  getMenuObservable():Observable<Menu> {
+  getMenuObservable(): Observable<Menu> {
     if (!this.menu) {
-      this.fetchMenu(this.slug).subscribe((menu:Menu)=> {
+      this.fetchMenu(this.slug).subscribe((menu: Menu) => {
         this._menu.next(menu);
       });
     }
     return this._menu.asObservable()
-      .filter((menu:Menu)=> {
+      .filter((menu: Menu) => {
         return menu !== null;
       });
   }
 
-  fetchMenu(slug:string):Observable<Menu> {
+  fetchMenu(slug: string): Observable<Menu> {
     return this.http.get(this._wpBase + 'wp-api-menus/v2/menus')
-      .flatMap((res:Response) => {
-        let menuRecord:any = null;
+      .flatMap((res: Response) => {
+        let menuRecord: any = null;
         res.json().forEach((record) => {
           if (record.slug == slug) {
             menuRecord = record;
@@ -49,9 +49,9 @@ export class MenuService {
           return null;
         }
       })
-      .flatMap((menuRes:Response) => {
+      .flatMap((menuRes: Response) => {
         return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
-          .map((categoryRes:Response) => {
+          .map((categoryRes: Response) => {
             // keep the menu so that it can be accessed by components
             this.menu = new Menu();
             Object.assign(this.menu, menuRes.json());
