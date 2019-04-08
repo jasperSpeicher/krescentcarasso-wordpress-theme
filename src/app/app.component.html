@@ -1,7 +1,9 @@
-<main [@fadeAnimation]="getRouterOutletState(o)">
-  <router-outlet #o="outlet"></router-outlet>
-</main>
+<div [class]="pageClasses">
+  <main [@fadeAnimation]="getRouterOutletState(o)">
+    <router-outlet #o="outlet"></router-outlet>
+  </main>
 
-<theme-menu>
-  {{ title }}
-</theme-menu>
+  <theme-menu [pageClasses]="pageClasses">
+    {{ title }}
+  </theme-menu>
+</div>

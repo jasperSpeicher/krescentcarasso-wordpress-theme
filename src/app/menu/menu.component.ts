@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuService } from './menu.service';
 import { Menu } from './menu';
-import { Router, ActivatedRoute, Params, NavigationStart, Event as NavigationEvent } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -11,7 +11,7 @@ import 'rxjs/add/operator/filter';
 })
 export class MenuComponent implements OnInit {
 
-  @Input() slug: string;
+  @Input() pageClasses: string;
 
   menu: Menu;
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 import { AppService } from './app.service';
 import { MenuService } from './menu/menu.service';
 import { fadeAnimation } from './shared/fade.animation';
@@ -13,9 +14,17 @@ import { fadeAnimation } from './shared/fade.animation';
 export class AppComponent implements OnInit {
 
   title = '';
+  pageClasses = '';
 
-  constructor(private appService: AppService) {
-
+  constructor(
+    private appService: AppService,
+    private router: Router,
+  ) {
+    router.events.filter(e => e instanceof NavigationStart).subscribe((e: NavigationStart) => {
+      const pathArray = e.url.split('/');
+      pathArray.splice(0, 1);
+      this.pageClasses = pathArray.join(' ');
+    });
   }
 
   public getRouterOutletState(outlet) {
