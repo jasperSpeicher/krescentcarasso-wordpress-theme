@@ -4,8 +4,25 @@
       [style.display]="{ none: menu==null, block: menu!=null }">
   <div class="container-fluid">
 
+    <h1>
+      <a routerLink="/">
+        <ng-content></ng-content>
+      </a>
+    </h1>
+
     <ul class="theme-menu">
       <li *ngFor="let parent of menu?.items">
+
+        <a *ngIf="parent.object==='custom'"
+           (click)="showChildren(parent)"
+           [class.active]="menu.activeParent === parent.object_slug"
+           [class.childActive]="menu.activeParent === parent.object_slug">
+          {{ parent.title }}
+        </a>
+        <a *ngIf="parent.object==='page'"
+           routerLink="{{ path(parent.object_slug) }}" routerLinkActive="active">
+          {{ parent.title }}
+        </a>
 
         <div>
           <ul [class.active]="menu.activeParent === parent.object_slug">
@@ -31,25 +48,8 @@
           </ul>
         </div>
 
-        <a *ngIf="parent.object==='custom'"
-           (click)="showChildren(parent)"
-           [class.active]="menu.activeParent === parent.object_slug"
-           [class.childActive]="menu.activeParent === parent.object_slug">
-          {{ parent.title }}
-        </a>
-        <a *ngIf="parent.object==='page'"
-           routerLink="{{ path(parent.object_slug) }}" routerLinkActive="active">
-          {{ parent.title }}
-        </a>
-
       </li>
     </ul>
-
-    <h1>
-      <a routerLink="/">
-        <ng-content></ng-content>
-      </a>
-    </h1>
 
   </div>
 </div>

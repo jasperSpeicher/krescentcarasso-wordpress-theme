@@ -1,8 +1,9 @@
 .theme-header {
   position: fixed;
   top: 0;
-  height: 100px;
-  width: 100%;
+  bottom: 0;
+  right: 0;
+  width: 400px;
   background-color: transparent;
   /*transition: height .4s ease-out;*/
   font-weight: 100;
@@ -16,8 +17,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+  top: 0;
+  background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .theme-header.projects:before {
@@ -25,9 +26,8 @@
 }
 
 .theme-header h1 {
-  position: absolute;
-  bottom: 5px;
   font-size: 32px;
+  padding-top: 20px;
   /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
   margin: 0;
   font-weight: 100;
@@ -54,21 +54,14 @@
 
 
 .theme-menu {
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100px;
-  padding: 10px 40px 0 0;
-  margin: 0;
+  padding: 10px 0 0 0;
   font-size: 24px;
   list-style: none;
   text-align: right;
 }
 
 .theme-menu li {
-  display: inline-block;
+  display: block;
   padding: 0;
   margin: 0 0 0 20px;
 }
@@ -96,17 +89,14 @@
 }
 
 .theme-menu li div {
-  position: absolute;
-  bottom: 50px;
-  right: 40px;
   /*overflow: hidden;*/
   pointer-events: none;
 }
 
 .theme-menu li div ul {
   padding: 0;
-  display: inline-block;
-  width: auto;
+  display: block;
+  height: 0;
   opacity: 0;
   /*transform: translateX(100%);*/
   transition: all 1s ease;
@@ -116,6 +106,7 @@
 .theme-menu li div ul.active {
   /*transform: translateX(0);*/
   opacity: 1;
+  height: auto;
   pointer-events: auto;
 }
 
@@ -149,7 +140,6 @@
 }
 
 .theme-header--below-content .theme-menu {
-  height: 50px;
   padding-top: 6px;
   overflow: visible;
   /*transition: height .4s ease-out;*/
