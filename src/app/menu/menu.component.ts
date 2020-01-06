@@ -14,8 +14,7 @@ export class MenuComponent implements OnInit {
   @Input() pageClasses: string;
 
   menu: Menu;
-
-  belowContent = true;
+  menuVisible = false;
 
   constructor(private menuService: MenuService, private router: Router) {
 

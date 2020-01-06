@@ -3,14 +3,22 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 400px;
+  left: 0;
   background-color: transparent;
   /*transition: height .4s ease-out;*/
   font-weight: 100;
   pointer-events: none;
 }
 
-.theme-header:before {
+.theme-header .container-fluid {
+  position: absolute;
+  padding: 60px 80px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.theme-header .container-fluid:before {
   content: '';
   display: block;
   position: absolute;
@@ -18,43 +26,69 @@
   left: 0;
   right: 0;
   top: 0;
-  background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+  background: rgba(255, 255, 255, 0.8);
+  /* background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
 }
 
-.theme-header.projects:before {
-  display: none;
+.theme-header .theme-menu {
+  opacity: 0;
+  transition: opacity 400ms 0ms ease;
+}
+.theme-header--menu-visible .theme-menu {
+  opacity: 1;
+  transition: opacity 800ms 100ms ease;
+}
+.theme-header .container-fluid:before {
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+.theme-header--menu-visible .container-fluid:before {
+  opacity: 1;
 }
 
 .theme-header h1 {
-  font-size: 32px;
-  padding-top: 20px;
-  /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 60px;
+  padding-top: 10px;
+  padding-right: 60px;
   margin: 0;
+  font-size: 24px;
+  /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
   font-weight: 100;
   pointer-events: auto;
+  /* background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
+  background: #fff;
+  text-align: right;
 }
 
 .theme-header h1 a,
 .theme-header h1 a:active,
 .theme-header h1 a:visited {
-  display: block;
+  display: inline;
   cursor: pointer;
-  padding: 2px 0 0 1px;
+  padding: 0;
   text-decoration: none;
   text-align: right;
   color: #000;
 }
 
 .theme-header h1 a:active {
-  padding-left: 0px;
   text-decoration: none;
-  font-weight: bolder;
   color: #000;
 }
 
+.theme-header h1 a.menu-toggle {
+  font-size: 28px;
+  margin-left: 10px;
+}
 
 .theme-menu {
+  position: relative;
   padding: 10px 0 0 0;
+  margin: 0;
   font-size: 24px;
   list-style: none;
   text-align: right;
