@@ -1,14 +1,9 @@
 <div class="theme-header {{pageClasses}}"
-     [class.theme-header--below-content]="belowContent"
+     [class.theme-header--menu-visible]="menuVisible"
      [class.theme-header--menu-open]="menu?.activeParent"
-      [style.display]="{ none: menu==null, block: menu!=null }">
-  <div class="container-fluid">
+     [style.display]="{ none: menu==null, block: menu!=null }">
 
-    <h1>
-      <a routerLink="/">
-        <ng-content></ng-content>
-      </a>
-    </h1>
+  <div class="container-fluid">
 
     <ul class="theme-menu">
       <li *ngFor="let parent of menu?.items">
@@ -52,4 +47,12 @@
     </ul>
 
   </div>
+
+  <h1>
+    <a routerLink="/">
+      <ng-content></ng-content>
+    </a>
+    <a class="menu-toggle" (click)="menuVisible=!menuVisible">+</a>
+  </h1>
+
 </div>
