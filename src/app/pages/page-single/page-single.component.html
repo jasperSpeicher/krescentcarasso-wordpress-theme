@@ -7,9 +7,8 @@
       <div *ngIf="page.acf?.hero_image" class="theme-hero__image"
            [style.background-image]="'url('+page.acf.hero_image?.url+')'">
       </div>
+      <h2>{{ page.title.rendered }}</h2>
     </div>
-
-    <h2>{{ page.title.rendered }}</h2>
 
     <!--[style.width]="image.sizes['medium_large-width']"-->
     <!--[style.height]="image.sizes['medium_large-height']"-->

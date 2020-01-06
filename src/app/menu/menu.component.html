@@ -11,7 +11,7 @@
         <a *ngIf="parent.object==='custom'"
            (click)="showChildren(parent)"
            [class.active]="menu.activeParent === parent.object_slug"
-           [class.childActive]="menu.activeParent === parent.object_slug">
+           [class.child-active]="menu.activeParent === parent.object_slug">
           {{ parent.title }}
         </a>
         <a *ngIf="parent.object==='page'"

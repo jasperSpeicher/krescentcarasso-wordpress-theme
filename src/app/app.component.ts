@@ -23,7 +23,11 @@ export class AppComponent implements OnInit {
     router.events.filter(e => e instanceof NavigationStart).subscribe((e: NavigationStart) => {
       const pathArray = e.url.split('/');
       pathArray.splice(0, 1);
-      this.pageClasses = pathArray.join(' ');
+      if (pathArray.length > 1) {
+        this.pageClasses = pathArray.join(' ');
+      } else {
+        this.pageClasses = 'home';
+      }
     });
   }
 

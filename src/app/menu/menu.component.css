@@ -1,13 +1,18 @@
 .theme-header {
   position: fixed;
   top: 0;
-  bottom: 0;
   right: 0;
   left: 0;
+  height: 60px;
+  overflow: hidden;
   background-color: transparent;
   /*transition: height .4s ease-out;*/
   font-weight: 100;
   pointer-events: none;
+}
+.theme-header.theme-header--menu-visible {
+  bottom: 0;
+  height: auto;
 }
 
 .theme-header .container-fluid {
@@ -63,6 +68,11 @@
   text-align: right;
 }
 
+.home h1 {
+  background: transparent;
+  font-size: 36px;
+}
+
 .theme-header h1 a,
 .theme-header h1 a:active,
 .theme-header h1 a:visited {
@@ -84,6 +94,7 @@
   width: 60px;
   display: inline-block;
   text-align: center;
+  user-select: none;
 }
 
 .theme-menu {
@@ -122,6 +133,10 @@
   color: #000;
   opacity: 1 !important;
 }
+.theme-menu li ul a:active,
+.theme-menu li ul a.active {
+  font-weight: 400;
+}
 
 .theme-menu li div {
   /*overflow: hidden;*/
@@ -129,20 +144,31 @@
 }
 
 .theme-menu li div ul {
-  padding: 0;
+  position: relative;
+  padding: 0 15px;
   display: block;
   height: 0;
   opacity: 0;
-  /*transform: translateX(100%);*/
-  transition: all 1s ease;
+  transition: opacity 0s 0s ease, height 1s 1s ease;
   pointer-events: none;
 }
 
 .theme-menu li div ul.active {
-  /*transform: translateX(0);*/
   opacity: 1;
   height: auto;
+  transition: opacity 1s 0s ease, height 0s 1s ease;
   pointer-events: auto;
+}
+
+.theme-menu li div ul.active::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  right: 1px;
+  top: 6px;
+  bottom: 10px;
+  width: 1px;
+  background: #000;
 }
 
 .theme-menu li div ul a {
@@ -157,29 +183,6 @@
   pointer-events: auto;
 }
 
-
-/* BOTTOM ORIENTATION */
-
-.theme-header--below-content {
-  top: 0;
-  height: 100vh;
-}
-
-.theme-header--below-content h1 {
-  bottom: 9px;
-  font-size: 32px;
-}
-
-.theme-header--below-content.theme-header--menu-open h1 {
-  /*bottom: 90px;*/
-}
-
-.theme-header--below-content .theme-menu {
-  padding-top: 6px;
-  overflow: visible;
-  /*transition: height .4s ease-out;*/
-}
-
-.theme-header--below-content.theme-header--menu-open .theme-menu > li > a {
-  opacity: 0.3;
-}
+/*.theme-header--menu-open .theme-menu > li > a {*/
+  /*opacity: 0.3;*/
+/*}*/
