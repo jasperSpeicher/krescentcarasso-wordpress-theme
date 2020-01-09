@@ -1,6 +1,6 @@
 h2{
   margin-bottom: 0.2em;
-  font-size: 52px;
+  font-size: 3.25rem;
   line-height: 1em;
   font-weight: normal;
 }
@@ -23,7 +23,7 @@ h2{
 
 .theme-body-text {
   padding-bottom: 40px;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-family: Muli;
 }
 

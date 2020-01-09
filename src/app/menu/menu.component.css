@@ -3,7 +3,7 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 120px;
+  height: 9.25rem;
   overflow: hidden;
   background-color: #fff;
   /*transition: height .4s ease-out;*/
@@ -11,9 +11,8 @@
   pointer-events: none;
   transition: height 400ms ease;
 }
-
 .theme-header.theme-header--menu-open {
-  height: 180px;
+  height: 13rem;
 }
 
 .theme-header h1 {
@@ -23,7 +22,8 @@
   left: 0;
   padding-top: 10px;
   margin: 0 auto;
-  font-size: 36px;
+  font-size: 3rem;
+  line-height: 1.5;
   /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
   font-weight: 100;
   pointer-events: auto;
@@ -53,16 +53,17 @@
 
 .theme-menu {
   position: relative;
-  padding: 60px 0 0 0;
+  padding: 5.5rem 0 0 0;
   margin: 0;
-  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 1;
   list-style: none;
   text-align: center;
 }
 
 .theme-menu li {
   display: inline-block;
-  padding: 10px;
+  padding: 0.625rem;
 }
 
 .theme-menu > li > a {
@@ -74,7 +75,7 @@
   content: ' ';
   display: block;
   width: 1px;
-  right: -5px;
+  right: -0.25rem;
   top: 5px;
   bottom: 0;
   background: #000;
@@ -113,7 +114,7 @@
 
 .theme-menu li div ul {
   position: absolute;
-  top: 110px;
+  top: 8.625rem;
   left: 0;
   right: 0;
   padding: 0 15px;
@@ -151,7 +152,7 @@
 
 /* TODO make the mobile styles fully override */
 
-@media (max-width: 768px){
+@media (max-width: 1280px){
   .theme-header {
     position: fixed;
     top: 0;
@@ -218,7 +219,7 @@
     height: 60px;
     padding-top: 10px;
     margin: 0;
-    font-size: 24px;
+    font-size: 1.5rem;
     /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
     font-weight: 100;
     pointer-events: auto;
@@ -229,7 +230,7 @@
 
   .home h1 {
     background: transparent;
-    font-size: 36px;
+    font-size: 2.25rem;
   }
 
   .theme-header h1 a,
@@ -249,7 +250,7 @@
   }
 
   .theme-header h1 a.menu-toggle {
-    font-size: 28px;
+    font-size: 1.75rem;
     width: 60px;
     display: inline-block;
     text-align: center;
@@ -260,7 +261,7 @@
     position: relative;
     padding: 10px 0 0 0;
     margin: 0;
-    font-size: 24px;
+    font-size: 1.5rem;
     list-style: none;
     text-align: right;
   }
