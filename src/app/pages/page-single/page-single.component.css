@@ -9,23 +9,33 @@
   position: absolute;
   right: 0;
   left: 0;
-  bottom: 30px;
+  top: 50%;
+  transform: translateY(-50%);
   margin: 0;
   font-size: 40px;
   text-align: center;
-  line-height: 1em;
   font-weight: 100;
-  color: #000;
+  color: #fff;
 }
 .theme-hero__image {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  bottom: 110px;
+  bottom: 60px;
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
+}
+.theme-hero__image::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
 }
 
 .theme-page {
