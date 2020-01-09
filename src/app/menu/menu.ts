@@ -1,17 +1,17 @@
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Observable} from "rxjs/Observable";
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 export class Menu {
 
-  ID:number;
-  slug:string;
-  items:any[];
-  mediaCategoryTerms:any;
-  activeParent:string;
+  ID: number;
+  slug: string;
+  items: any[];
+  mediaCategoryTerms: any;
+  activeParent: string;
 
-  private _activeTerm:BehaviorSubject<string> = new BehaviorSubject(null);
+  private _activeTerm: BehaviorSubject<string> = new BehaviorSubject(null);
 
-  public set activeTerm(slug:string) {
+  public set activeTerm(slug: string) {
     this._activeTerm.next(slug);
   }
 
@@ -19,7 +19,7 @@ export class Menu {
     return this._activeTerm.value;
   }
 
-  public getActiveTermObservable():Observable<string>{
+  public getActiveTermObservable(): Observable<string> {
     return this._activeTerm.asObservable();
   }
 

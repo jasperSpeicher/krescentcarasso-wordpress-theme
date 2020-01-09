@@ -39,7 +39,7 @@ export class MenuService {
       .flatMap((res: Response) => {
         let menuRecord: any = null;
         res.json().forEach((record) => {
-          if (record.slug == slug) {
+          if (record.slug === slug) {
             menuRecord = record;
           }
         });
@@ -49,17 +49,28 @@ export class MenuService {
           return null;
         }
       })
-      .flatMap((menuRes: Response) => {
-        return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
-          .map((categoryRes: Response) => {
-            // keep the menu so that it can be accessed by components
-            this.menu = new Menu();
-            Object.assign(this.menu, menuRes.json());
-            this.menu.mediaCategoryTerms = categoryRes.json();
-            this.menu.activeParent = null;
-            return this.menu;
-          })
-      })
+      // temporarily skip categories
+      .map((menuRes: Response) => {
+        // keep the menu so that it can be accessed by components
+        const menu = new Menu();
+        const menuData = menuRes.json();
+        Object.assign(menu, menuData);
+        menu.activeParent = null;
+        this.menu = menu
+        return menu;
+      });
+
+      // .flatMap((menuRes: Response) => {
+      //   return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
+      //     .map((categoryRes: Response) => {
+      //       // keep the menu so that it can be accessed by components
+      //       this.menu = new Menu();
+      //       Object.assign(this.menu, menuRes.json());
+      //       this.menu.mediaCategoryTerms = categoryRes.json();
+      //       this.menu.activeParent = null;
+      //       return this.menu;
+      //     })
+      // })
   }
 
 }

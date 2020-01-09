@@ -1,6 +1,4 @@
-<div class="theme-header {{pageClasses}}"
-     [class.theme-header--menu-visible]="menuVisible"
-     [class.theme-header--menu-open]="menu?.activeParent"
+<div [ngClass]="headerClasses"
      [style.display]="{ none: menu==null, block: menu!=null }">
 
   <div class="container-fluid">

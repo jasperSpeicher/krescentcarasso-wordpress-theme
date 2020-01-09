@@ -1,54 +1,19 @@
 .theme-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  height: 60px;
+  height: 120px;
   overflow: hidden;
-  background-color: transparent;
+  background-color: #fff;
   /*transition: height .4s ease-out;*/
   font-weight: 100;
   pointer-events: none;
-}
-.theme-header.theme-header--menu-visible {
-  bottom: 0;
-  height: auto;
+  transition: height 400ms ease;
 }
 
-.theme-header .container-fluid {
-  position: absolute;
-  padding: 60px 80px;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-.theme-header .container-fluid:before {
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  background: rgba(255, 255, 255, 0.8);
-  /* background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
-}
-
-.theme-header .theme-menu {
-  opacity: 0;
-  transition: opacity 400ms 0ms ease;
-}
-.theme-header--menu-visible .theme-menu {
-  opacity: 1;
-  transition: opacity 800ms 100ms ease;
-}
-.theme-header .container-fluid:before {
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
-.theme-header--menu-visible .container-fluid:before {
-  opacity: 1;
+.theme-header.theme-header--menu-open {
+  height: 180px;
 }
 
 .theme-header h1 {
@@ -56,21 +21,15 @@
   top: 0;
   right: 0;
   left: 0;
-  height: 60px;
   padding-top: 10px;
-  margin: 0;
-  font-size: 24px;
+  margin: 0 auto;
+  font-size: 36px;
   /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
   font-weight: 100;
   pointer-events: auto;
   /* background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
-  background: #fff;
-  text-align: right;
-}
-
-.home h1 {
-  background: transparent;
-  font-size: 36px;
+  text-align: center;
+  text-transform: lowercase;
 }
 
 .theme-header h1 a,
@@ -80,7 +39,6 @@
   cursor: pointer;
   padding: 0;
   text-decoration: none;
-  text-align: right;
   color: #000;
 }
 
@@ -90,40 +48,50 @@
 }
 
 .theme-header h1 a.menu-toggle {
-  font-size: 28px;
-  width: 60px;
-  display: inline-block;
-  text-align: center;
-  user-select: none;
+  display: none;
 }
 
 .theme-menu {
   position: relative;
-  padding: 10px 0 0 0;
+  padding: 60px 0 0 0;
   margin: 0;
   font-size: 24px;
   list-style: none;
-  text-align: right;
+  text-align: center;
 }
 
 .theme-menu li {
-  display: block;
-  padding: 0;
-  margin: 0 0 0 20px;
+  display: inline-block;
+  padding: 10px;
 }
 
-.theme-menu > li {
+.theme-menu > li > a {
+  position: relative;
+}
+
+.theme-menu > li > a::after {
+  position: absolute;
+  content: ' ';
+  display: block;
+  width: 1px;
+  right: -5px;
+  top: 5px;
+  bottom: 0;
+  background: #000;
+}
+
+.theme-menu > li:last-child a::after {
+  display: none;
 }
 
 .theme-menu li a,
 .theme-menu li a:active,
 .theme-menu li a:visited {
-  display: block;
+  display: inline;
   text-transform: lowercase;
   cursor: pointer;
   padding: 2px 0 0 0;
   text-decoration: none;
-  text-align: right;
   color: #000;
 }
 
@@ -131,8 +99,8 @@
 .theme-menu li a.active {
   text-decoration: none;
   color: #000;
-  opacity: 1 !important;
 }
+
 .theme-menu li ul a:active,
 .theme-menu li ul a.active {
   font-weight: 400;
@@ -144,35 +112,33 @@
 }
 
 .theme-menu li div ul {
-  position: relative;
+  position: absolute;
+  top: 110px;
+  left: 0;
+  right: 0;
   padding: 0 15px;
   display: block;
   height: 0;
   opacity: 0;
-  transition: opacity 0s 0s ease, height 1s 1s ease;
+  transition: none;
   pointer-events: none;
+  background: #fff;
 }
 
 .theme-menu li div ul.active {
   opacity: 1;
   height: auto;
-  transition: opacity 1s 0s ease, height 0s 1s ease;
+  transition: none;
   pointer-events: auto;
-}
-
-.theme-menu li div ul.active::before {
-  content: ' ';
-  display: block;
-  position: absolute;
-  right: 1px;
-  top: 6px;
-  bottom: 10px;
-  width: 1px;
-  background: #000;
 }
 
 .theme-menu li div ul a {
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms 400ms ease;
+}
+.theme-menu li div ul.active a {
+  opacity: 1;
 }
 
 .theme-menu li div ul.active a {
@@ -183,6 +149,201 @@
   pointer-events: auto;
 }
 
-/*.theme-header--menu-open .theme-menu > li > a {*/
+/* TODO make the mobile styles fully override */
+
+@media (max-width: 768px){
+  .theme-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 60px;
+    overflow: hidden;
+    background-color: transparent;
+    /*transition: height .4s ease-out;*/
+    font-weight: 100;
+    pointer-events: none;
+  }
+
+  .theme-header.theme-header--menu-visible {
+    bottom: 0;
+    height: auto;
+  }
+
+  .theme-header .container-fluid {
+    position: absolute;
+    padding: 60px 80px;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .theme-header .container-fluid:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.8);
+    /* background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
+  }
+
+  .theme-header .theme-menu {
+    opacity: 0;
+    transition: opacity 400ms 0ms ease;
+  }
+
+  .theme-header--menu-visible .theme-menu {
+    opacity: 1;
+    transition: opacity 800ms 100ms ease;
+  }
+
+  .theme-header .container-fluid:before {
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .theme-header--menu-visible .container-fluid:before {
+    opacity: 1;
+  }
+
+  .theme-header h1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 60px;
+    padding-top: 10px;
+    margin: 0;
+    font-size: 24px;
+    /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
+    font-weight: 100;
+    pointer-events: auto;
+    /* background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
+    background: #fff;
+    text-align: right;
+  }
+
+  .home h1 {
+    background: transparent;
+    font-size: 36px;
+  }
+
+  .theme-header h1 a,
+  .theme-header h1 a:active,
+  .theme-header h1 a:visited {
+    display: inline;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+    text-align: right;
+    color: #000;
+  }
+
+  .theme-header h1 a:active {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .theme-header h1 a.menu-toggle {
+    font-size: 28px;
+    width: 60px;
+    display: inline-block;
+    text-align: center;
+    user-select: none;
+  }
+
+  .theme-menu {
+    position: relative;
+    padding: 10px 0 0 0;
+    margin: 0;
+    font-size: 24px;
+    list-style: none;
+    text-align: right;
+  }
+
+  .theme-menu li {
+    display: block;
+    padding: 0;
+    margin: 0 0 0 20px;
+  }
+
+  .theme-menu > li {
+  }
+
+  .theme-menu li a,
+  .theme-menu li a:active,
+  .theme-menu li a:visited {
+    display: block;
+    text-transform: lowercase;
+    cursor: pointer;
+    padding: 2px 0 0 0;
+    text-decoration: none;
+    text-align: right;
+    color: #000;
+  }
+
+  .theme-menu li a:active,
+  .theme-menu li a.active {
+    text-decoration: none;
+    color: #000;
+    opacity: 1 !important;
+  }
+
+  .theme-menu li ul a:active,
+  .theme-menu li ul a.active {
+    font-weight: 400;
+  }
+
+  .theme-menu li div {
+    /*overflow: hidden;*/
+    pointer-events: none;
+  }
+
+  .theme-menu li div ul {
+    position: relative;
+    padding: 0 15px;
+    display: block;
+    height: 0;
+    opacity: 0;
+    transition: opacity 0s 0s ease, height 1s 1s ease;
+    pointer-events: none;
+  }
+
+  .theme-menu li div ul.active {
+    opacity: 1;
+    height: auto;
+    transition: opacity 1s 0s ease, height 0s 1s ease;
+    pointer-events: auto;
+  }
+
+  .theme-menu li div ul.active::before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    right: 1px;
+    top: 6px;
+    bottom: 10px;
+    width: 1px;
+    background: #000;
+  }
+
+  .theme-menu li div ul a {
+    pointer-events: none;
+  }
+
+  .theme-menu li div ul.active a {
+    pointer-events: auto;
+  }
+
+  .theme-menu li > a {
+    pointer-events: auto;
+  }
+
+  /*.theme-header--menu-open .theme-menu > li > a {*/
   /*opacity: 0.3;*/
-/*}*/
+  /*}*/
+}

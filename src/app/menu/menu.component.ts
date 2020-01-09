@@ -52,6 +52,32 @@ export class MenuComponent implements OnInit {
     this.menu.activeTerm = term.slug;
   }
 
+  get menuOpen() {
+    if (!this.menu) return false;
+    const itemActiveWithChildren = i => {
+      return i.object_slug === this.menu.activeParent && i.children;
+    };
+    const activeItemsWithChildren = this.menu.items.filter(itemActiveWithChildren);
+    console.log({activeItemsWithChildren, activeParent: this.menu.activeParent});
+    return this.menu &&
+      this.menu.activeParent &&
+      activeItemsWithChildren.length > 0;
+  }
+
+  get headerClasses() {
+    const pageClasses = this.pageClasses.split(' ');
+    const classes = pageClasses.reduce((obj, c) => {
+      obj[c] = true;
+      return obj;
+    }, {});
+    Object.assign(classes, {
+      'theme-header': true,
+      'theme-header--menu-visible': this.menuVisible,
+      'theme-header--menu-open': this.menuOpen
+    });
+    return classes;
+  }
+
   ngOnInit() {
     this.getMenu();
   }
