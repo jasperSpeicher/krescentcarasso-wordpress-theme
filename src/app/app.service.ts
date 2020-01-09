@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 
-const baseUrl = 'http://krescentcarasso.jasperspeicher.codes'; //window ? window.location.origin : 'http://krescentcarasso.jasperspeicher.codes';
+const baseUrl = window ? window.location.origin : 'http://krescentcarasso.jasperspeicher.codes';
 
 @Injectable()
 export class AppService {
