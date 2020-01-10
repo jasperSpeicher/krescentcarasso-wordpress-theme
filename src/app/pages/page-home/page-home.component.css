@@ -7,13 +7,14 @@ h2{
 
 .theme-hero__image {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 120px;
+  bottom: 40px;
+  left: 40px;
+  right: 40px;
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
+  background-color: #777;
 }
 
 .theme-page-body{
