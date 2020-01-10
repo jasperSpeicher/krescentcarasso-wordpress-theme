@@ -3,7 +3,7 @@
   <div *ngIf="!page.acf?.gallery" class="theme-page-body container-fluid">
 
     <!--hero image-->
-    <div class="theme-hero">
+    <div class="theme-hero" [class.theme-hero--fade-in]="fadeIn">
       <div *ngIf="page.acf?.hero_image" class="theme-hero__image"
            [style.background-image]="'url('+page.acf.hero_image?.url+')'">
       </div>

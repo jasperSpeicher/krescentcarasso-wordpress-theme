@@ -12,10 +12,12 @@
   top: 50%;
   transform: translateY(-50%);
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 4rem;
   text-align: center;
   font-weight: 100;
   color: #fff;
+  opacity: 1;
+  transition: opacity 2s ease;
 }
 .theme-hero__image {
   position: absolute;
@@ -26,6 +28,7 @@
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
+  background-color: #777;
 }
 .theme-hero__image::before {
   content: ' ';
@@ -36,9 +39,15 @@
   left: 0;
   bottom: 0;
   background: rgba(0,0,0,0.8);
+  transition: background-color 0s;
 }
+.theme-hero--fade-in .theme-hero__image::before {
+  background: rgba(0,0,0,0);
+  transition: background-color 2s ease;
 
-.theme-page {
+}
+.theme-hero--fade-in h2 {
+  opacity: 0;
 }
 
 .theme-page-body {

@@ -1,11 +1,11 @@
-import { Component, ViewChild, Input, OnInit, OnDestroy, AfterViewChecked, OnChanges } from '@angular/core';
+import { Component, ViewChild, Input, OnInit, OnDestroy, AfterViewChecked, OnChanges, HostListener } from '@angular/core';
 import { Page } from '../page';
 import { PagesService } from '../pages.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { MenuService } from "../../menu/menu.service";
-import { Menu } from "../../menu/menu";
+import { MenuService } from '../../menu/menu.service';
+import { Menu } from '../../menu/menu';
 import { Observable } from 'rxjs/Observable';
-import { PackeryComponent } from "../../packery/packery.component";
+import { PackeryComponent } from '../../packery/packery.component';
 
 @Component({
   selector: 'app-page-single',
@@ -13,18 +13,27 @@ import { PackeryComponent } from "../../packery/packery.component";
   styleUrls: ['./page-single.component.css'],
   providers: [PagesService]
 })
-export class PageSingleComponent implements OnInit, OnChanges {
+export class PageSingleComponent implements OnInit, OnDestroy {
 
-  @ViewChild(PackeryComponent) imageGrid:PackeryComponent;
-  page:Page;
-  menu:Menu = null;
-  images:Array<any> = null;
-  termSlug:string = null;
-  mediaObjects:any = null;
+  @ViewChild(PackeryComponent) imageGrid: PackeryComponent;
+  page: Page;
+  menu: Menu = null;
+  images: Array<any> = null;
+  termSlug: string = null;
+  mediaObjects: any = null;
+  fadeIn = false;
 
-  constructor(private pagesService:PagesService, private route:ActivatedRoute, private menuService:MenuService) {
+  scrollPos = 0;
+
+  constructor(private pagesService: PagesService, private route: ActivatedRoute, private menuService: MenuService) {
   }
 
+  // @HostListener('window:scroll', ['$event']) // for window scroll events
+  // onScroll(event) {
+  //   console.log('scroll', this.scrollPos);
+  //   console.log(event.target)
+  // }
+  //
   getPage(parentSlug, termSlug?) {
 
     this.pagesService
@@ -32,31 +41,32 @@ export class PageSingleComponent implements OnInit, OnChanges {
       .subscribe(res => {
         this.page = res[0] as Page;
         this.images = this.page.acf.gallery;
+        this.fadeIn = false;
+        setTimeout(() => { this.fadeIn = true; }, 2000);
         if (this.images) {
-          this.populateMediaCategoryTerms().subscribe(()=> {
+          this.populateMediaCategoryTerms().subscribe(() => {
             // ...and use the slug for the media category
             if (termSlug !== undefined) {
               this.filterGallery(termSlug);
             }
-
           });
         }
       });
 
   }
 
-  populateMediaCategoryTerms():Observable<any> {
+  populateMediaCategoryTerms(): Observable<any> {
     //FIXME what about when this is still loading?
     var imagesById = {};
-    this.images.forEach((image:any)=> {
+    this.images.forEach((image: any) => {
       imagesById[image.id] = image;
     });
-    var obs:Observable<any> = this.pagesService.getMediaObjects()
+    var obs: Observable<any> = this.pagesService.getMediaObjects()
       .map(objects => {
         this.mediaObjects = objects;
-        objects.forEach((object)=> {
+        objects.forEach((object) => {
           imagesById[object.id].mediaCategoryTerms = object['media_category_terms']
-            .map((term:any)=>term.slug);
+            .map((term: any) => term.slug);
         });
       });
     obs.subscribe();
@@ -65,7 +75,7 @@ export class PageSingleComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
-    this.route.params.forEach((params:Params) => {
+    this.route.params.forEach((params: Params) => {
 
       let parent = params['parent'];
       let slug = params['slug'];
@@ -81,7 +91,7 @@ export class PageSingleComponent implements OnInit, OnChanges {
           //      this.menu = menu;
           //    }
           //  });
-        }else{
+        } else {
           if (slug !== undefined) {
             this.filterGallery(slug);
           }
@@ -90,34 +100,32 @@ export class PageSingleComponent implements OnInit, OnChanges {
         // otherwise just show the page
         if (slug !== undefined) {
           this.page = null;
-          this.getPage(slug)
+          this.getPage(slug);
         }
       }
 
     });
   }
 
-  filterGallery(termSlug:string) {
+  ngOnDestroy() {
+    this.fadeIn = false;
+  }
+
+  filterGallery(termSlug: string) {
     console.log('filtering grid ' + termSlug);
     this.termSlug = termSlug;
     if (this.images) {
-      if(termSlug == 'all'){
-        this.images.forEach((image:any)=> {
+      if (termSlug == 'all') {
+        this.images.forEach((image: any) => {
           image.hidden = false;
         });
-      }else{
-        this.images.forEach((image:any)=> {
+      } else {
+        this.images.forEach((image: any) => {
           image.hidden = image.mediaCategoryTerms ? image.mediaCategoryTerms.indexOf(this.termSlug) < 0 : true;
         });
       }
       this.imageGrid.updateVisibleImages();
     }
   }
-
-
-  ngOnChanges() {
-    console.log('onchanges');
-  }
-
 }
 
