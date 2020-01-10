@@ -102,9 +102,8 @@
   color: #000;
 }
 
-.theme-menu li ul a:active,
 .theme-menu li ul a.active {
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .theme-menu li div {
