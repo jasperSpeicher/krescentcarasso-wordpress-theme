@@ -29,6 +29,11 @@
   background-position-x: center;
   background-position-y: center;
   background-color: #777;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+.theme-hero__image--loaded {
+  opacity: 1;
 }
 .theme-hero__image::before {
   content: ' ';
@@ -76,3 +81,6 @@
   padding-bottom: 10px;
 }
 
+.packery-container {
+  padding-top: 250px;
+}

@@ -24,9 +24,12 @@ export class MenuService {
 
   getMenuObservable(): Observable<Menu> {
     if (!this.menu) {
-      this.fetchMenu(this.slug).subscribe((menu: Menu) => {
-        this._menu.next(menu);
-      });
+      this.fetchMenu(this.slug).subscribe(
+        () => {
+          this._menu.next(this.menu);
+        }, () => {
+          this._menu.next(this.menu);
+        });
     }
     return this._menu.asObservable()
       .filter((menu: Menu) => {
@@ -56,21 +59,17 @@ export class MenuService {
         const menuData = menuRes.json();
         Object.assign(menu, menuData);
         menu.activeParent = null;
-        this.menu = menu
+        this.menu = menu;
         return menu;
+      })
+      .flatMap((menu: Menu) => {
+        return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
+          .map((categoryRes: Response) => {
+            this.menu.mediaCategoryTerms = categoryRes.json();
+            this.menu.activeParent = null;
+            return this.menu;
+          });
       });
-
-      // .flatMap((menuRes: Response) => {
-      //   return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
-      //     .map((categoryRes: Response) => {
-      //       // keep the menu so that it can be accessed by components
-      //       this.menu = new Menu();
-      //       Object.assign(this.menu, menuRes.json());
-      //       this.menu.mediaCategoryTerms = categoryRes.json();
-      //       this.menu.activeParent = null;
-      //       return this.menu;
-      //     })
-      // })
   }
 
 }

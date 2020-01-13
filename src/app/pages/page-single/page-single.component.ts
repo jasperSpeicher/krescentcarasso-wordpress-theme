@@ -22,6 +22,7 @@ export class PageSingleComponent implements OnInit, OnDestroy {
   termSlug: string = null;
   mediaObjects: any = null;
   fadeIn = false;
+  heroSrc = null;
 
   scrollPos = 0;
 
@@ -35,14 +36,25 @@ export class PageSingleComponent implements OnInit, OnDestroy {
   // }
   //
   getPage(parentSlug, termSlug?) {
-
+    console.log('getPage')
     this.pagesService
       .getPage(parentSlug)
       .subscribe(res => {
+        console.log('getPage sub')
+
         this.page = res[0] as Page;
         this.images = this.page.acf.gallery;
+        console.log(this.images);
         this.fadeIn = false;
-        setTimeout(() => { this.fadeIn = true; }, 2000);
+        this.heroSrc = null;
+        const preload = new Image();
+        preload.addEventListener('load', () => {
+          this.heroSrc = preload.src;
+        });
+        preload.src = this.page.acf.hero_image.url;
+        setTimeout(() => {
+          this.fadeIn = true;
+        }, 2000);
         if (this.images) {
           this.populateMediaCategoryTerms().subscribe(() => {
             // ...and use the slug for the media category
@@ -57,19 +69,24 @@ export class PageSingleComponent implements OnInit, OnDestroy {
 
   populateMediaCategoryTerms(): Observable<any> {
     //FIXME what about when this is still loading?
-    var imagesById = {};
+
+    const imagesById = {};
     this.images.forEach((image: any) => {
       imagesById[image.id] = image;
     });
-    var obs: Observable<any> = this.pagesService.getMediaObjects()
+    const obs: Observable<any> = this.pagesService.getMediaObjects()
       .map(objects => {
+        console.log('populateMediaCategoryTerms', objects );
+
         this.mediaObjects = objects;
         objects.forEach((object) => {
-          imagesById[object.id].mediaCategoryTerms = object['media_category_terms']
-            .map((term: any) => term.slug);
+          if (imagesById[object.id]) {
+            console.log('mediaCategoryTerms', imagesById[object.id].mediaCategoryTerms);
+            imagesById[object.id].mediaCategoryTerms = object['media_category_terms']
+              .map((term: any) => term.slug);
+          }
         });
       });
-    obs.subscribe();
     return obs;
   }
 
@@ -115,16 +132,19 @@ export class PageSingleComponent implements OnInit, OnDestroy {
     console.log('filtering grid ' + termSlug);
     this.termSlug = termSlug;
     if (this.images) {
-      if (termSlug == 'all') {
+      if (termSlug === 'all') {
         this.images.forEach((image: any) => {
           image.hidden = false;
         });
       } else {
-        this.images.forEach((image: any) => {
+        this.images.forEach((image: any, i: number) => {
           image.hidden = image.mediaCategoryTerms ? image.mediaCategoryTerms.indexOf(this.termSlug) < 0 : true;
+          console.log(i, {terms: image.mediaCategoryTerms});
         });
       }
-      this.imageGrid.updateVisibleImages();
+      if (this.imageGrid) {
+        this.imageGrid.updateVisibleImages();
+      }
     }
   }
 }

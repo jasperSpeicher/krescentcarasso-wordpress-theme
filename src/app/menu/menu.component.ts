@@ -26,17 +26,18 @@ export class MenuComponent implements OnInit {
       .getMenuObservable()
       .subscribe((menu: Menu) => {
         this.menu = menu;
-        // this.parseUrl(this.router.url);
+        this.parseUrl();
         this.router.events
           .filter(event => event instanceof NavigationStart && this.menu !== null)
           .forEach((event: NavigationStart) => {
-            this.menu.activeParent = null;
+            this.parseUrl();
           });
       });
   }
 
-  parseUrl(url: string) {
-    this.menu.activeParent = url.split('/')[1];
+  parseUrl() {
+    const page = this.router.url.split('/')[1];
+    this.menu.activeParent = page === 'explore' ? page : null;
   }
 
   path(parentSlug: string, childSlug: string) {
@@ -57,7 +58,7 @@ export class MenuComponent implements OnInit {
     };
     return this.menu &&
       this.menu.activeParent &&
-      this.menu.items.filter(itemActiveWithChildren).length > 0;
+      (this.menu.items.filter(itemActiveWithChildren).length > 0 || this.menu.activeParent === 'explore');
   }
 
   get headerClasses() {

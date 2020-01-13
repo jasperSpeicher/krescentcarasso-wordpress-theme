@@ -1,24 +1,24 @@
 <div *ngIf="page" class="theme-page">
 
-  <div *ngIf="!page.acf?.gallery" class="theme-page-body container-fluid">
+  <!--[style.width]="image.sizes['medium_large-width']"-->
+  <!--[style.height]="image.sizes['medium_large-height']"-->
+
+  <!--imageGrid-->
+  <div *ngIf="images" class="packery-container">
+    <div [packery]="images">
+    </div>
+  </div>
+
+  <div *ngIf="!images" class="theme-page-body container-fluid">
 
     <!--hero image-->
     <div class="theme-hero" [class.theme-hero--fade-in]="fadeIn">
-      <div *ngIf="page.acf?.hero_image" class="theme-hero__image"
-           [style.background-image]="'url('+page.acf.hero_image?.url+')'">
+      <div *ngIf="page.acf?.hero_image && heroSrc" class="theme-hero__image"
+           [class.theme-hero__image--loaded]="!!heroSrc"
+           [style.background-image]="'url('+heroSrc+')'">
       </div>
       <h2>{{ page.title.rendered }}</h2>
     </div>
-
-    <!--[style.width]="image.sizes['medium_large-width']"-->
-    <!--[style.height]="image.sizes['medium_large-height']"-->
-
-    <!--imageGrid-->
-    <div *ngIf="page.acf?.gallery">
-      <div [packery]="images">
-      </div>
-    </div>
-
 
     <div [innerHTML]="page.content.rendered" class="theme-body-text">
     </div>

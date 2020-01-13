@@ -30,7 +30,7 @@ function slug_register_media_categories() {
  *
  * @return mixed
  */
-function slug_get_media_category_terms( $object, $field_name, $request ) {
+function slug_get_media_category_terms( $object ) {
       return get_terms( 'category_media' );
 }
 
