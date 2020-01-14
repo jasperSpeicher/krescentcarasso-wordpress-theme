@@ -36,15 +36,11 @@ export class PageSingleComponent implements OnInit, OnDestroy {
   // }
   //
   getPage(parentSlug, termSlug?) {
-    console.log('getPage')
     this.pagesService
       .getPage(parentSlug)
       .subscribe(res => {
-        console.log('getPage sub')
-
         this.page = res[0] as Page;
         this.images = this.page.acf.gallery;
-        console.log(this.images);
         this.fadeIn = false;
         this.heroSrc = null;
         const preload = new Image();
@@ -76,12 +72,10 @@ export class PageSingleComponent implements OnInit, OnDestroy {
     });
     const obs: Observable<any> = this.pagesService.getMediaObjects()
       .map(objects => {
-        console.log('populateMediaCategoryTerms', objects );
 
         this.mediaObjects = objects;
         objects.forEach((object) => {
           if (imagesById[object.id]) {
-            console.log('mediaCategoryTerms', imagesById[object.id].mediaCategoryTerms);
             imagesById[object.id].mediaCategoryTerms = object['media_category_terms']
               .map((term: any) => term.slug);
           }
@@ -129,7 +123,6 @@ export class PageSingleComponent implements OnInit, OnDestroy {
   }
 
   filterGallery(termSlug: string) {
-    console.log('filtering grid ' + termSlug);
     this.termSlug = termSlug;
     if (this.images) {
       if (termSlug === 'all') {
@@ -139,7 +132,6 @@ export class PageSingleComponent implements OnInit, OnDestroy {
       } else {
         this.images.forEach((image: any, i: number) => {
           image.hidden = image.mediaCategoryTerms ? image.mediaCategoryTerms.indexOf(this.termSlug) < 0 : true;
-          console.log(i, {terms: image.mediaCategoryTerms});
         });
       }
       if (this.imageGrid) {

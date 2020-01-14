@@ -36,11 +36,9 @@ export class PagesService {
   }
 
   getMediaObjects(): Observable<any> {
-    console.log('getMediaObjects');
     const pageSize = 100;
     let objects = [];
     let makeReq = (url, page?) => {
-      console.log('makeReq', url, page);
       let urlObj: URL = new URL(url);
       const params = {per_page: pageSize};
       if (page) {
@@ -50,7 +48,6 @@ export class PagesService {
         .get(`${urlObj.protocol}//${urlObj.host}${urlObj.pathname}`, {params})
         .flatMap((res: Response) => {
           objects = objects.concat(res.json());
-          console.log('page ' + res.url + ' ids found', res.json().map(o => o.id).join(','));
           let pages = parseInt(res.headers.get('x-wp-totalpages'), 10);
           if (!page && pages > 1) {
             const reqs = [];
@@ -66,7 +63,6 @@ export class PagesService {
         });
     };
     let result = makeReq(this._wpBase + 'wp/v2/media').map(r => {
-      console.log('req results', r);
       return r;
     });
     return result;

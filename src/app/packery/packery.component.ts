@@ -43,17 +43,14 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
 
   safeImageGridShiftLayout() {
-    console.log('safe imageGrid shift layout');
     this._packery.shiftLayout();
   }
 
   safeImageGridFitLayout(element) {
-    console.log('safe imageGrid fit layout');
     this._packery.fit(element);
   }
 
   ngOnChanges() {
-    console.log('images changed in packery');
   }
 
   ngAfterViewInit() {
@@ -63,13 +60,11 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   }
 
   updateVisibleImages() {
-    console.log('start', JSON.stringify(this._images.map(i => ({hidden: i.hidden?1:0, removed: i.removed?1:0}) )));
     if (this._packery) {
       document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
       this._images.forEach((image) => {
         if (image.hidden) {
           if (!image.removed) {
-            image.element.classList.remove('theme-image-grid__image--large');
             this._packery.remove(image.element);
             image.removed = true;
             this.safeImageGridShiftLayout();
@@ -83,8 +78,6 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
         }
       });
     }
-    console.log('end', JSON.stringify(this._images.map(i => ({hidden: i.hidden?1:0, removed: i.removed?1:0}) )));
-
   }
 
   initPackery() {
@@ -94,7 +87,6 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     this._packery && this._packery.destroy();
 
     //init packery
-    console.log('init packery');
     this._packery = new Packery(
       this._imageGridElement, {
         itemSelector: '.theme-image-grid__image',
