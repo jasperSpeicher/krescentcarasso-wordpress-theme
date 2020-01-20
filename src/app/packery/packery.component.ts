@@ -107,7 +107,6 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
     //Packery.layoutOnViewChecked = true;
 
-    let _self = this;
     this._imageGridElement.addEventListener('click', (event: any) => {
       const rect = event.target.getBoundingClientRect();
       setTimeout(() => {
