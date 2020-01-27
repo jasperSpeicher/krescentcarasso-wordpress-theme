@@ -7,8 +7,6 @@ import { Menu } from '../../menu/menu';
 import { Observable } from 'rxjs/Observable';
 import { PackeryComponent } from '../../packery/packery.component';
 
-const imagesLoaded = require('imagesloaded');
-
 @Component({
   selector: 'app-page-single',
   templateUrl: './page-single.component.html',
@@ -20,6 +18,8 @@ export class PageSingleComponent implements OnInit, OnDestroy {
   page: Page;
   menu: Menu = null;
   images: Array<any> = null;
+  imagesByFours = null;
+  imageRowStyles = [];
   termSlug: string = null;
   mediaObjects: any = null;
   fadeIn = false;
@@ -42,6 +42,7 @@ export class PageSingleComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.page = res[0] as Page;
         this.images = this.page.acf.gallery;
+        this.imagesByFours = this.getImagesByFours();
         this.fadeIn = false;
         this.heroSrc = null;
         setTimeout(() => this.positionImageRows(), 1000);
@@ -142,61 +143,52 @@ export class PageSingleComponent implements OnInit, OnDestroy {
     }
   }
 
-  get imagesByFours() {
-    return this.images.reduce((groups, image, index) => {
+  getImagesByFours() {
+    return this.images ? this.images.reduce((groups, image, index) => {
       if (groups[groups.length - 1].length === 4) {
         groups.push([]);
       }
       groups[groups.length - 1].push(image);
       return groups;
-    }, [[]]);
+    }, [[]]) : [];
   }
 
   positionImageRows() {
-    var padding = 10;
-    var maxHeight = 450;
-    var resize = function () {
-      var rows = Array.from(document.querySelectorAll('.image-rows__row'));
-      rows.forEach(function (rowElement: any) {
-        var rowWidth = rowElement.clientWidth;
-        var imageContainers = Array.from(rowElement.querySelectorAll('.image-rows__image'));
-        var images = Array.from(rowElement.querySelectorAll('img'));
-        var heights = [];
-        var widths = [];
-        images.forEach(function (image: any, i) {
-          image.style = '';
-          widths[i] = image.clientWidth;
-          heights[i] = image.clientHeight;
-        });
-        var imagesWidth = widths.reduce(
-          function (sum, w, i) {
-            return sum + (w / (heights[i]));
-          }, 0);
-        var ratio = (rowWidth - (images.length - 1) * padding) / imagesWidth;
-        ratio = Math.min(ratio, maxHeight);
-        imageContainers.forEach(function (image: any, i) {
-          image.style.width = ratio * widths[i] / heights[i] + 'px';
-          image.style.left = widths.slice(0, i).reduce(function (sum, w, j) {
-            return sum + (padding + ratio * widths[j] / heights[j]);
-          }, 0) + 'px';
-          image.style.height = ratio + 'px';
-        });
-        rowElement.style.height = padding + ratio + 'px';
+    const padding = 20;
+    const maxHeight = 450;
+    this.imageRowStyles = [];
+    this.imagesByFours.forEach((rowImages: any[]) => {
+      let rowWidth = window.innerWidth;
+      let heights = [];
+      let widths = [];
+      let styles: any = {images: [], row: {}};
+      this.imageRowStyles.push(styles);
+      rowImages.forEach((image: any, i) => {
+        widths[i] = image.sizes['large-width'];
+        heights[i] = image.sizes['large-height'];
       });
-    }
-
-    var loaded = false;
-    console.log(imagesLoaded);
-    imagesLoaded(document.querySelector('.image-rows'), function () {
-      loaded = true;
-      resize();
+      let imagesWidth = widths.reduce(
+        (sum, w, i) => {
+          return sum + (w / (heights[i]));
+        }, 0);
+      let ratio = (rowWidth - (rowImages.length - 1) * padding) / imagesWidth;
+      ratio = Math.min(ratio, maxHeight);
+      rowImages.forEach((image: any, i) => {
+        let imageStyles: any = {};
+        imageStyles.width = ratio * widths[i] / heights[i] + 'px';
+        imageStyles.left = widths.slice(0, i).reduce(function (sum, w, j) {
+          return sum + (padding + ratio * widths[j] / heights[j]);
+        }, 0) + 'px';
+        imageStyles.height = ratio + 'px';
+        styles.images.push(imageStyles);
+      });
+      styles.row.height = padding + ratio + 'px';
     });
 
-    window.addEventListener('resize', function () {
-      if (loaded) {
-        resize();
-      }
-    });
+
+    // window.addEventListener('resize', () => {
+    //   this.positionImageRows();
+    // });
   }
 }
 

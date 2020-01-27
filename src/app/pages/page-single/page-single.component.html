@@ -8,9 +8,9 @@
     <div [packery]="images">
     </div>
   </div>
-  <div *ngIf="images && page.acf.grid_type==='rows'" class="image-rows">
-    <div *ngFor="let imageRow of imagesByFours" class="image-rows__row">
-      <div *ngFor="let image of imageRow" class="image-rows__image">
+  <div *ngIf="imagesByFours && imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'" class="image-rows">
+    <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row" [ngStyle]="imageRowStyles[rowIndex].row">
+      <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image" [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]">
         <img [src]="image.url">
       </div>
     </div>

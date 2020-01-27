@@ -26,8 +26,8 @@ export class MenuService {
   getMenuObservable(): Observable<Menu> {
     if (!this.menu) {
       this.fetchMenu(this.slug).subscribe(
-        () => {
-          this._menu.next(this.menu);
+        (menu) => {
+          this._menu.next(menu);
         }, () => {
           this._menu.next(this.menu);
         });
@@ -75,8 +75,15 @@ export class MenuService {
         return this.pagesService.getPages().map((pages) => {
           // fixme use media record to get the correct size image for this
           this.menu.items
-            .filter(i => i.object_slug === 'projects')[0].children
-            .forEach(child => child.gridImage = pages.filter(p => p.slug === child.object_slug)[0].acf.grid_image.url);
+            .filter(i => i.object_slug === 'projects' || i.object_slug === 'collections')
+            .forEach((item) => {
+              item.children.forEach((child, i, children) => {
+                let newChild = <any>{};
+                Object.assign(newChild, child);
+                newChild.gridImage = pages.filter(p => p.slug === child.object_slug)[0].acf.grid_image.url;
+                children[i] = newChild;
+              });
+            });
           return this.menu;
         });
       });
