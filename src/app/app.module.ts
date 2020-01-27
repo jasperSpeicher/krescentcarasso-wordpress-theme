@@ -14,6 +14,7 @@ import { MenuComponent } from './menu/menu.component';
 import { PackeryComponent } from './packery/packery.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PagesService } from './pages/pages.service';
+import { PageListComponent } from './pages/page-list/page-list.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { PagesService } from './pages/pages.service';
     PageSingleComponent,
     PageHomeComponent,
     MenuComponent,
-    PackeryComponent
+    PackeryComponent,
+    PageListComponent
   ],
   imports: [
     BrowserModule,

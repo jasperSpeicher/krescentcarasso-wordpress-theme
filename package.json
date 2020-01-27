@@ -12,7 +12,7 @@
     "ng": "ng",
     "build": "ng build --sourcemaps=false",
     "build:watch": "npm run build && ng build --watch",
-    "build:prod": "ng build --prod && npm run postbuild",
+    "build:prod": "ng build --prod",
     "deploy": "scp -r ./dist root@jasperspeicher.codes:/var/www/krescentcarasso/wp-content/themes/krescentcarasso-wordpress-theme"
   },
   "private": true,
