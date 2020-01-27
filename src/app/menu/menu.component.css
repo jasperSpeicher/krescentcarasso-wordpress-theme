@@ -188,7 +188,6 @@
   background-color: #333333;
   width: 100%;
   display: block;
-  pointer-events: auto;
 }
 
 .image-grid__item img {
