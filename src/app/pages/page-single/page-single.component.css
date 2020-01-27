@@ -84,3 +84,18 @@
 .packery-container {
   padding-top: 250px;
 }
+
+.image-rows__row {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.image-rows__image{
+  display: block;
+  position: absolute;
+}
+
+img {
+  display: block;
+  width: 100%;
+}

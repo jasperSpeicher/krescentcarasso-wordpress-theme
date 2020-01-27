@@ -1,11 +1,18 @@
-<div *ngIf="page" class="theme-page">
+<div *ngIf="!!page" class="theme-page">
 
   <!--[style.width]="image.sizes['medium_large-width']"-->
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
   <!--imageGrid-->
-  <div *ngIf="images" class="packery-container">
+  <div *ngIf="images && page.acf.grid_type==='columns'" class="packery-container">
     <div [packery]="images">
+    </div>
+  </div>
+  <div *ngIf="images && page.acf.grid_type==='rows'" class="image-rows">
+    <div *ngFor="let imageRow of imagesByFours" class="image-rows__row">
+      <div *ngFor="let image of imageRow" class="image-rows__image">
+        <img [src]="image.url">
+      </div>
     </div>
   </div>
 
@@ -23,7 +30,7 @@
     <div [innerHTML]="page.content.rendered" class="theme-body-text">
     </div>
 
-    <!-- collection -->
+    <!-- collection fields -->
     <div *ngIf="page.acf.collection" class="theme-collection">
       <template ngFor let-layout [ngForOf]="page.acf.collection">
         <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
