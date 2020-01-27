@@ -64,7 +64,8 @@ export class MenuComponent implements OnInit {
   get showGrid() {
     return this.menu &&
       this.menu.activeParent &&
-      this.menu.activeParent === 'projects';
+      this.menu.activeParent === 'projects' ||
+      this.menu.activeParent === 'collections';
   }
 
   get headerClasses() {
