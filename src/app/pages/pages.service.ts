@@ -24,7 +24,7 @@ export class PagesService {
     return (this.pages && Observable.of(this.pages)) ||
       (this.pagesRequest ||
         this.http
-          .get(this._wpBase + 'wp/v2/pages')
+          .get(this._wpBase + 'wp/v2/pages', {params: {per_page: 100}})
           .map((res: Response) => res.json()));
   }
 
@@ -33,7 +33,7 @@ export class PagesService {
       .map(pages => pages.filter(p => p.slug === slug));
   }
 
-  getMediaObjects(): Observable<any> {
+  makePagedRequest(reqUrl): Observable<any> {
     const pageSize = 100;
     let objects = [];
     let makeReq = (url, page?) => {
@@ -53,16 +53,19 @@ export class PagesService {
               reqs.push(makeReq(url, pages--));
             }
             let reqsObs = Observable.forkJoin(reqs).map(r => objects);
-            //reqsObs.subscribe();
+            // reqsObs.subscribe();
             return reqsObs;
           } else {
             return objects;
           }
         });
     };
-    let result = makeReq(this._wpBase + 'wp/v2/media').map(r => {
+    return makeReq(reqUrl).map(r => {
       return r;
     });
-    return result;
+  }
+
+  getMediaObjects(): Observable<any> {
+    return this.makePagedRequest(this._wpBase + 'wp/v2/media');
   }
 }
