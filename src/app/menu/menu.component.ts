@@ -61,6 +61,12 @@ export class MenuComponent implements OnInit {
       (this.menu.items.filter(itemActiveWithChildren).length > 0 || this.menu.activeParent === 'explore');
   }
 
+  get showGrid() {
+    return this.menu &&
+      this.menu.activeParent &&
+      this.menu.activeParent === 'projects';
+  }
+
   get headerClasses() {
     const pageClasses = this.pageClasses.split(' ');
     const classes = pageClasses.reduce((obj, c) => {
@@ -70,7 +76,8 @@ export class MenuComponent implements OnInit {
     Object.assign(classes, {
       'theme-header': true,
       'theme-header--menu-visible': this.menuVisible,
-      'theme-header--menu-open': this.menuOpen
+      'theme-header--menu-open': this.menuOpen,
+      'theme-header--show-grid': this.showGrid
     });
     return classes;
   }

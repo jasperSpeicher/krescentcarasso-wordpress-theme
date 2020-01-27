@@ -11,7 +11,6 @@ import { PackeryComponent } from '../../packery/packery.component';
   selector: 'app-page-single',
   templateUrl: './page-single.component.html',
   styleUrls: ['./page-single.component.css'],
-  providers: [PagesService]
 })
 export class PageSingleComponent implements OnInit, OnDestroy {
 

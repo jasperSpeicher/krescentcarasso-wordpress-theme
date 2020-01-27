@@ -9,6 +9,7 @@ import 'rxjs/add/operator/mergeMap';
 import { Menu } from './menu';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AppService } from '../app.service';
+import { PagesService } from '../pages/pages.service';
 
 @Injectable()
 export class MenuService {
@@ -19,7 +20,7 @@ export class MenuService {
   private _menu: BehaviorSubject<Menu> = new BehaviorSubject(null);
   private slug = 'main-navigation';
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private pagesService: PagesService) {
   }
 
   getMenuObservable(): Observable<Menu> {
@@ -69,6 +70,15 @@ export class MenuService {
             this.menu.activeParent = null;
             return this.menu;
           });
+      })
+      .flatMap((menu: Menu) => {
+        return this.pagesService.getPages().map((pages) => {
+          // fixme use media record to get the correct size image for this
+          this.menu.items
+            .filter(i => i.object_slug === 'projects')[0].children
+            .forEach(child => child.gridImage = pages.filter(p => p.slug === child.object_slug)[0].acf.grid_image.url);
+          return this.menu;
+        });
       });
   }
 

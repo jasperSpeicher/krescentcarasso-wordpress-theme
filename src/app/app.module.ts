@@ -13,6 +13,7 @@ import { MenuComponent } from './menu/menu.component';
 
 import { PackeryComponent } from './packery/packery.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PagesService } from './pages/pages.service';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     Wpng2RoutingModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [PagesService],
   bootstrap: [AppComponent]
 })
 
