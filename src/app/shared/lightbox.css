@@ -1,0 +1,27 @@
+.theme-image-grid__enlarged-image {
+  position: fixed;
+  background: #000;
+}
+
+.theme-image-grid__enlarged-image img {
+  width: 100%;
+  height: auto;
+  display: none;
+}
+
+.theme-image-grid__enlarged-image-backdrop {
+  position: fixed;
+  background: #fff;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 100;
+  transition: opacity 1s ease;
+}
+.theme-image-grid__enlarged-image-backdrop--visible {
+  opacity: 1;
+  pointer-events: auto;
+}

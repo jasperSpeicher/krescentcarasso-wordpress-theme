@@ -1,3 +1,5 @@
+@import "../shared/lightbox.css";
+
 /* ---- grid ---- */
 
 .theme-image-grid {
@@ -42,24 +44,3 @@
   /*transition: all 0.8s;*/
 /*}*/
 
-.theme-image-grid__enlarged-image {
-  position: fixed;
-  background: #000;
-}
-
-.theme-image-grid__enlarged-image img {
-  width: 100%;
-  height: auto;
-  display: none;
-}
-
-.theme-image-grid__enlarged-image-backdrop {
-  position: fixed;
-  background: rgba(255,255,255,0.7);
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: none;
-  z-index: 100;
-}

@@ -1,17 +1,21 @@
-<div *ngIf="!!page" class="theme-page">
+<div class="theme-page">
 
-  <!--[style.width]="image.sizes['medium_large-width']"-->
+<!--[style.width]="image.sizes['medium_large-width']"-->
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
   <!--imageGrid-->
-  <div *ngIf="images && page.acf.grid_type==='columns'" class="packery-container">
-    <div [packery]="images">
+  <div class="image-grids container-fluid">
+    <div *ngIf="page && page.acf.grid_type==='columns'" class="packery-container">
+      <div [packery]="images">
+      </div>
     </div>
-  </div>
-  <div *ngIf="imagesByFours && imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'" class="image-rows">
-    <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row" [ngStyle]="imageRowStyles[rowIndex].row">
-      <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image" [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]">
-        <img [src]="image.url">
+    <div *ngIf="page && imagesByFours && imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'" class="image-rows">
+      <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row"
+           [ngStyle]="imageRowStyles[rowIndex].row">
+        <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image"
+             [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]">
+          <img [src]="image.sizes.large" [attr.data-src-large]="image.sizes.large">
+        </div>
       </div>
     </div>
   </div>
@@ -20,18 +24,18 @@
 
     <!--hero image-->
     <div class="theme-hero" [class.theme-hero--fade-in]="fadeIn">
-      <div *ngIf="page.acf?.hero_image && heroSrc" class="theme-hero__image"
+      <div *ngIf="page && page.acf?.hero_image && heroSrc" class="theme-hero__image"
            [class.theme-hero__image--loaded]="!!heroSrc"
            [style.background-image]="'url('+heroSrc+')'">
       </div>
-      <h2>{{ page.title.rendered }}</h2>
+      <h2>{{ page?.title.rendered }}</h2>
     </div>
 
-    <div [innerHTML]="page.content.rendered" class="theme-body-text">
+    <div [innerHTML]="page?.content.rendered" class="theme-body-text">
     </div>
 
     <!-- collection fields -->
-    <div *ngIf="page.acf.collection" class="theme-collection">
+    <div *ngIf="page && page.acf.collection" class="theme-collection">
       <template ngFor let-layout [ngForOf]="page.acf.collection">
         <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
           <div class="col-sm-12">
@@ -49,10 +53,15 @@
       </template>
     </div>
 
-
   </div>
 
 </div>
+
+<div class="theme-image-grid__enlarged-image-backdrop"></div>
+<div class="theme-image-grid__enlarged-image">
+  <img src=""/>
+</div>
+
 
 <div *ngIf="!page">
   <!--loading...-->

@@ -23,12 +23,18 @@ export class MenuService {
   constructor(private http: Http, private pagesService: PagesService) {
   }
 
+  // get menu() {
+  //   return this._menu.getValue();
+  // }
+
   getMenuObservable(): Observable<Menu> {
     if (!this.menu) {
       this.fetchMenu(this.slug).subscribe(
         (menu) => {
           this._menu.next(menu);
-        }, () => {
+          // this.menu = menu;
+        }, (e) => {
+          console.log(e);
           this._menu.next(this.menu);
         });
     }
@@ -39,7 +45,7 @@ export class MenuService {
   }
 
   fetchMenu(slug: string): Observable<Menu> {
-    return this.http.get(this._wpBase + 'wp-api-menus/v2/menus')
+    return this.http.get(this._wpBase + 'wp-api-menus/v2/menus', {params: {per_page: 100}})
       .flatMap((res: Response) => {
         let menuRecord: any = null;
         res.json().forEach((record) => {
@@ -60,33 +66,34 @@ export class MenuService {
         const menuData = menuRes.json();
         Object.assign(menu, menuData);
         menu.activeParent = null;
-        this.menu = menu;
         return menu;
       })
       .flatMap((menu: Menu) => {
         return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
           .map((categoryRes: Response) => {
-            this.menu.mediaCategoryTerms = categoryRes.json();
-            this.menu.activeParent = null;
-            return this.menu;
+            menu.mediaCategoryTerms = categoryRes.json();
+            menu.activeParent = null;
+            return menu;
           });
       })
       .flatMap((menu: Menu) => {
-        return this.pagesService.getPages().map((pages) => {
-          // fixme use media record to get the correct size image for this
-          this.menu.items
-            .filter(i => i.object_slug === 'projects' || i.object_slug === 'collections')
-            .forEach((item) => {
-              item.children.forEach((child, i, children) => {
-                let newChild = <any>{};
-                Object.assign(newChild, child);
-                newChild.gridImage = pages.filter(p => p.slug === child.object_slug)[0].acf.grid_image.url;
-                children[i] = newChild;
+          return this.pagesService.getPages().map((pages) => {
+            // fixme use media record to get the correct size image for this
+            menu.items
+              .filter(i => i.object_slug === 'projects' || i.object_slug === 'collections')
+              .forEach((item) => {
+                item.children.forEach((child, i, children) => {
+                  let newChild = <any>{};
+                  Object.assign(newChild, child);
+                  const dataChild = pages.filter(p => p.slug === child.object_slug)[0]
+                  newChild.gridImage = dataChild.acf.grid_image && dataChild.acf.grid_image.url;
+                  children[i] = newChild;
+                });
               });
-            });
-          return this.menu;
-        });
-      });
+            return menu;
+          });
+        }
+      );
   }
 
 }

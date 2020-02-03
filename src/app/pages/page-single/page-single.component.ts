@@ -1,18 +1,26 @@
-import { Component, ViewChild, Input, OnInit, OnDestroy, AfterViewChecked, OnChanges, HostListener } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ElementRef, HostListener
+} from '@angular/core';
 import { Page } from '../page';
 import { PagesService } from '../pages.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MenuService } from '../../menu/menu.service';
 import { Menu } from '../../menu/menu';
 import { Observable } from 'rxjs/Observable';
 import { PackeryComponent } from '../../packery/packery.component';
+import { LightBox } from '../../shared/lightbox';
 
 @Component({
   selector: 'app-page-single',
   templateUrl: './page-single.component.html',
   styleUrls: ['./page-single.component.css'],
 })
-export class PageSingleComponent implements OnInit, OnDestroy {
+export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild(PackeryComponent) imageGrid: PackeryComponent;
   page: Page;
@@ -24,18 +32,24 @@ export class PageSingleComponent implements OnInit, OnDestroy {
   mediaObjects: any = null;
   fadeIn = false;
   heroSrc = null;
+  private lightbox: LightBox;
 
   scrollPos = 0;
 
-  constructor(private pagesService: PagesService, private route: ActivatedRoute, private menuService: MenuService) {
+  constructor(private pagesService: PagesService,
+              private route: ActivatedRoute,
+              private menuService: MenuService,
+              private elementRef: ElementRef) {
   }
 
-  // @HostListener('window:scroll', ['$event']) // for window scroll events
-  // onScroll(event) {
-  //   console.log('scroll', this.scrollPos);
-  //   console.log(event.target)
-  // }
-  //
+  @HostListener('window:resize', ['$event']) // for window scroll events
+  resize(event) {
+    if (this.lightbox) {
+      this.lightbox.resize();
+      this.positionImageRows();
+    }
+  }
+
   getPage(parentSlug, termSlug?) {
     this.pagesService
       .getPage(parentSlug)
@@ -45,7 +59,13 @@ export class PageSingleComponent implements OnInit, OnDestroy {
         this.imagesByFours = this.getImagesByFours();
         this.fadeIn = false;
         this.heroSrc = null;
-        setTimeout(() => this.positionImageRows(), 1000);
+        this.positionImageRows();
+        if (this.lightbox) {
+          this.lightbox.destroy();
+        }
+        setTimeout(() => {
+          this.lightbox.initialize();
+        }, 1000);
         const preload = new Image();
         preload.addEventListener('load', () => {
           this.heroSrc = preload.src;
@@ -121,6 +141,19 @@ export class PageSingleComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    // Init lightbox
+    if (this.lightbox) {
+      this.lightbox.destroy();
+    }
+    this.lightbox = new LightBox(
+      this.elementRef.nativeElement.querySelector('.image-grids'),
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop')
+    );
+  }
+
   ngOnDestroy() {
     this.fadeIn = false;
   }
@@ -155,24 +188,24 @@ export class PageSingleComponent implements OnInit, OnDestroy {
 
   positionImageRows() {
     const padding = 20;
-    const maxHeight = 450;
     this.imageRowStyles = [];
     this.imagesByFours.forEach((rowImages: any[]) => {
-      let rowWidth = window.innerWidth;
+      let rowWidth = document.querySelector('.image-grids').clientWidth;
+      console.log(rowWidth);
       let heights = [];
       let widths = [];
       let styles: any = {images: [], row: {}};
       this.imageRowStyles.push(styles);
       rowImages.forEach((image: any, i) => {
-        widths[i] = image.sizes['large-width'];
-        heights[i] = image.sizes['large-height'];
+        widths[i] = image.width;
+        heights[i] = image.height;
       });
       let imagesWidth = widths.reduce(
         (sum, w, i) => {
           return sum + (w / (heights[i]));
         }, 0);
       let ratio = (rowWidth - (rowImages.length - 1) * padding) / imagesWidth;
-      ratio = Math.min(ratio, maxHeight);
+      ratio = Math.min(ratio, rowWidth / 4);
       rowImages.forEach((image: any, i) => {
         let imageStyles: any = {};
         imageStyles.width = ratio * widths[i] / heights[i] + 'px';
@@ -183,6 +216,10 @@ export class PageSingleComponent implements OnInit, OnDestroy {
         styles.images.push(imageStyles);
       });
       styles.row.height = padding + ratio + 'px';
+      styles.row.width = widths.reduce(function (sum, w, j) {
+        return sum + (padding + ratio * widths[j] / heights[j]);
+      }, 0) + 'px';
+      styles.row.margin = '0 auto';
     });
 
 

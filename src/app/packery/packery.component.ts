@@ -1,11 +1,14 @@
-import { ViewEncapsulation, Component, Input, ElementRef, AfterContentInit, OnChanges, AfterViewInit } from '@angular/core';
+import { ViewEncapsulation, Component, Input, ElementRef, OnChanges, AfterViewInit } from '@angular/core';
+import { LightBox } from '../shared/lightbox';
 
 declare var Packery: any;
 
 @Component({
   selector: '[packery]',
   styleUrls: ['./packery.component.css'],
-  template: '<div class="theme-image-grid"></div><div class="theme-image-grid__enlarged-image-backdrop"></div><div class="theme-image-grid__enlarged-image"><img src=""/></div>',
+  template: '<div class="theme-image-grid"></div>' +
+    '<div class="theme-image-grid__enlarged-image-backdrop"></div>' +
+    '<div class="theme-image-grid__enlarged-image"><img src=""/></div>',
   encapsulation: ViewEncapsulation.None
 })
 export class PackeryComponent implements OnChanges, AfterViewInit {
@@ -13,9 +16,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   private _images: Array<any> = null;
   private _packery;
   private _imageGridElement; // fixme don't init twice
-  private _enlargedImageElement;
-  private _enlargedImageElementImage;
-  private _enlargedImageBackdropElement;
+  private lightbox: LightBox;
 
   constructor(private elementRef: ElementRef) {
   }
@@ -24,15 +25,24 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
     this._images = images.slice();
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
-    this._enlargedImageElement = this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image');
-    this._enlargedImageElementImage = this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img');
-    this._enlargedImageBackdropElement = this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop');
+
+    // Init lightbox
+    if (this.lightbox) {
+      this.lightbox.destroy();
+    }
+    this.lightbox = new LightBox(
+      this._imageGridElement,
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop')
+    );
+
 
     while (this._imageGridElement.firstChild) {
       this._imageGridElement.removeChild(this._imageGridElement.firstChild);
     }
 
-    //create images
+    // create images
     this._images.forEach((image: any, index: number) => {
       let imageElement = document.createElement('img');
       imageElement.setAttribute('src', image.sizes.medium_large);
@@ -91,9 +101,11 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
     let transitionDuration = 800;
 
-    this._packery && this._packery.destroy();
+    if (this._packery) {
+      this._packery.destroy();
+    }
 
-    //init packery
+    // init packery
     this._packery = new Packery(
       this._imageGridElement, {
         itemSelector: '.theme-image-grid__image',
@@ -105,38 +117,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     this._packery.layout();
     this.updateVisibleImages();
 
-    //Packery.layoutOnViewChecked = true;
-
-    this._imageGridElement.addEventListener('click', (event: any) => {
-      const rect = event.target.getBoundingClientRect();
-      setTimeout(() => {
-        this._enlargedImageBackdropElement.style['display'] = 'block';
-        this._enlargedImageElement.style['z-index'] = '101';
-        this._enlargedImageElement.style.backgroundSize = 'cover';
-        this._enlargedImageElement.style.backgroundImage = `url('${event.target.src}')`;
-        this._enlargedImageElementImage.setAttribute('src', event.target.getAttribute('data-src-large'));
-        this._enlargedImageElementImage.style.display = 'block';
-        this._enlargedImageElement.style.transition = 'all 0s';
-        ['top', 'left', 'width', 'height'].forEach((key) => {
-          this._enlargedImageElement.style[key] = rect[key] + 'px';
-        });
-      }, 0);
-      setTimeout(() => {
-        this._enlargedImageElement.style.transition = 'all 800ms ease';
-        const scale = (window.innerHeight - 80) / rect.height;
-        this._enlargedImageElement.style.top = '40px';
-        this._enlargedImageElement.style.left = (window.innerWidth / 2 - rect.width * scale / 2) + 'px';
-        this._enlargedImageElement.style.width = rect.width * scale + 'px';
-        this._enlargedImageElement.style.height = rect.height * scale + 'px';
-      }, 100);
-    });
-    const reset = (event: any) => {
-      this._enlargedImageElement.style = '';
-      this._enlargedImageBackdropElement.style = '';
-      this._enlargedImageElementImage.style = '';
-    };
-    this._enlargedImageElement.addEventListener('click', reset);
-    this._enlargedImageBackdropElement.addEventListener('click', reset);
+    // Packery.layoutOnViewChecked = true;
   }
 
 }
