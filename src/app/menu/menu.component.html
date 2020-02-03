@@ -46,14 +46,16 @@
           <div class="image-grid container-fluid" [class.active]="menu.activeParent === parent.object_slug">
             <div class="row d-none d-sm-block" [class.active]="menu.activeParent === parent.object_slug">
 
-                <div class="image-grid__item col-12 col-sm-4" *ngFor="let child of parent.children">
-                  <a class="image-grid__project-link" routerLink="{{ path(parent.object_slug,child.object_slug) }}" routerLinkActive="active">
-                    <template [ngIf]="!!child.gridImage">
-                      <img [src]="child.gridImage"/>
-                    </template>
-                    <div class="image-grid__item-title">{{ child.title }}</div>
-                  </a>
-                </div>
+              <div class="image-grid__item col-12" *ngFor="let child of parent.children"
+                   [ngClass]="{'col-sm-4':parent.children.length>2, 'col-sm-6':parent.children.length<=2}">
+                <a class="image-grid__project-link" routerLink="{{ path(parent.object_slug,child.object_slug) }}"
+                   routerLinkActive="active">
+                  <template [ngIf]="!!child.gridImage">
+                    <img [src]="child.gridImage"/>
+                  </template>
+                  <div class="image-grid__item-title">{{ child.title }}</div>
+                </a>
+              </div>
 
             </div>
           </div>
