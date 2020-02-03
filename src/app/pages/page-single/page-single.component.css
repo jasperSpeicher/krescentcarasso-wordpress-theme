@@ -57,8 +57,8 @@
   opacity: 0;
 }
 
-.theme-page-body {
-  max-width: 2600px;
+.theme-page-body, .image-grids {
+  max-width: 1600px;
 }
 
 .theme-body-text {
