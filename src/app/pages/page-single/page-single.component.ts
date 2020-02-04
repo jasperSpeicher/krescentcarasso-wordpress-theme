@@ -188,10 +188,10 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   positionImageRows() {
     const padding = 20;
+    const minRatioDivisor = 3;
     this.imageRowStyles = [];
     this.imagesByFours.forEach((rowImages: any[]) => {
       let rowWidth = document.querySelector('.image-grids').clientWidth;
-      console.log(rowWidth);
       let heights = [];
       let widths = [];
       let styles: any = {images: [], row: {}};
@@ -205,7 +205,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
           return sum + (w / (heights[i]));
         }, 0);
       let ratio = (rowWidth - (rowImages.length - 1) * padding) / imagesWidth;
-      ratio = Math.min(ratio, rowWidth / 4);
+      ratio = Math.min(ratio, rowWidth / minRatioDivisor);
       rowImages.forEach((image: any, i) => {
         let imageStyles: any = {};
         imageStyles.width = ratio * widths[i] / heights[i] + 'px';
