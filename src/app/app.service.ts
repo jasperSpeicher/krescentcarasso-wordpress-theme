@@ -12,14 +12,14 @@ export class AppService {
 
   public static _wpBase = `${baseUrl}/wp-json/`;
 
-  constructor(private http:Http) {
+  constructor(private http: Http) {
   }
 
-  getApp():Observable<any> {
+  getApp(): Observable<any> {
 
     return this.http
       .get(AppService._wpBase)
-      .map((res:Response) => res.json());
+      .map((res: Response) => res.json());
 
   }
 

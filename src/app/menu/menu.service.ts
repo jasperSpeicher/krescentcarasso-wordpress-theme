@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
@@ -10,42 +11,46 @@ import { Menu } from './menu';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AppService } from '../app.service';
 import { PagesService } from '../pages/pages.service';
+import { NavigationStart, Router } from '@angular/router';
 
 @Injectable()
 export class MenuService {
 
-  private _wpBase = AppService._wpBase;
-
-  menu: Menu;
   private _menu: BehaviorSubject<Menu> = new BehaviorSubject(null);
   private slug = 'main-navigation';
 
-  constructor(private http: Http, private pagesService: PagesService) {
-  }
+  constructor(private http: Http, private pagesService: PagesService, private router: Router) {
 
-  // get menu() {
-  //   return this._menu.getValue();
-  // }
-
-  getMenuObservable(): Observable<Menu> {
-    if (!this.menu) {
-      this.fetchMenu(this.slug).subscribe(
-        (menu) => {
-          this._menu.next(menu);
-          // this.menu = menu;
-        }, (e) => {
-          console.log(e);
-          this._menu.next(this.menu);
-        });
-    }
-    return this._menu.asObservable()
-      .filter((menu: Menu) => {
-        return menu !== null;
+    // only call this once, so that the initial menu is always the latest
+    this.fetchMenu(this.slug).subscribe(
+      (menu) => {
+        this._menu.next(menu);
+      }, (e) => {
+        console.log(e);
+      });
+    this.router.events
+      .filter(event => event instanceof NavigationStart && this.menu !== null)
+      .forEach((event: NavigationStart) => {
+        if (this.menu) {
+          this.menu.parseUrl(this.router.url);
+        }
       });
   }
 
-  fetchMenu(slug: string): Observable<Menu> {
-    return this.http.get(this._wpBase + 'wp-api-menus/v2/menus', {params: {per_page: 100}})
+  public get menu(): Menu {
+    return this._menu.getValue();
+  }
+
+  getMenuObservable(): Observable<Menu> {
+    return this._menu.asObservable()
+      .filter((menu: Menu) => {
+        return menu !== null;
+      })
+      .take(1);
+  }
+
+  private fetchMenu(slug: string): Observable<Menu> {
+    return this.http.get(AppService._wpBase + 'wp-api-menus/v2/menus', {params: {per_page: 100}})
       .flatMap((res: Response) => {
         let menuRecord: any = null;
         res.json().forEach((record) => {
@@ -54,7 +59,7 @@ export class MenuService {
           }
         });
         if (menuRecord) {
-          return this.http.get(this._wpBase + 'wp-api-menus/v2/menus/' + menuRecord.ID);
+          return this.http.get(AppService._wpBase + 'wp-api-menus/v2/menus/' + menuRecord.ID);
         } else {
           return null;
         }
@@ -69,7 +74,7 @@ export class MenuService {
         return menu;
       })
       .flatMap((menu: Menu) => {
-        return this.http.get(this._wpBase + 'theme/v2/media_category_terms')
+        return this.http.get(AppService._wpBase + 'theme/v2/media_category_terms')
           .map((categoryRes: Response) => {
             menu.mediaCategoryTerms = categoryRes.json();
             menu.activeParent = null;

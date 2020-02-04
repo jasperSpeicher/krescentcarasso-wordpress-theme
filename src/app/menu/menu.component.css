@@ -76,6 +76,12 @@
 
 .theme-menu > li > a {
   position: relative;
+  letter-spacing: 0.75px;
+}
+
+.theme-menu > li > a.active {
+  font-weight: bold;
+  letter-spacing: 0;
 }
 
 .theme-menu > li > a::after {

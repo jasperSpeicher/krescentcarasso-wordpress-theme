@@ -3,6 +3,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { AppService } from './app.service';
 import { MenuService } from './menu/menu.service';
 import { fadeAnimation } from './shared/fade.animation';
+import { Menu } from './menu/menu';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,14 @@ import { fadeAnimation } from './shared/fade.animation';
 })
 export class AppComponent implements OnInit {
 
-  title = '';
+  title = 'Krescent Carasso';
   pageClasses = '';
+  menuClasses = '';
 
   constructor(
     private appService: AppService,
     private router: Router,
+    private menuService: MenuService,
   ) {
     router.events.filter(e => e instanceof NavigationStart).subscribe((e: NavigationStart) => {
       const pathArray = e.url.split('/');
@@ -29,6 +32,23 @@ export class AppComponent implements OnInit {
         this.pageClasses = 'home';
       }
     });
+    menuService.getMenuObservable()
+      .subscribe((menu: Menu) => {
+        menu.getActiveParentObservable().subscribe((p: string) => {
+          const menuClasses = [];
+          if (menu.showingGrid) {
+            menuClasses.push('app--menu-showing-grid');
+          }
+          if (menu.open) {
+            menuClasses.push('app--menu-open');
+          }
+          this.menuClasses = menuClasses.join(' ');
+        });
+      });
+  }
+
+  get classes() {
+    return `${this.pageClasses} ${this.menuClasses}`;
   }
 
   public getRouterOutletState(outlet) {
@@ -36,8 +56,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appService.getApp().subscribe((app) => {
-      this.title = app.name;
-    });
+    // this.appService.getApp().subscribe((app) => {
+    //   this.title = app.name;
+    // });
   }
 }

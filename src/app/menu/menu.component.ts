@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuService } from './menu.service';
-import { Menu } from './menu';
-import { Router, NavigationStart } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -13,31 +11,13 @@ export class MenuComponent implements OnInit {
 
   @Input() pageClasses: string;
 
-  menu: Menu;
   menuVisible = false;
 
-  constructor(private menuService: MenuService, private router: Router) {
-
+  constructor(private menuService: MenuService) {
   }
 
-  // TODO move router into the menu service and make active parent observable rather than listening to url
-  getMenu() {
-    this.menuService
-      .getMenuObservable()
-      .subscribe((menu: Menu) => {
-        this.menu = menu;
-        this.parseUrl();
-        this.router.events
-          .filter(event => event instanceof NavigationStart && this.menu !== null)
-          .forEach((event: NavigationStart) => {
-            this.parseUrl();
-          });
-      });
-  }
-
-  parseUrl() {
-    const page = this.router.url.split('/')[1];
-    this.menu.activeParent = page === 'explore' ? page : null;
+  get menu() {
+    return this.menuService.menu;
   }
 
   path(parentSlug: string, childSlug: string) {
@@ -45,7 +25,12 @@ export class MenuComponent implements OnInit {
   }
 
   showChildren(parent: any) {
-    this.menu.activeParent = parent.object_slug;
+    if (this.menu.activeParent === parent.object_slug) {
+      // close menu if user clicks the open parent
+      this.menu.activeParent = null;
+    } else {
+      this.menu.activeParent = parent.object_slug;
+    }
   }
 
   showCategoryTerm(term: any) {
@@ -53,19 +38,11 @@ export class MenuComponent implements OnInit {
   }
 
   get menuOpen() {
-    const itemActiveWithChildren = i => {
-      return i.object_slug === this.menu.activeParent && i.children;
-    };
-    return this.menu &&
-      this.menu.activeParent &&
-      (this.menu.items.filter(itemActiveWithChildren).length > 0 || this.menu.activeParent === 'explore');
+    return this.menu && this.menu.open;
   }
 
-  get showGrid() {
-    return this.menu &&
-      this.menu.activeParent &&
-      (this.menu.activeParent === 'projects' ||
-      this.menu.activeParent === 'collections');
+  get showingGrid() {
+    return this.menu && this.menu.showingGrid;
   }
 
   get headerClasses() {
@@ -78,13 +55,12 @@ export class MenuComponent implements OnInit {
       'theme-header': true,
       'theme-header--menu-visible': this.menuVisible,
       'theme-header--menu-open': this.menuOpen,
-      'theme-header--show-grid': this.showGrid
+      'theme-header--show-grid': this.showingGrid
     });
     return classes;
   }
 
   ngOnInit() {
-    this.getMenu();
   }
 
 }
