@@ -3,4 +3,19 @@
   overflow: hidden;
 }
 
+:host /deep/ .theme-hero h2 {
+  display: none;
+}
+:host /deep/ .theme-hero .theme-hero__image::before {
+  display: none;
+}
+:host /deep/ .about .theme-body-text img {
+  float: right;
+  width: 50%;
+  height: auto;
+  margin-left: 40px;
+}
 
+:host /deep/ .about .theme-body-text p {
+  margin: 0;
+}
