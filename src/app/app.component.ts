@@ -24,9 +24,8 @@ export class AppComponent implements OnInit {
     private menuService: MenuService,
   ) {
     router.events.filter(e => e instanceof NavigationStart).subscribe((e: NavigationStart) => {
-      const pathArray = e.url.split('/');
-      pathArray.splice(0, 1);
-      if (pathArray.length > 1) {
+      const pathArray = e.url.split('/').filter( p=>!!p );
+      if (pathArray.length > 0) {
         this.pageClasses = pathArray.join(' ');
       } else {
         this.pageClasses = 'home';

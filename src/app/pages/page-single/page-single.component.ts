@@ -135,6 +135,9 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         if (slug !== undefined) {
           this.page = null;
           this.getPage(slug);
+        } else {
+          this.page = null;
+          this.getPage(this.route.snapshot.url[0].path);
         }
       }
 

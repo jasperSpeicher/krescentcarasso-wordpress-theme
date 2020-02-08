@@ -30,6 +30,11 @@ const routes: Routes = [
     resolve: [DelayResolve],
   },
   {
+    path: 'about',
+    component: PageSingleComponent,
+    resolve: [DelayResolve],
+  },
+  {
     path: '',
     component: PageHomeComponent,
     pathMatch: 'full',
