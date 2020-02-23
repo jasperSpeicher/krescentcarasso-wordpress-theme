@@ -1,6 +1,6 @@
 <div class="theme-page">
 
-<!--[style.width]="image.sizes['medium_large-width']"-->
+  <!--[style.width]="image.sizes['medium_large-width']"-->
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
   <!--imageGrid-->
@@ -9,12 +9,13 @@
       <div [packery]="images">
       </div>
     </div>
-    <div *ngIf="page && imagesByFours && imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'" class="image-rows">
+    <div *ngIf="page && imagesByFours && imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'"
+         class="image-rows">
       <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row"
            [ngStyle]="imageRowStyles[rowIndex].row">
         <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image"
              [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]">
-          <img [src]="image.sizes.large" [attr.data-src-large]="image.sizes.large">
+          <img [src]="image.sizes.large" [attr.data-src-large]="image.url">
         </div>
       </div>
     </div>
@@ -24,10 +25,14 @@
 
     <!--hero image-->
     <div class="theme-hero" [class.theme-hero--fade-in]="fadeIn">
-      <div *ngIf="page && page.acf?.hero_image && heroSrc" class="theme-hero__image"
+      <div *ngIf="page && page.acf?.hero_image && heroSrc && !showFixedHero" class="theme-hero__image"
            [class.theme-hero__image--loaded]="!!heroSrc"
            [style.background-image]="'url('+heroSrc+')'">
       </div>
+      <img *ngIf="page && page.acf?.hero_image && heroSrc && showFixedHero" class="theme-hero__image theme-hero__image--natural"
+           [class.theme-hero__image--loaded]="!!heroSrc"
+           [src]="heroSrc">
+
       <h2>{{ page?.title.rendered }}</h2>
     </div>
 
