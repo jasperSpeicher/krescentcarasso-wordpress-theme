@@ -3,10 +3,15 @@
   overflow: hidden;
 }
 
-:host /deep/ .theme-hero h2 {
+:host /deep/ .about .theme-hero {
+  padding-top: 80vh;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+:host /deep/ .about .theme-hero h2 {
   display: none;
 }
-:host /deep/ .theme-hero .theme-hero__image::before {
+:host /deep/ .about .theme-hero .theme-hero__image::before {
   display: none;
 }
 :host /deep/ .about .theme-body-text img {
