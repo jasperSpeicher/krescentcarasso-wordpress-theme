@@ -15,7 +15,7 @@ export class Menu {
     this._activeTerm.next(slug);
   }
 
-  public get activeTerm() {
+  public get activeTerm(): string {
     return this._activeTerm.value;
   }
 
@@ -23,7 +23,7 @@ export class Menu {
     this._activeParent.next(slug);
   }
 
-  public get activeParent() {
+  public get activeParent(): string {
     return this._activeParent.value;
   }
 
@@ -35,13 +35,13 @@ export class Menu {
     return this._activeParent.asObservable();
   }
 
-  public get showingGrid() {
-    return this.activeParent &&
+  public get showingGrid(): boolean {
+    return !!this.activeParent &&
       (this.activeParent === 'projects' ||
         this.activeParent === 'collections');
   }
 
-  public get open() {
+  public get open(): boolean {
     const itemActiveWithChildren = i => {
       return i.object_slug === this.activeParent && i.children;
     };
