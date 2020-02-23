@@ -54,9 +54,9 @@ export class LightBox {
       this.activeRect = element.getBoundingClientRect();
       const largeImage = element.getAttribute('data-src-large');
       if (largeImage !== element.src) {
-        this._enlargedImageElementImage.setAttribute('src', largeImage);
+        this._enlargedImageElementImage.src = largeImage;
       } else {
-        this._enlargedImageElementImage.setAttribute('src', '');
+        this._enlargedImageElementImage.src = '';
       }
       this._enlargedImageBackdropElement.classList.add('theme-image-grid__enlarged-image-backdrop--visible');
       this._enlargedImageElement.style['z-index'] = '101';
