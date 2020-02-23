@@ -30,8 +30,11 @@ function slug_register_media_categories() {
  *
  * @return mixed
  */
-function slug_get_media_category_terms( $object ) {
-      return get_terms( 'category_media' );
+function slug_get_media_category_terms() {
+      return get_terms( array(
+                            'taxonomy' => 'category_media',
+                            'hide_empty' => false,
+                        ) );
 }
 
 /**
