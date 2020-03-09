@@ -116,7 +116,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // if the parent is 'explore' then show the explore page...
       if (parent === 'explore') {
-        if (!this.page || this.page.slug !== 'explore') {
+        if (!this.page || this.page.parent !== 'explore') {
           this.page = null;
           this.getPage('explore', slug);
           //this.menuService.getMenuObservable()

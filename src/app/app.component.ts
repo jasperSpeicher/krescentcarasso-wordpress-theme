@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MenuService } from './menu/menu.service';
 import { fadeAnimation } from './shared/fade.animation';
 import { Menu } from './menu/menu';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,12 @@ import { Menu } from './menu/menu';
   providers: [AppService, MenuService],
   animations: [fadeAnimation]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   title = 'Krescent Carasso';
   pageClasses = '';
   menuClasses = '';
+  subscriptions = new Subscription();
 
   constructor(
     private appService: AppService,
@@ -24,7 +26,7 @@ export class AppComponent implements OnInit {
     private menuService: MenuService,
   ) {
     router.events.filter(e => e instanceof NavigationStart).subscribe((e: NavigationStart) => {
-      const pathArray = e.url.split('/').filter( p=>!!p );
+      const pathArray = e.url.split('/').filter(p => !!p);
       if (pathArray.length > 0) {
         this.pageClasses = pathArray.join(' ');
       } else {
@@ -33,17 +35,34 @@ export class AppComponent implements OnInit {
     });
     menuService.getMenuObservable()
       .subscribe((menu: Menu) => {
-        menu.getActiveParentObservable().subscribe((p: string) => {
-          const menuClasses = [];
-          if (menu.showingGrid) {
-            menuClasses.push('app--menu-showing-grid');
-          }
-          if (menu.open) {
-            menuClasses.push('app--menu-open');
-          }
-          this.menuClasses = menuClasses.join(' ');
-        });
+        if (this.subscriptions) {
+          this.subscriptions.unsubscribe();
+          this.subscriptions = new Subscription();
+        }
+        [
+          menu.getActiveParentObservable().subscribe((p: string) => {
+            this.setMenuClasses(menu);
+          }),
+          menu.getMobileVisibleObservable().subscribe((p: boolean) => {
+            this.setMenuClasses(menu);
+          })
+        ].forEach(s => this.subscriptions.add(s));
       });
+  }
+
+  setMenuClasses(menu) {
+    const menuClasses = [];
+    if (menu.showingGrid) {
+      menuClasses.push('app--menu-showing-grid');
+    }
+    if (menu.open) {
+      menuClasses.push('app--menu-open');
+    }
+    if (menu.mobileVisible) {
+      menuClasses.push('app--menu-mobile-visible');
+    }
+    this.menuClasses = menuClasses.join(' ');
+
   }
 
   get classes() {
@@ -52,11 +71,5 @@ export class AppComponent implements OnInit {
 
   public getRouterOutletState(outlet) {
     return outlet.isActivated ? outlet.activatedRoute : '';
-  }
-
-  ngOnInit() {
-    // this.appService.getApp().subscribe((app) => {
-    //   this.title = app.name;
-    // });
   }
 }

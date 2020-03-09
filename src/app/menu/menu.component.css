@@ -271,32 +271,34 @@
     pointer-events: none;
   }
 
-  .theme-header.theme-header--menu-visible {
+  .theme-header.theme-header--mobile-menu-visible {
     bottom: 0;
     height: auto;
-    overflow: auto;
-    pointer-events: auto;
   }
 
   .theme-header .container-fluid {
     position: absolute;
-    padding: 60px 30px 0 0;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
+    padding: 60px 0 0 0;
   }
 
-  .theme-header--menu-visible {
+  .theme-header--mobile-menu-visible {
     background: rgba(255, 255, 255, 0.9);
   }
 
   .theme-header .theme-menu {
     opacity: 0;
     transition: opacity 400ms 0ms ease;
+    padding-right: 30px;
+    overflow: auto;
+    pointer-events: auto;
+
   }
 
-  .theme-header--menu-visible .theme-menu {
+  .theme-header--mobile-menu-visible .theme-menu {
     opacity: 1;
     transition: opacity 800ms 100ms ease;
   }
@@ -306,7 +308,7 @@
     transition: opacity 400ms ease;
   }
 
-  .theme-header--menu-visible .container-fluid:before {
+  .theme-header--mobile-menu-visible .container-fluid:before {
     opacity: 1;
   }
 

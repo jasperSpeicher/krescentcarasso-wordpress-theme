@@ -1,4 +1,5 @@
-.app--menu-showing-grid {
+.app--menu-showing-grid,
+.app--menu-mobile-visible {
   height: 100vh;
   overflow: hidden;
 }

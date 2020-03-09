@@ -42,10 +42,9 @@ h2{
   padding-bottom: 10px;
 }
 
-
-@media(max-width: 500px) {
+@media(max-width: 768px) {
   .theme-hero__image {
-    top: 120px;
+    top: 60px;
     bottom: 0px;
     left: 0px;
     right: 0px;

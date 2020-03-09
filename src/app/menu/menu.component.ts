@@ -11,8 +11,6 @@ export class MenuComponent implements OnInit {
 
   @Input() pageClasses: string;
 
-  menuVisible = false;
-
   constructor(private menuService: MenuService) {
   }
 
@@ -33,12 +31,20 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  toggleMobile() {
+    this.menu.mobileVisible = !this.menu.mobileVisible;
+  }
+
   showCategoryTerm(term: any) {
     this.menu.activeTerm = term.slug;
   }
 
   get menuOpen() {
     return this.menu && this.menu.open;
+  }
+
+  get mobileVisible() {
+    return this.menu && this.menu.mobileVisible;
   }
 
   get showingGrid() {
@@ -53,7 +59,7 @@ export class MenuComponent implements OnInit {
     }, {});
     Object.assign(classes, {
       'theme-header': true,
-      'theme-header--menu-visible': this.menuVisible,
+      'theme-header--mobile-menu-visible': this.mobileVisible,
       'theme-header--menu-open': this.menuOpen,
       'theme-header--show-grid': this.showingGrid
     });

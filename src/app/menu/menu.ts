@@ -8,6 +8,7 @@ export class Menu {
   items: any[];
   mediaCategoryTerms: any;
 
+  private _mobileVisible: BehaviorSubject < boolean > = new BehaviorSubject(false);
   private _activeTerm: BehaviorSubject<string> = new BehaviorSubject(null);
   private _activeParent: BehaviorSubject<string> = new BehaviorSubject(null);
 
@@ -17,6 +18,14 @@ export class Menu {
 
   public get activeTerm(): string {
     return this._activeTerm.value;
+  }
+
+  public set mobileVisible(state: boolean) {
+    this._mobileVisible.next(state);
+  }
+
+  public get mobileVisible(): boolean {
+    return this._mobileVisible.value;
   }
 
   public set activeParent(slug: string) {
@@ -35,6 +44,10 @@ export class Menu {
     return this._activeParent.asObservable();
   }
 
+  public getMobileVisibleObservable(): Observable<boolean> {
+    return this._mobileVisible.asObservable();
+  }
+
   public get showingGrid(): boolean {
     return !!this.activeParent &&
       (this.activeParent === 'projects' ||
@@ -45,13 +58,18 @@ export class Menu {
     const itemActiveWithChildren = i => {
       return i.object_slug === this.activeParent && i.children;
     };
-    return this.activeParent &&
-      (this.items.filter(itemActiveWithChildren).length > 0 || this.activeParent === 'explore');
+    console.log('ap', this.activeParent);
+    return !!this.activeParent
+      && (
+        (this.items.filter(itemActiveWithChildren).length > 0)
+        || this.activeParent === 'explore'
+      );
   }
 
   public parseUrl(url) {
+    console.log('parseurl');
     const page = url.split('/')[1];
-    this.activeParent = page === 'explore' ? page : null;
+    this.activeParent = page;
   }
 
 
