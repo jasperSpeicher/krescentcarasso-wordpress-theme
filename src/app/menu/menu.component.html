@@ -4,7 +4,7 @@
   <div class="container-fluid">
 
     <ul class="theme-menu">
-      <li *ngFor="let parent of menu?.items">
+      <li *ngFor="let parent of menu?.items" class="theme-menu__item {{parent.object_slug}}">
 
         <a *ngIf="parent.object==='custom'"
            (click)="showChildren(parent)"

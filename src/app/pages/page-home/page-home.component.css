@@ -41,3 +41,13 @@ h2{
 .theme-collection__two-images div {
   padding-bottom: 10px;
 }
+
+
+@media(max-width: 500px) {
+  .theme-hero__image {
+    top: 120px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
+}
