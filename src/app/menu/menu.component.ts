@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuService } from './menu.service';
 import 'rxjs/add/operator/filter';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'theme-menu',
@@ -11,24 +12,40 @@ export class MenuComponent implements OnInit {
 
   @Input() pageClasses: string;
 
-  constructor(private menuService: MenuService) {
+  navigationCancelled = false;
+
+  constructor(private menuService: MenuService, private router: Router) {
   }
 
   get menu() {
     return this.menuService.menu;
   }
 
+  get fadeOut() {
+    return this.menuService.navigating || this.navigationCancelled;
+  }
+
   path(parentSlug: string, childSlug: string) {
     return parentSlug + (childSlug !== undefined ? '/' + childSlug : '');
   }
 
+  navigate(path: string) {
+    this.router.navigate(path.split('/')).then(
+      routeChanged => {
+        // if the route did not change, then set navigationCancelled
+        if (!routeChanged) {
+          this.navigationCancelled = true;
+          setTimeout(() => {
+            this.navigationCancelled = false;
+            this.menu.activeParent = null;
+          }, 400);
+        }
+      }
+    );
+  }
+
   showChildren(parent: any) {
-    if (this.menu.activeParent === parent.object_slug) {
-      // close menu if user clicks the open parent
-      this.menu.activeParent = null;
-    } else {
-      this.menu.activeParent = parent.object_slug;
-    }
+    this.menu.activeParent = parent.object_slug;
   }
 
   toggleMobile() {
@@ -62,7 +79,7 @@ export class MenuComponent implements OnInit {
       'theme-header--mobile-menu-visible': this.mobileVisible,
       'theme-header--menu-open': this.menuOpen,
       'theme-header--show-grid': this.showingGrid,
-      'theme-header--menu-fade-out': this.menuService.navigating,
+      'theme-header--menu-fade-out': this.fadeOut,
     });
     return classes;
   }

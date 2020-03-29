@@ -219,6 +219,7 @@
     background-color: #333333;
     width: 100%;
     display: block;
+    cursor: pointer;
   }
 
   .image-grid__item img {

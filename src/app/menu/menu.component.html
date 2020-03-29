@@ -48,8 +48,8 @@
 
               <div class="image-grid__item col-12" *ngFor="let child of parent.children"
                    [ngClass]="{'col-sm-4':parent.children.length>2, 'col-sm-6':parent.children.length<=2}">
-                <a class="image-grid__project-link" routerLink="{{ path(parent.object_slug,child.object_slug) }}"
-                   routerLinkActive="active">
+                <a class="image-grid__project-link"
+                   (click)="navigate(path(parent.object_slug,child.object_slug))">
                   <template [ngIf]="!!child.gridImage">
                     <img [src]="child.gridImage"/>
                   </template>
