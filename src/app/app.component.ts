@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { AppService } from './app.service';
 import { MenuService } from './menu/menu.service';
 import { fadeAnimation } from './shared/fade.animation';
@@ -25,7 +25,7 @@ export class AppComponent {
     private router: Router,
     private menuService: MenuService,
   ) {
-    router.events.filter(e => e instanceof NavigationStart).subscribe((e: NavigationStart) => {
+    router.events.filter(e => e instanceof NavigationEnd).subscribe((e: NavigationEnd) => {
       const pathArray = e.url.split('/').filter(p => !!p);
       if (pathArray.length > 0) {
         this.pageClasses = pathArray.join(' ');
@@ -50,7 +50,7 @@ export class AppComponent {
       });
   }
 
-  setMenuClasses(menu) {
+  setMenuClasses(menu: Menu) {
     const menuClasses = [];
     if (menu.showingGrid) {
       menuClasses.push('app--menu-showing-grid');
@@ -62,11 +62,10 @@ export class AppComponent {
       menuClasses.push('app--menu-mobile-visible');
     }
     this.menuClasses = menuClasses.join(' ');
-
   }
 
   get classes() {
-    return `${this.pageClasses} ${this.menuClasses}`;
+    return `app ${this.pageClasses} ${this.menuClasses} ${this.menuService.navigating ? 'app--navigating' : ''}`;
   }
 
   public getRouterOutletState(outlet) {

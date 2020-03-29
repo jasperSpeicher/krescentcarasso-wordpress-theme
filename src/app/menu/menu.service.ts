@@ -16,7 +16,9 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 @Injectable()
 export class MenuService {
 
-  private _menu: BehaviorSubject<Menu> = new BehaviorSubject(null);
+  public navigating = false;
+
+  private _menu = new BehaviorSubject<Menu>(null);
   private slug = 'main-navigation';
 
   constructor(private http: Http, private pagesService: PagesService, private router: Router) {
@@ -31,6 +33,7 @@ export class MenuService {
     this.router.events
       .filter(event => event instanceof NavigationEnd && this.menu !== null)
       .forEach((event: NavigationEnd) => {
+        this.navigating = false;
         if (this.menu) {
           this.menu.parseUrl(this.router.url);
         }
@@ -38,8 +41,9 @@ export class MenuService {
     this.router.events
       .filter(event => event instanceof NavigationStart && this.menu !== null)
       .forEach((event: NavigationStart) => {
+        this.navigating = true;
         if (this.menu) {
-          this.menu.activeParent = null;
+          setTimeout(() => this.menu.activeParent = null, 400);
         }
       });
   }

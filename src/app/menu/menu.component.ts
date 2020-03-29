@@ -61,7 +61,8 @@ export class MenuComponent implements OnInit {
       'theme-header': true,
       'theme-header--mobile-menu-visible': this.mobileVisible,
       'theme-header--menu-open': this.menuOpen,
-      'theme-header--show-grid': this.showingGrid
+      'theme-header--show-grid': this.showingGrid,
+      'theme-header--menu-fade-out': this.menuService.navigating,
     });
     return classes;
   }

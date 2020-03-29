@@ -28,6 +28,10 @@
     height: 13rem;
   }
 
+  .theme-header.theme-header--menu-fade-out .image-grid__item {
+    opacity: 0;
+  }
+
   .theme-header.theme-header--menu-open.theme-header--show-grid {
     height: 100%;
   }
@@ -188,7 +192,7 @@
     padding: 3rem 15px 0 15px;
     height: 0;
     opacity: 0;
-    transition: none;
+    transition: opacity 400ms ease;
     pointer-events: none;
     background: #fff;
     max-width: 1200px;
@@ -201,12 +205,13 @@
   .theme-header--show-grid .theme-menu li div .image-grid.active {
     opacity: 1;
     height: auto;
-    transition: none;
     pointer-events: auto;
   }
 
   .image-grid__item {
     padding: 0 1.25rem 2.5rem 1.25rem;
+    opacity: 1;
+    transition: opacity 400ms ease;
   }
 
   .image-grid__project-link {

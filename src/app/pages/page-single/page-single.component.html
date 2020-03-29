@@ -24,7 +24,7 @@
   <div *ngIf="!images" class="theme-page-body container-fluid">
 
     <!--hero image-->
-    <div class="theme-hero" [class.theme-hero--fade-in]="fadeIn">
+    <div class="theme-hero" [class.theme-hero--fade-in]="fadeInHero">
       <div *ngIf="page && page.acf?.hero_image && heroSrc && !showFixedHero" class="theme-hero__image"
            [class.theme-hero__image--loaded]="!!heroSrc"
            [style.background-image]="'url('+heroSrc+')'">

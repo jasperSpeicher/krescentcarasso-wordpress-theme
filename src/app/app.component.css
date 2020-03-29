@@ -4,6 +4,14 @@
   overflow: hidden;
 }
 
+.app main {
+  transition: opacity 400ms ease;
+}
+
+.app--navigating main {
+  opacity: 0;
+}
+
 :host /deep/ .about .theme-hero {
   padding-top: 80vh;
   max-width: 1000px;

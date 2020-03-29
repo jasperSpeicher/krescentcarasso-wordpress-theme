@@ -30,7 +30,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   imageRowStyles = [];
   termSlug: string = null;
   mediaObjects: any = null;
-  fadeIn = false;
+  fadeInHero = false;
   heroSrc = null;
   private lightbox: LightBox;
 
@@ -57,7 +57,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.page = res[0] as Page;
         this.images = this.page.acf.gallery;
         this.imagesByFours = this.getImagesByFours();
-        this.fadeIn = false;
+        this.fadeInHero = false;
         this.heroSrc = null;
         this.positionImageRows();
         if (this.lightbox) {
@@ -72,7 +72,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         preload.src = this.page.acf.hero_image.url;
         setTimeout(() => {
-          this.fadeIn = true;
+          this.fadeInHero = true;
         }, 2000);
         if (this.images) {
           this.populateMediaCategoryTerms().subscribe(() => {
@@ -119,12 +119,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!this.page || this.page.parent !== 'explore') {
           this.page = null;
           this.getPage('explore', slug);
-          //this.menuService.getMenuObservable()
-          //  .subscribe((menu:Menu)=> {
-          //    if (menu && !this.menu) {
-          //      this.menu = menu;
-          //    }
-          //  });
         } else {
           if (slug !== undefined) {
             this.filterGallery(slug);
@@ -158,7 +152,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.fadeIn = false;
+    this.fadeInHero = false;
   }
 
   filterGallery(termSlug: string) {
@@ -224,11 +218,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
       }, 0) + 'px';
       styles.row.margin = '0 auto';
     });
-
-
-    // window.addEventListener('resize', () => {
-    //   this.positionImageRows();
-    // });
   }
 }
 
