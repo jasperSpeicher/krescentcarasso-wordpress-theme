@@ -21,7 +21,7 @@
     background-color: #fff;
     font-weight: 100;
     pointer-events: none;
-    transition: height 400ms ease;
+    /*transition: height 400ms ease;*/
   }
 
   .theme-header.theme-header--menu-open {

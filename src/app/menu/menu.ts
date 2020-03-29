@@ -67,9 +67,9 @@ export class Menu {
   }
 
   public parseUrl(url) {
-    console.log('parseurl');
-    const page = url.split('/')[1];
-    this.activeParent = page;
+    console.log('parseurl', url);
+    let segments = url.split('/');
+    this.activeParent = segments[1] === 'explore' && 'explore';
   }
 
 

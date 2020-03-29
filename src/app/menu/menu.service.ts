@@ -11,7 +11,7 @@ import { Menu } from './menu';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AppService } from '../app.service';
 import { PagesService } from '../pages/pages.service';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Injectable()
 export class MenuService {
@@ -29,10 +29,17 @@ export class MenuService {
         console.log(e);
       });
     this.router.events
+      .filter(event => event instanceof NavigationEnd && this.menu !== null)
+      .forEach((event: NavigationEnd) => {
+        if (this.menu) {
+          this.menu.parseUrl(this.router.url);
+        }
+      });
+    this.router.events
       .filter(event => event instanceof NavigationStart && this.menu !== null)
       .forEach((event: NavigationStart) => {
         if (this.menu) {
-          this.menu.parseUrl(this.router.url);
+          this.menu.activeParent = null;
         }
       });
   }
