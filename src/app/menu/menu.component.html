@@ -12,8 +12,9 @@
            [class.child-active]="menu.activeParent === parent.object_slug">
           {{ parent.title }}
         </a>
-        <a class="page-link" *ngIf="parent.object==='page'"
-           routerLink="{{ path(parent.object_slug) }}" routerLinkActive="active">
+        <a *ngIf="parent.object==='page'"
+           class="page-link"
+           (click)="navigate(path(parent.object_slug))" [class.active]="linkActive(path(parent.object_slug))">
           {{ parent.title }}
         </a>
 

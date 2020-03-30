@@ -12,8 +12,6 @@ export class MenuComponent implements OnInit {
 
   @Input() pageClasses: string;
 
-  navigationCancelled = false;
-
   constructor(private menuService: MenuService, private router: Router) {
   }
 
@@ -22,7 +20,7 @@ export class MenuComponent implements OnInit {
   }
 
   get fadeOut() {
-    return this.menuService.navigating || this.navigationCancelled;
+    return this.menuService.navigating;
   }
 
   path(parentSlug: string, childSlug: string) {
@@ -34,14 +32,18 @@ export class MenuComponent implements OnInit {
       routeChanged => {
         // if the route did not change, then set navigationCancelled
         if (!routeChanged) {
-          this.navigationCancelled = true;
+          this.menuService.navigating = true;
           setTimeout(() => {
-            this.navigationCancelled = false;
+            this.menuService.navigating = false;
             this.menu.activeParent = null;
           }, 400);
         }
       }
     );
+  }
+
+  linkActive(url: string) {
+    return this.router.url === `/${url}`;
   }
 
   showChildren(parent: any) {
