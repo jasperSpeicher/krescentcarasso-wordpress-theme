@@ -4,6 +4,10 @@
   overflow: hidden;
 }
 
+.app {
+  padding-top: 150px;
+}
+
 .app main {
   transition: opacity 400ms ease;
 }
