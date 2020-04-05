@@ -43,6 +43,9 @@ export class MenuService {
             this.navigating = true;
             setTimeout(() => this.menu.activeParent = null, 400);
           }
+
+          // hide mobile menu on nav
+          this.menu.mobileVisible = false;
         }
       });
     this.router.events
