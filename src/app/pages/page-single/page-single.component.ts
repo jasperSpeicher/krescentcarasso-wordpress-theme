@@ -46,6 +46,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   resize(event) {
     if (this.lightbox) {
       this.lightbox.resize();
+    }
+    if (this.imagesByFours) {
       this.positionImageRows();
     }
   }
@@ -59,11 +61,14 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.imagesByFours = this.getImagesByFours();
         this.fadeInHero = false;
         this.heroSrc = null;
-        this.positionImageRows();
+        if (this.imagesByFours) {
+          this.positionImageRows();
+        }
         if (this.lightbox) {
           this.lightbox.destroy();
         }
         setTimeout(() => {
+          console.log('init lightbox')
           this.lightbox.initialize();
         }, 1000);
         const preload = new Image();
@@ -72,6 +77,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         preload.src = this.page.acf.hero_image.url;
         setTimeout(() => {
+          console.log('fade in hero')
           this.fadeInHero = true;
         }, 2000);
         if (this.images) {
@@ -164,7 +170,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       } else {
         this.images.forEach((image: any, i: number) => {
-          image.hidden = image.mediaCategoryTerms ? image.mediaCategoryTerms.indexOf(this.termSlug) < 0 : true;
+          //image.hidden = image.mediaCategoryTerms ? image.mediaCategoryTerms.indexOf(this.termSlug) < 0 : true;
+          image.hidden = Math.random() > 0.5;
         });
       }
       if (this.imageGrid) {

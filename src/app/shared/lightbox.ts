@@ -6,6 +6,7 @@ export class LightBox {
   private clickListener = this.setImageHash.bind(this);
   private hashListener = this.onHashChange.bind(this);
   private activeRect;
+  private initialized = false;
 
   constructor(
     private _imageGridElement: HTMLElement,
@@ -16,11 +17,13 @@ export class LightBox {
   }
 
   initialize() {
-    this._enlargedImageElement.addEventListener('click', this.resetListener);
-    this._enlargedImageBackdropElement.addEventListener('click', this.resetListener);
-    this._imageGridElement.addEventListener('click', this.clickListener);
-    window.addEventListener('hashchange', this.hashListener);
-    this.onHashChange();
+    if (!this.initialized) {
+      this._enlargedImageElement.addEventListener('click', this.resetListener);
+      this._enlargedImageBackdropElement.addEventListener('click', this.resetListener);
+      this._imageGridElement.addEventListener('click', this.clickListener);
+      window.addEventListener('hashchange', this.hashListener);
+      this.onHashChange();
+    }
   }
 
   onHashChange() {

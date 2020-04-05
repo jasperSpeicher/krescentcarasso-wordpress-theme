@@ -31,19 +31,26 @@ export class MenuService {
         console.log(e);
       });
     this.router.events
+      .filter(event => event instanceof NavigationStart && this.menu !== null)
+      .forEach((event: NavigationStart) => {
+        if (this.menu) {
+          console.log('NavigationStart', event.url.split('/')[1], this.menu.activeParent);
+
+          const suppressActiveParentChange =
+            this.menu.activeParent === null ||
+            (event.url.split('/')[1] === 'explore' && this.menu.activeParent === 'explore');
+          if (!suppressActiveParentChange) {
+            this.navigating = true;
+            setTimeout(() => this.menu.activeParent = null, 400);
+          }
+        }
+      });
+    this.router.events
       .filter(event => event instanceof NavigationEnd && this.menu !== null)
       .forEach((event: NavigationEnd) => {
         this.navigating = false;
         if (this.menu) {
           this.menu.parseUrl(this.router.url);
-        }
-      });
-    this.router.events
-      .filter(event => event instanceof NavigationStart && this.menu !== null)
-      .forEach((event: NavigationStart) => {
-        this.navigating = true;
-        if (this.menu) {
-          setTimeout(() => this.menu.activeParent = null, 400);
         }
       });
   }

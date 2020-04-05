@@ -94,6 +94,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
           }
         }
       });
+      this._packery.layout();
     }
   }
 
@@ -112,9 +113,9 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
         transitionDuration: transitionDuration + 'ms',
         percentPosition: true,
         hiddenStyle: {opacity: 0},
-        visibleStyle: {opacity: 1}
+        visibleStyle: {opacity: 1},
+        horizontal: false,
       });
-    this._packery.layout();
     this.updateVisibleImages();
 
     // Packery.layoutOnViewChecked = true;

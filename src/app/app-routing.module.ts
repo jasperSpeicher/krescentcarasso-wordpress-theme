@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { PageSingleComponent } from './pages/page-single/page-single.component';
 import { PageHomeComponent } from './pages/page-home/page-home.component';
 import { Observable } from 'rxjs';
@@ -9,11 +9,17 @@ import { Resolve } from '@angular/router';
 @Injectable()
 export class DelayResolve implements Resolve<Observable<any>> {
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
-  resolve(): any {
-    return Observable.of('delayed navigation').delay(400);
+  resolve(route): any {
+    console.log('delay', this.router.url.split('/')[1], route.url[0].path)
+    const suppressDelay = this.router.url.split('/')[1] === 'explore' && route.url[0].path === 'explore';
+    if (suppressDelay) {
+      return Observable.of('navigation');
+    } else {
+      return Observable.of('delayed navigation').delay(400);
+    }
   }
 }
 
