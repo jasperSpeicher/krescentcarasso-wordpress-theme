@@ -28,7 +28,7 @@
     height: 13rem;
   }
 
-  .theme-header.theme-header--menu-fade-out .image-grid__item {
+  .theme-header.theme-header--menu-fade-out .menu-image-grid__item {
     opacity: 0;
   }
 
@@ -74,7 +74,6 @@
     line-height: 1;
     list-style: none;
     text-align: center;
-
   }
 
   .theme-menu li {
@@ -188,37 +187,40 @@
     pointer-events: auto;
   }
 
-  .theme-menu li div .image-grid {
+  .menu-image-grid {
     position: absolute;
     top: 8.625rem;
     left: 0;
     right: 0;
+    bottom:0;
     padding: 3rem 15px 0 15px;
     height: 0;
+    width: 65%;
+    max-width: 1200px;
+    font-size: 1.5rem;
+    line-height: 1;
+    list-style: none;
+    text-align: center;
     opacity: 0;
     transition: opacity 400ms ease;
     pointer-events: none;
     background: #fff;
-    max-width: 1200px;
+    overflow: auto;
   }
 
-  .theme-menu li.theme-menu__item.explore div .image-grid {
-    display: none;
-  }
-
-  .theme-header--show-grid .theme-menu li div .image-grid.active {
+  .menu-image-grid.active {
     opacity: 1;
     height: auto;
     pointer-events: auto;
   }
 
-  .image-grid__item {
+  .menu-image-grid__item {
     padding: 0 1.25rem 2.5rem 1.25rem;
     opacity: 1;
     transition: opacity 400ms ease;
   }
 
-  .image-grid__project-link {
+  .menu-image-grid__project-link {
     position: relative;
     background-color: #333333;
     width: 100%;
@@ -226,12 +228,12 @@
     cursor: pointer;
   }
 
-  .image-grid__item img {
+  .menu-image-grid__item img {
     width: 100%;
     height: auto;
   }
 
-  .image-grid__item-title {
+  .menu-image-grid__item-title {
     position: absolute;
     top: 50%;
     width: 100%;
@@ -242,7 +244,7 @@
     color: #fff !important;
   }
 
-  .image-grid__project-link::after {
+  .menu-image-grid__project-link::after {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -255,12 +257,17 @@
     transition: opacity 400ms ease;
   }
 
-  .image-grid__project-link:hover::after {
+  .menu-image-grid__project-link:hover::after {
     opacity: 0.8;
   }
 
-  .image-grid__project-link:hover .image-grid__item-title {
+  .menu-image-grid__project-link:hover .menu-image-grid__item-title {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1400px){
+  .menu-image-grid {
   }
 }
 
@@ -463,7 +470,7 @@
   /*.theme-header--menu-open .theme-menu > li > a {*/
   /*opacity: 0.3;*/
   /*}*/
-  .theme-menu li div .image-grid {
+  .menu-image-grid {
     display: none;
   }
 }

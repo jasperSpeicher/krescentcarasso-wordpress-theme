@@ -43,24 +43,6 @@
 
           </ul>
 
-          <!-- image based for desktop -->
-          <div class="image-grid container-fluid" [class.active]="menu.activeParent === parent.object_slug">
-            <div class="row d-none d-sm-block" [class.active]="menu.activeParent === parent.object_slug">
-
-              <div class="image-grid__item col-12" *ngFor="let child of parent.children"
-                   [ngClass]="{'col-sm-4':parent.children.length>2, 'col-sm-6':parent.children.length<=2}">
-                <a class="image-grid__project-link"
-                   (click)="navigate(path(parent.object_slug,child.object_slug))">
-                  <template [ngIf]="!!child.gridImage">
-                    <img [src]="child.gridImage"/>
-                  </template>
-                  <div class="image-grid__item-title">{{ child.title }}</div>
-                </a>
-              </div>
-
-            </div>
-          </div>
-
         </div>
 
       </li>
@@ -74,5 +56,28 @@
     </a>
     <a class="menu-toggle" (click)="toggleMobile()">+</a>
   </h1>
+
+
+  <!-- image based for desktop -->
+  <ng-container *ngFor="let parent of menu?.items">
+    <div class="menu-image-grid container-fluid"
+         *ngIf="parent.object_slug !== 'explore'"
+         [class.active]="menu.activeParent === parent.object_slug">
+      <div class="row d-none d-sm-block" [class.active]="menu.activeParent === parent.object_slug">
+
+        <div class="menu-image-grid__item col-12" *ngFor="let child of parent.children"
+             [ngClass]="{'col-sm-4':parent.children.length>2, 'col-sm-6':parent.children.length<=2}">
+          <a class="menu-image-grid__project-link"
+             (click)="navigate(path(parent.object_slug,child.object_slug))">
+            <template [ngIf]="!!child.gridImage">
+              <img [src]="child.gridImage"/>
+            </template>
+            <div class="menu-image-grid__item-title">{{ child.title }}</div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
 
 </div>
