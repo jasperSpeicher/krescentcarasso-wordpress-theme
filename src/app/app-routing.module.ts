@@ -13,8 +13,10 @@ export class DelayResolve implements Resolve<Observable<any>> {
   }
 
   resolve(route): any {
-    console.log('delay', this.router.url.split('/')[1], route.url[0].path)
-    const suppressDelay = this.router.url.split('/')[1] === 'explore' && route.url[0].path === 'explore';
+    const currentUrlSegments = this.router.url.split('/');
+    const suppressDelay =
+      !!currentUrlSegments && !!currentUrlSegments[1] && !!route.url[0] &&
+      currentUrlSegments[1] === 'explore' && route.url[0].path === 'explore';
     if (suppressDelay) {
       return Observable.of('navigation');
     } else {
