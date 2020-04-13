@@ -19,6 +19,11 @@
         </div>
       </div>
     </div>
+    <div class="image-grids__flat-list row">
+      <div *ngFor="let image of images" class="col-12">
+        <img [src]="image.sizes.large" [attr.data-src-large]="image.url">
+      </div>
+    </div>
   </div>
 
   <div *ngIf="!images" class="theme-page-body container-fluid">

@@ -64,6 +64,9 @@
 .theme-page-body, .image-grids {
   max-width: 1600px;
 }
+.image-grids__flat-list {
+  display: none;
+}
 
 :host /deep/ .theme-meta-text {
   border-bottom: 1px solid #ccc;
@@ -146,5 +149,11 @@ img {
   }
   :host /deep/ .theme-meta-text span {
     font-size: 0.9rem;
+  }
+  .image-grids__flat-list {
+    display: block;
+  }
+  .image-grids .image-rows, .image-grids .packery-container {
+    display: none;
   }
 }
