@@ -24,15 +24,19 @@
   <div *ngIf="!images" class="theme-page-body container-fluid">
 
     <!--hero image-->
-    <div class="theme-hero" [class.theme-hero--fade-in]="fadeInHero">
-      <div *ngIf="page && page.acf?.hero_image && heroSrc && !showFixedHero" class="theme-hero__image"
+    <div class="theme-hero theme-hero--cropped" [class.theme-hero--fade-in]="fadeInHero">
+      <div *ngIf="page && page.acf?.hero_image && heroSrc" class="theme-hero__image"
            [class.theme-hero__image--loaded]="!!heroSrc"
            [style.background-image]="'url('+heroSrc+')'">
       </div>
-      <img *ngIf="page && page.acf?.hero_image && heroSrc && showFixedHero" class="theme-hero__image theme-hero__image--natural"
-           [class.theme-hero__image--loaded]="!!heroSrc"
-           [src]="heroSrc">
-
+      <h2>{{ page?.title.rendered }}</h2>
+    </div>
+    <div class="theme-hero theme-hero--natural" [class.theme-hero--fade-in]="fadeInHero">
+      <div class="theme-hero__image">
+        <img *ngIf="page && page.acf?.hero_image && heroSrc"
+             [class.theme-hero__image--loaded]="!!heroSrc"
+             [src]="heroSrc">
+      </div>
       <h2>{{ page?.title.rendered }}</h2>
     </div>
 

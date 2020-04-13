@@ -191,7 +191,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   positionImageRows() {
-    const padding = 20;
+    const padding = window.innerWidth > 768 ? 20 : 0;
     const minRatioDivisor = 3;
     this.imageRowStyles = [];
     this.imagesByFours.forEach((rowImages: any[]) => {
