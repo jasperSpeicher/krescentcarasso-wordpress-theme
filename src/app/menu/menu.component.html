@@ -26,7 +26,7 @@
             <!-- show child links if not on explore page -->
             <template [ngIf]="parent.object_slug!=='explore'">
               <li *ngFor="let child of parent.children">
-                <a routerLink="{{ path(parent.object_slug,child.object_slug) }}" routerLinkActive="active">
+                <a (click)="navigate(path(parent.object_slug,child.object_slug))" routerLinkActive="active">
                   {{ child.title }}
                 </a>
               </li>

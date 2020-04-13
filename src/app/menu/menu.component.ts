@@ -36,6 +36,8 @@ export class MenuComponent implements OnInit {
           setTimeout(() => {
             this.menuService.navigating = false;
             this.menu.activeParent = null;
+            // hide mobile menu on nav
+            this.menu.mobileVisible = false;
           }, 400);
         }
       }
