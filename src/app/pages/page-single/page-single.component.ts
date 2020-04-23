@@ -27,7 +27,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   page: Page;
   menu: Menu = null;
   images: Array<any> = null;
-  imagesByFours = null;
+  imagesByFours = [];
   imageRowStyles = [];
   termSlug: string = null;
   mediaObjects: any = null;

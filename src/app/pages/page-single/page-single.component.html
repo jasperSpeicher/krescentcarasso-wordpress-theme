@@ -5,11 +5,11 @@
 
   <!--imageGrid-->
   <div class="image-grids container-fluid">
-    <div *ngIf="page && page.acf.grid_type==='columns'" class="packery-container">
+    <div *ngIf="!!page && !!page.acf && page.acf.grid_type==='columns'" class="packery-container">
       <div [packery]="images">
       </div>
     </div>
-    <div *ngIf="page && imagesByFours && imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'"
+    <div *ngIf="!!page && !!imagesByFours && imagesByFours.length > 0 && !!imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'"
          class="image-rows">
       <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row"
            [ngStyle]="imageRowStyles[rowIndex].row">
@@ -19,7 +19,8 @@
         </div>
       </div>
     </div>
-    <div class="image-grids__flat-list row">
+    <div *ngIf="!!page && !!images && images.length > 0 "
+         class="image-grids__flat-list row">
       <div *ngFor="let image of images" class="col-12">
         <img [src]="image.sizes.large" [attr.data-src-large]="image.url">
       </div>
