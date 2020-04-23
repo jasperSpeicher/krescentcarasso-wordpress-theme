@@ -121,6 +121,38 @@ img {
   width: 100%;
 }
 
+.back-to-top {
+  font: inherit;
+  font-size: 1rem;
+  margin: 100px auto;
+  border: none !important;
+  padding: 0 !important;
+  width: auto;
+  overflow: visible;
+  text-align: inherit;
+  display: block;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
+
+.back-to-top:hover {
+  border-bottom: 1px solid #000 !important;
+}
+
+
 @media (max-width: 768px) {
   .theme-page-body {
     padding-top: 60px;

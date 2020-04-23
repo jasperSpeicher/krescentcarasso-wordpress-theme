@@ -162,6 +162,12 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fadeInHero = false;
   }
 
+  scrollToTop() {
+    document.documentElement.classList.toggle('scrolling', true);
+    document.documentElement.scrollTop = 0;
+    document.documentElement.classList.toggle('scrolling', false);
+  }
+
   filterGallery(termSlug: string) {
     this.termSlug = termSlug;
     if (this.images) {
