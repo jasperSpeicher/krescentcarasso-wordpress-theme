@@ -47,7 +47,7 @@ export class LightBox {
   }
 
   clearImageHash() {
-    history.back()
+    history.replaceState(null, null, window.location.href.split('#')[0]);
     this.reset();
   }
 
