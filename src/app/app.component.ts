@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AppService } from './app.service';
 import { MenuService } from './menu/menu.service';
-import { fadeAnimation } from './shared/fade.animation';
+import { fadeAnimation } from './common/fade.animation';
 import { Menu } from './menu/menu';
 import { Subscription } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { ViewEncapsulation, Component, Input, ElementRef, OnChanges, AfterViewInit } from '@angular/core';
-import { LightBox } from '../shared/lightbox';
+import { LightBox } from '../common/lightbox';
 
 declare var Packery: any;
 

@@ -13,7 +13,8 @@ import { MenuService } from '../../menu/menu.service';
 import { Menu } from '../../menu/menu';
 import { Observable } from 'rxjs/Observable';
 import { PackeryComponent } from '../../packery/packery.component';
-import { LightBox } from '../../shared/lightbox';
+import { LightBox } from '../../common/lightbox';
+import { chunkReducer } from '../../common/helpers';
 
 @Component({
   selector: 'app-page-single',
@@ -181,13 +182,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getImagesByFours() {
-    return this.images ? this.images.reduce((groups, image, index) => {
-      if (groups[groups.length - 1].length === 4) {
-        groups.push([]);
-      }
-      groups[groups.length - 1].push(image);
-      return groups;
-    }, [[]]) : [];
+    return this.images ? this.images.reduce(chunkReducer(4), [[]]) : [];
   }
 
   positionImageRows() {
