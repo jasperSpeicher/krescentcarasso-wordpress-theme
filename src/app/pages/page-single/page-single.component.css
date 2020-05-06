@@ -153,6 +153,14 @@ img {
   border-bottom: 1px solid #000 !important;
 }
 
+.packery-container {
+  opacity: 0;
+  transition: 800ms;
+}
+
+.packery-container--fade-in {
+  opacity: 1;
+}
 
 @media (max-width: 768px) {
   .theme-page-body {
