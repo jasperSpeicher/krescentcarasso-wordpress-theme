@@ -1,41 +1,87 @@
+.app {
+  padding-top: 9.25rem;
+}
+
+.app.app--menu-open {
+  padding-top: 13rem;
+}
+
+.app main {
+  transition: opacity 400ms ease;
+}
+.app--navigating main {
+  opacity: 0;
+}
 .app--menu-showing-grid,
 .app--menu-mobile-visible {
   height: 100vh;
   overflow: hidden;
 }
 
-.app {
-  padding-top: 150px;
-}
-
-.app main {
-  transition: opacity 400ms ease;
-}
-
-.app--navigating main {
-  opacity: 0;
-}
-
+/*:host /deep/ .about .theme-hero {*/
+  /*padding-top: 80vh;*/
+  /*max-width: 1000px;*/
+  /*margin: 0 auto;*/
+/*}*/
+/*:host /deep/ .about .theme-hero h2 {*/
+  /*display: none;*/
+/*}*/
+/*:host /deep/ .about .theme-hero .theme-hero__image::before {*/
+  /*display: none;*/
+/*}*/
+/*:host /deep/ .about .theme-body-text img {*/
+  /*float: right;*/
+  /*width: 50%;*/
+  /*height: auto;*/
+  /*margin-left: 40px;*/
+/*}*/
 :host /deep/ .about .theme-hero {
-  padding-top: 80vh;
-  max-width: 1000px;
+  display: none;
+}
+:host /deep/ .about .theme-body-text__background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.1;
+}
+
+:host /deep/ .about .theme-body-text {
+  position: relative;
+  padding: 3rem 2rem;
+  font-weight: 300;
+  max-width: 1600px;
+}
+
+:host /deep/ .about .theme-body-text .content {
+  max-width: 1100px;
   margin: 0 auto;
 }
-:host /deep/ .about .theme-hero h2 {
-  display: none;
-}
-:host /deep/ .about .theme-hero .theme-hero__image::before {
-  display: none;
-}
-:host /deep/ .about .theme-body-text img {
-  float: right;
-  width: 50%;
-  height: auto;
-  margin-left: 40px;
+
+:host /deep/ .about .theme-body-text .content p {
+  margin-bottom: 2rem;
 }
 
+
+@media (max-width: 1919px) {
+  :host /deep/ .about .theme-body-text {
+    padding: 3rem 2rem;
+    max-width: 1000px;
+  }
+
+  :host /deep/ .about .theme-body-text .content {
+    max-width: 690px;
+  }
+}
 @media (max-width: 768px) {
   .app {
+    padding-top: 0;
+  }
+  .app.app--menu-open {
     padding-top: 0;
   }
 }
