@@ -5,7 +5,7 @@
 
   <!--imageGrid-->
   <div class="image-grids container-fluid">
-    <div *ngIf="!!page && !!page.acf && page.acf.grid_type==='columns'" class="packery-container">
+    <div *ngIf="!!page && !!page.acf && page.acf.grid_type==='columns'" [ngClass]="{ 'packery-container': true, 'packery-container--fade-in': fadeInPackery }">
       <div [packery]="images">
       </div>
     </div>
@@ -70,7 +70,7 @@
 
   </div>
 
-  <button class="back-to-top" (click)="scrollToTop()">Back to Top</button>
+  <button *ngIf="showBackTopButton" class="back-to-top" (click)="scrollToTop()">Back to Top</button>
 
 </div>
 

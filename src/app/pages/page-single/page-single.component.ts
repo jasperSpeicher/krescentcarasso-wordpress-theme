@@ -33,10 +33,11 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   termSlug: string = null;
   mediaObjects: any = null;
   fadeInHero = false;
+  fadeInPackery = false;
+  showBackTopButton = false;
+
   heroSrc = null;
   private lightbox: LightBox;
-
-  scrollPos = 0;
 
   constructor(private pagesService: PagesService,
               private route: ActivatedRoute,
@@ -68,6 +69,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
           : this.page.acf.gallery;
         this.imagesByFours = this.getImagesByFours();
         this.fadeInHero = false;
+        this.fadeInPackery = false;
+        this.showBackTopButton = false;
         this.heroSrc = null;
         if (this.imagesByFours) {
           this.positionImageRows();
@@ -87,6 +90,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => {
           console.log('fade in hero')
           this.fadeInHero = true;
+          this.fadeInPackery = true;
+          this.showBackTopButton = true;
         }, 2000);
         if (this.taggedImages && termSlug !== undefined) {
           this.filterGallery(termSlug);
