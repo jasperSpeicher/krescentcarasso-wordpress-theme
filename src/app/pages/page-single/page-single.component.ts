@@ -27,6 +27,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   page: Page;
   menu: Menu = null;
   images: Array<any> = null;
+  taggedImages: Array<{ tag_name: string, images: any[] }> = null;
   imagesByFours = [];
   imageRowStyles = [];
   termSlug: string = null;
@@ -58,7 +59,13 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
       .getPage(parentSlug)
       .subscribe(res => {
         this.page = res[0] as Page;
-        this.images = this.page.acf.gallery;
+        this.taggedImages = this.page.acf.tagged_gallery;
+        this.images = this.taggedImages ?
+          this.images = this.taggedImages.reduce(
+            (images, taggedGallery) => {
+              return images.concat(taggedGallery.images);
+            }, [])
+          : this.page.acf.gallery;
         this.imagesByFours = this.getImagesByFours();
         this.fadeInHero = false;
         this.heroSrc = null;
@@ -81,37 +88,11 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('fade in hero')
           this.fadeInHero = true;
         }, 2000);
-        if (this.images) {
-          this.populateMediaCategoryTerms().subscribe(() => {
-            // ...and use the slug for the media category
-            if (termSlug !== undefined) {
-              this.filterGallery(termSlug);
-            }
-          });
+        if (this.taggedImages && termSlug !== undefined) {
+          this.filterGallery(termSlug);
         }
       });
 
-  }
-
-  populateMediaCategoryTerms(): Observable<any> {
-    //FIXME what about when this is still loading?
-
-    const imagesById = {};
-    this.images.forEach((image: any) => {
-      imagesById[image.id] = image;
-    });
-    const obs: Observable<any> = this.pagesService.getMediaObjects()
-      .map(objects => {
-
-        this.mediaObjects = objects;
-        objects.forEach((object) => {
-          if (imagesById[object.id]) {
-            imagesById[object.id].mediaCategoryTerms = object['media_category_terms']
-              .map((term: any) => term.slug);
-          }
-        });
-      });
-    return obs;
   }
 
   ngOnInit() {
@@ -124,6 +105,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
       // if the parent is 'explore' then show the explore page...
       if (parent === 'explore') {
         if (!this.page || this.page.parent !== 'explore') {
+
+        if (!this.page || this.page.slug !== 'explore') {
           this.page = null;
           this.getPage('explore', slug);
         } else {
@@ -170,15 +153,18 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   filterGallery(termSlug: string) {
     this.termSlug = termSlug;
-    if (this.images) {
+    if (this.taggedImages) {
       if (termSlug === 'all') {
-        this.images.forEach((image: any) => {
-          image.hidden = false;
+        this.taggedImages.forEach((taggedGallery) => {
+          taggedGallery.images.forEach((image: any) => {
+            image.hidden = false;
+          });
         });
       } else {
-        this.images.forEach((image: any, i: number) => {
-          //image.hidden = image.mediaCategoryTerms ? image.mediaCategoryTerms.indexOf(this.termSlug) < 0 : true;
-          image.hidden = Math.random() > 0.5;
+        this.taggedImages.forEach((taggedGallery) => {
+          taggedGallery.images.forEach((image: any, i: number) => {
+            image.hidden = taggedGallery.tag_name !== this.termSlug;
+          });
         });
       }
       if (this.imageGrid) {

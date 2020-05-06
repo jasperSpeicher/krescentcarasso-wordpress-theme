@@ -95,14 +95,6 @@ export class MenuService {
         return menu;
       })
       .flatMap((menu: Menu) => {
-        return this.http.get(AppService._wpBase + 'theme/v2/media_category_terms')
-          .map((categoryRes: Response) => {
-            menu.mediaCategoryTerms = categoryRes.json();
-            menu.activeParent = null;
-            return menu;
-          });
-      })
-      .flatMap((menu: Menu) => {
           return this.pagesService.getPages().map((pages) => {
             // fixme use media record to get the correct size image for this
             menu.items
@@ -116,6 +108,9 @@ export class MenuService {
                   children[i] = newChild;
                 });
               });
+            menu.mediaCategoryTerms = pages
+              .filter(p => p.slug === 'explore')[0].acf.tagged_gallery
+              .map(g => g.tag_name);
             return menu;
           });
         }
