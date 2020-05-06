@@ -190,3 +190,7 @@ img {
     display: none;
   }
 }
+
+.theme-body-text__background {
+  display: none;
+}
