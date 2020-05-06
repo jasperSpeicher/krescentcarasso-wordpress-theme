@@ -1,5 +1,5 @@
 export class Page {
-  acf:any;
-  slug:string;
-  parent:string;
+  acf: any;
+  slug: string;
+  parent: string;
 }
