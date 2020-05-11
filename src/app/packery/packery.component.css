@@ -19,14 +19,15 @@
 /* height of 1 row */
 .theme-image-grid__sizer,
 .theme-image-grid__image {
-  width: 16.5%;
+  width: 8.333%;
   height: auto;
   filter: grayscale(100%);
-  transition: filter 200ms ease, width 200ms ease;
+  transition: filter 200ms ease;
+/*, width 200ms ease;*/
 }
 
 .theme-image-grid__image--active {
-  width: 33%;
+  width: 16.666%;
   height: auto;
   filter: grayscale(0);
 }

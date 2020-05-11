@@ -24,6 +24,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   @Input() set packery(images: Array<any>) {
 
     this._images = images.slice();
+    this._images.sort(function(){ return 0.5 - Math.random(); });
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
 
     // Init lightbox
