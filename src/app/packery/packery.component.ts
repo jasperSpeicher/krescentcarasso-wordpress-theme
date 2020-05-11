@@ -81,26 +81,20 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
       document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
       this._images.forEach((image) => {
         if (image.hidden) {
-          if (!image.removed) {
-            this._packery.remove(image.element);
-            image.removed = true;
-            this.safeImageGridShiftLayout();
-          }
+          image.element.classList.remove('theme-image-grid__image--active');
         } else {
-          if (image.removed) {
-            this._imageGridElement.insertBefore(image.element, this._imageGridElement.firstChild);
-            this._packery.prepended(image.element);
-            image.removed = false;
-          }
+          image.element.classList.add('theme-image-grid__image--active');
         }
       });
-      this._packery.layout();
+      setTimeout((function () {
+        this._packery.layout();
+      }).bind(this), 200);
     }
   }
 
   initPackery() {
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
-    let transitionDuration = 800;
+    let transitionDuration = 200;
 
     if (this._packery) {
       this._packery.destroy();
