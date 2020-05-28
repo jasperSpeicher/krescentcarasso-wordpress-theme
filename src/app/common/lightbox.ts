@@ -69,7 +69,6 @@ export class LightBox {
       ['top', 'left', 'width', 'height'].forEach((key) => {
         this._enlargedImageElement.style[key] = this.activeRect[key] + 'px';
       });
-      this._enlargedImageElement.style.transform = 'translate(0, 0)';
 
       setTimeout(() => {
         if (this.activeRect) {
@@ -77,12 +76,13 @@ export class LightBox {
             this._enlargedImageElementImage.style.display = 'block';
           }
           const scale = this.getScale();
-          this._enlargedImageElement.style.transition = 'all 800ms ease';
-          this._enlargedImageElement.style.top = '50%';
-          this._enlargedImageElement.style.left = '50%';
-          this._enlargedImageElement.style.transform = 'translate(-50%, -50%)';
-          this._enlargedImageElement.style.width = this.activeRect.width * scale + 'px';
-          this._enlargedImageElement.style.height = this.activeRect.height * scale + 'px';
+          const width = this.activeRect.width * scale;
+          const height = this.activeRect.height * scale;
+          this._enlargedImageElement.style.transition = 'top 800ms, left 800ms, width 800ms, height 800ms';
+          this._enlargedImageElement.style.width = width + 'px';
+          this._enlargedImageElement.style.height = height + 'px';
+          this._enlargedImageElement.style.top = (window.innerHeight - height) / 2 + 'px';
+          this._enlargedImageElement.style.left = (window.innerWidth - width) / 2 + 'px';
         }
       }, 100);
     }
