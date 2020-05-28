@@ -28,6 +28,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
 
     // Init lightbox
+    // TODO make this more angular
     if (this.lightbox) {
       this.lightbox.destroy();
     }
@@ -37,7 +38,6 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
       this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
       this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop')
     );
-
 
     while (this._imageGridElement.firstChild) {
       this._imageGridElement.removeChild(this._imageGridElement.firstChild);
