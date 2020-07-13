@@ -117,4 +117,9 @@ export class MenuService {
       );
   }
 
+  public navigateToRouteInURL(fullUrl: string) {
+    const url = new URL(fullUrl);
+    this.router.navigateByUrl(url.pathname);
+  }
+
 }

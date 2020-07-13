@@ -81,6 +81,17 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => {
           console.log('init lightbox')
           this.lightbox.initialize();
+          // make Wordpress links work in angular
+          const links = document.querySelectorAll('.theme-body-text .content a');
+          Array.prototype.slice.call(links).forEach(link => {
+            const href = link.href;
+            if (href.indexOf(window.location.hostname) > -1) {
+              link.addEventListener('click', e => {
+                e.preventDefault();
+                this.menuService.navigateToRouteInURL(href);
+              });
+            }
+          });
         }, 1000);
         const preload = new Image();
         preload.addEventListener('load', () => {

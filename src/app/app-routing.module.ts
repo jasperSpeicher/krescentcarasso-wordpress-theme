@@ -43,6 +43,11 @@ const routes: Routes = [
     resolve: [DelayResolve],
   },
   {
+    path: 'clients',
+    component: PageSingleComponent,
+    resolve: [DelayResolve],
+  },
+  {
     path: '',
     component: PageHomeComponent,
     pathMatch: 'full',
