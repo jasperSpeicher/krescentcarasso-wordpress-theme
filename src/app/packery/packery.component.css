@@ -23,13 +23,34 @@
   height: auto;
   filter: grayscale(100%);
   transition: filter 200ms ease;
-/*, width 200ms ease;*/
+  padding-top: 5.55%;
+  /*, width 200ms ease;*/
+}
+
+/* uncomment this to make small portrait images vertical */
+/*.theme-image-grid__image--portrait {*/
+/*  padding-top: 11.111%;*/
+/*}*/
+
+.theme-image-grid__image > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-position: center;
+  background-size: cover;
 }
 
 .theme-image-grid__image--active {
-  width: 16.666%;
+  width: 33.33%;
   height: auto;
+  padding-top: 22.22%;
   filter: grayscale(0);
+}
+
+.theme-image-grid__image--active.theme-image-grid__image--portrait {
+  padding-top: 44.44%;
 }
 
 .theme-image-grid__gutter-sizer {

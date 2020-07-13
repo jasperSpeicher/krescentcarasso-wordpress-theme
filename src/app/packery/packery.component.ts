@@ -45,13 +45,18 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
     // create images
     this._images.forEach((image: any, index: number) => {
-      let imageElement = document.createElement('img');
-      imageElement.setAttribute('src', image.sizes.medium_large);
+      const imageElement = document.createElement('div');
+      const backgroundImageElement = document.createElement('div');
+      backgroundImageElement.setAttribute('style', `background-image: url(${image.sizes.medium_large})`);
       imageElement.setAttribute('data-src-large', image.sizes.large);
       imageElement.classList.add('theme-image-grid__image');
+      if (image.height > image.width) {
+        imageElement.classList.add('theme-image-grid__image--portrait');
+      }
       if (index === 0) {
         imageElement.classList.add('theme-image-grid__sizer');
       }
+      imageElement.appendChild(backgroundImageElement);
       this._imageGridElement.appendChild(imageElement);
       image.element = imageElement;
     });
