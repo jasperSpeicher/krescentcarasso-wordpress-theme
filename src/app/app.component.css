@@ -35,7 +35,8 @@
   /*height: auto;*/
   /*margin-left: 40px;*/
 /*}*/
-:host /deep/ .about .theme-hero {
+:host /deep/ .about .theme-hero,
+:host /deep/ .clients .theme-hero {
   display: none;
 }
 :host /deep/ .about .theme-body-text__background {
