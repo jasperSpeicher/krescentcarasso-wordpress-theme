@@ -88,6 +88,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
         }
       });
       setTimeout((function () {
+        this._packery.shuffle();
         this._packery.layout();
       }).bind(this), 200);
     }
@@ -101,6 +102,16 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
       this._packery.destroy();
     }
 
+    // add shuffler
+    Packery.prototype.shuffle = function(){
+      let m = this.items.length, t, i;
+      while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = this.items[m];
+        this.items[m] = this.items[i];
+        this.items[i] = t;
+      }
+    };
     // init packery
     this._packery = new Packery(
       this._imageGridElement, {
