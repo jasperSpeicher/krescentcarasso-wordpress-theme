@@ -22,6 +22,7 @@
   width: 8.333%;
   height: auto;
   filter: grayscale(100%);
+  opacity: 0.7;
   transition: filter 200ms ease;
   padding-top: 5.55%;
   /*, width 200ms ease;*/
@@ -47,6 +48,7 @@
   height: auto;
   padding-top: 22.22%;
   filter: grayscale(0);
+  opacity: 1;
 }
 
 .theme-image-grid__image--active.theme-image-grid__image--portrait {
