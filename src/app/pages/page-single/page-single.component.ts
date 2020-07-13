@@ -11,7 +11,6 @@ import { PagesService } from '../pages.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MenuService } from '../../menu/menu.service';
 import { Menu } from '../../menu/menu';
-import { Observable } from 'rxjs/Observable';
 import { PackeryComponent } from '../../packery/packery.component';
 import { LightBox } from '../../common/lightbox';
 import { chunkReducer } from '../../common/helpers';
@@ -31,7 +30,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   imagesByFours = [];
   imageRowStyles = [];
   termSlug: string = null;
-  mediaObjects: any = null;
   fadeInHero = false;
   fadeInPackery = false;
   showBackTopButton = false;
