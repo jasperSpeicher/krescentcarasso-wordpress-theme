@@ -58,13 +58,21 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
       .getPage(parentSlug)
       .subscribe(res => {
         this.page = res[0] as Page;
+        console.log('parentSlug', parentSlug);
         this.taggedImages = this.page.acf.tagged_gallery;
         this.images = this.taggedImages ?
-          this.images = this.taggedImages.reduce(
+          this.taggedImages
+            .reduce(
             (images, taggedGallery) => {
               return images.concat(taggedGallery.images);
             }, [])
           : this.page.acf.gallery;
+        if (!!this.taggedImages) {
+          this.images = this.images
+            .concat(
+              this.page.acf.gallery
+                .filter((filler) => this.images.findIndex(tagged => filler.id === tagged.id) === -1));
+        }
         this.imagesByFours = this.getImagesByFours();
         this.fadeInHero = false;
         this.fadeInPackery = false;
@@ -130,7 +138,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       } else {
         // otherwise just show the page
-        if (slug !== undefined) {
+        if (!!slug) {
           this.page = null;
           this.getPage(slug);
         } else {
@@ -169,10 +177,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.termSlug = termSlug;
     if (this.taggedImages) {
       if (termSlug === 'all') {
-        this.taggedImages.forEach((taggedGallery) => {
-          taggedGallery.images.forEach((image: any) => {
-            image.hidden = false;
-          });
+        this.images.forEach((image) => {
+          image.hidden = true;
         });
       } else {
         this.taggedImages.forEach((taggedGallery) => {

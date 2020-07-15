@@ -109,12 +109,21 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
     // add shuffler
     Packery.prototype.shuffle = function(){
-      let m = this.items.length, t, i;
-      while (m) {
-        i = Math.floor(Math.random() * m--);
-        t = this.items[m];
-        this.items[m] = this.items[i];
-        this.items[i] = t;
+      const stride = 15;
+      const activeItems = this.items.filter(item => item.element.classList.contains('theme-image-grid__image--active'));
+      const inactiveItems = this.items.filter(item => !item.element.classList.contains('theme-image-grid__image--active'));
+      let cursor = 0;
+      this.items = [];
+      while (!!activeItems.length || !!inactiveItems.length) {
+        if (cursor++ % stride === 0) {
+          if (!!activeItems.length) {
+            this.items.push(activeItems.pop());
+          }
+        } else {
+          if (!!inactiveItems.length) {
+            this.items.push(inactiveItems.pop());
+          }
+        }
       }
     };
     // init packery
