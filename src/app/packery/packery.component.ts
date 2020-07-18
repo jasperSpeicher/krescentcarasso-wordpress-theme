@@ -24,7 +24,8 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   setImageBackground(backgroundImageElement, url) {
     backgroundImageElement.setAttribute(
       'style',
-      `background-color:rgba(0,0,0,${Math.random() * 0.2 + 0.1}); background-image: url(${url})`
+      `background-color:rgba(0,0,0,${Math.random() * 0.2 + 0.1}); background-image: url(${url}); ` +
+      `transition: opacity ${Math.random() * 400}ms`
     );
   }
 
@@ -89,10 +90,8 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
   updateVisibleImages() {
     if (this._packery) {
-      document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
-      this._images.forEach((image) => {
-        image.element.classList.toggle('theme-image-grid__image--clipped', false);
-      });
+      const gridElement = document.getElementsByClassName('theme-image-grid')[0];
+      gridElement.classList.toggle('theme-image-grid--transitioning-on', true);
       this._images.forEach((image) => {
         if (image.hidden) {
           image.element.classList.remove('theme-image-grid__image--active');
@@ -105,7 +104,8 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
       setTimeout((function () {
         this._packery.shuffle();
         this._packery.layout();
-      }).bind(this), 200);
+        gridElement.classList.toggle('theme-image-grid--transitioning-on', false);
+      }).bind(this), 200); // this should exceed image width and padding-top time in css
 
       setTimeout((function () {
         const activeImages = Array.prototype.slice.apply(
@@ -120,9 +120,10 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
           const bottom = image.offsetTop + image.offsetHeight;
           return Math.max(yMax, bottom);
         }, 0);
-        this._images.forEach((image) => {
-          image.element.classList.toggle('theme-image-grid__image--clipped', image.offsetTop > gridBottom);
-          });
+        gridElement.setAttribute('style', `height:${gridBottom}px;`);
+        // this._images.forEach((image) => {
+        //   image.element.classList.toggle('theme-image-grid__image--clipped', image.offsetTop > gridBottom);
+        //   });
       }).bind(this), 1000);
 
     }
@@ -130,7 +131,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
   initPackery() {
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
-    let transitionDuration = 0;
+    let transitionDuration = 100;
 
     if (this._packery) {
       this._packery.destroy();
