@@ -96,7 +96,6 @@
 
 .theme-body-text .content {
   position: relative;
-  z-index: 1;
 }
 
 /deep/ .theme-body-text .content p a {
