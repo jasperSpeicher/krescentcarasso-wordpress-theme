@@ -21,6 +21,13 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   constructor(private elementRef: ElementRef) {
   }
 
+  setImageBackground(backgroundImageElement, url) {
+    backgroundImageElement.setAttribute(
+      'style',
+      `background-color:rgba(0,0,0,${Math.random() * 0.2 + 0.1}); background-image: url(${url})`
+    );
+  }
+
   @Input() set packery(images: Array<any>) {
 
     this._images = images.slice();
@@ -47,21 +54,19 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     this._images.forEach((image: any, index: number) => {
       const imageElement = document.createElement('div');
       const backgroundImageElement = document.createElement('div');
-      backgroundImageElement.setAttribute('style', `background-image: url(${image.sizes.medium_large})`);
+      this.setImageBackground(backgroundImageElement, image.sizes.thumbnail);
       imageElement.setAttribute('data-src-large', image.sizes.large);
       imageElement.classList.add('theme-image-grid__image');
       if (image.height > image.width) {
         imageElement.classList.add('theme-image-grid__image--portrait');
       }
-      if (index === 0) {
-        imageElement.classList.add('theme-image-grid__sizer');
-      }
+      // if (index === 0) {
+      //   imageElement.classList.add('theme-image-grid__sizer');
+      // }
       imageElement.appendChild(backgroundImageElement);
       this._imageGridElement.appendChild(imageElement);
       image.element = imageElement;
     });
-
-
   }
 
 
@@ -86,22 +91,46 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     if (this._packery) {
       document.getElementsByClassName('theme-image-grid')[0].classList.add('theme-image-grid--transitioning-on');
       this._images.forEach((image) => {
+        image.element.classList.toggle('theme-image-grid__image--clipped', false);
+      });
+      this._images.forEach((image) => {
         if (image.hidden) {
           image.element.classList.remove('theme-image-grid__image--active');
+          this.setImageBackground(image.element.childNodes[0], image.sizes.thumbnail);
         } else {
           image.element.classList.add('theme-image-grid__image--active');
+          this.setImageBackground(image.element.childNodes[0], image.sizes.medium_large);
         }
       });
       setTimeout((function () {
         this._packery.shuffle();
         this._packery.layout();
       }).bind(this), 200);
+
+      setTimeout((function () {
+        const activeImages = Array.prototype.slice.apply(
+          document.getElementsByClassName('theme-image-grid__image--active'));
+        if (!activeImages.length) {
+          this._images.forEach((image) => {
+            image.element.classList.toggle('theme-image-grid__image--clipped', false);
+          });
+          return;
+        }
+        const gridBottom = activeImages.reduce((yMax, image) => {
+          const bottom = image.offsetTop + image.offsetHeight;
+          return Math.max(yMax, bottom);
+        }, 0);
+        this._images.forEach((image) => {
+          image.element.classList.toggle('theme-image-grid__image--clipped', image.offsetTop > gridBottom);
+          });
+      }).bind(this), 1000);
+
     }
   }
 
   initPackery() {
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
-    let transitionDuration = 200;
+    let transitionDuration = 0;
 
     if (this._packery) {
       this._packery.destroy();
@@ -109,13 +138,14 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
 
     // add shuffler
     Packery.prototype.shuffle = function(){
-      const stride = 15;
+      const stride = parseInt(`${Math.random() * 15 + 6}`, 10);
+      const start = parseInt(`${stride / 2}`, 10);
       const activeItems = this.items.filter(item => item.element.classList.contains('theme-image-grid__image--active'));
       const inactiveItems = this.items.filter(item => !item.element.classList.contains('theme-image-grid__image--active'));
-      let cursor = 0;
+        let cursor = 0;
       this.items = [];
       while (!!activeItems.length || !!inactiveItems.length) {
-        if (cursor++ % stride === 0) {
+        if (cursor++ % stride === start) {
           if (!!activeItems.length) {
             this.items.push(activeItems.pop());
           }
@@ -125,6 +155,12 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
           }
         }
       }
+      this.items.forEach((item, index) => {
+        item.element.childNodes[0].setAttribute(
+          'data-index',
+          `${index}`
+        );
+      });
     };
     // init packery
     this._packery = new Packery(

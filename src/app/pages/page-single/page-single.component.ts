@@ -68,10 +68,11 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
             }, [])
           : this.page.acf.gallery;
         if (!!this.taggedImages) {
+          const fillerImages = this.page.acf.gallery
+            .filter((fillerImage) => this.images.findIndex(tagged => fillerImage.id === tagged.id) === -1);
           this.images = this.images
-            .concat(
-              this.page.acf.gallery
-                .filter((filler) => this.images.findIndex(tagged => filler.id === tagged.id) === -1));
+            .concat(fillerImages)
+            .concat(fillerImages.slice(0, fillerImages.length / 2));
         }
         this.imagesByFours = this.getImagesByFours();
         this.fadeInHero = false;
@@ -85,7 +86,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
           this.lightbox.destroy();
         }
         setTimeout(() => {
-          console.log('init lightbox')
+          console.log('init lightbox');
           this.lightbox.initialize();
           // make Wordpress links work in angular
           const links = document.querySelectorAll('.theme-body-text .content a');
