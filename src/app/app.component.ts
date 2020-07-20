@@ -26,7 +26,7 @@ export class AppComponent {
     private menuService: MenuService,
   ) {
     router.events.filter(e => e instanceof NavigationEnd).subscribe((e: NavigationEnd) => {
-      const pathArray = e.url.split('/').filter(p => !!p);
+      const pathArray = e.urlAfterRedirects.split('/').filter(p => !!p);
       if (pathArray.length > 0) {
         this.pageClasses = pathArray.join(' ');
       } else {

@@ -53,7 +53,7 @@
 
     <!-- collection fields -->
     <div *ngIf="page && page.acf.collection" class="theme-collection">
-      <template ngFor let-layout [ngForOf]="page.acf.collection">
+      <ng-template ngFor let-layout [ngForOf]="page.acf.collection">
         <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
           <div class="col-sm-12">
             <img src="{{ layout.image.url }}">
@@ -67,14 +67,14 @@
             <img src="{{ layout.image_two.url }}">
           </div>
         </div>
-      </template>
+      </ng-template>
     </div>
 
   </div>
 
   <button *ngIf="showBackTopButton" class="back-to-top" (click)="scrollToTop()">Back to Top</button>
 
-</div>g
+</div>
 
 <div class="theme-image-grid__enlarged-image-backdrop"></div>
 <div class="theme-image-grid__enlarged-image">

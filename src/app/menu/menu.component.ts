@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
     return this.menuService.navigating;
   }
 
-  path(parentSlug: string, childSlug: string) {
+  path(parentSlug: string, childSlug?: string) {
     return parentSlug + (childSlug !== undefined ? '/' + childSlug : '');
   }
 

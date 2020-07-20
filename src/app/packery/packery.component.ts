@@ -18,7 +18,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   private _imageGridElement; // fixme don't init twice
   private lightbox: LightBox;
   private clippingInterval;
-  private gridBottom;
+  private gridBottom: number;
 
   constructor(private elementRef: ElementRef) {
   }
@@ -26,7 +26,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   setImageBackground(backgroundImageElement, url) {
     backgroundImageElement.setAttribute(
       'style',
-      `background-color:rgba(0,0,0,${Math.random() * 0.2 + 0.1}); background-image: url(${url}); ` +
+      `background-color:rgba(250,250,250,${Math.random() * 0.3 + 0.7}); background-image: url(${url}); ` +
       `transition: opacity ${Math.random() * 400}ms`
     );
   }

@@ -35,6 +35,11 @@
   /*height: auto;*/
   /*margin-left: 40px;*/
 /*}*/
+
+:host /deep/ .explore.all .theme-image-grid__image {
+  opacity: 1;
+}
+
 :host /deep/ .about .theme-hero,
 :host /deep/ .clients .theme-hero {
   display: none;

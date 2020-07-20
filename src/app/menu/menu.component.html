@@ -24,22 +24,22 @@
           <ul [class.active]="menu.activeParent === parent.object_slug">
 
             <!-- show child links if not on explore page -->
-            <template [ngIf]="parent.object_slug!=='explore'">
+            <ng-template [ngIf]="parent.object_slug!=='explore'">
               <li *ngFor="let child of parent.children">
                 <a (click)="navigate(path(parent.object_slug,child.object_slug))" routerLinkActive="active">
                   {{ child.title }}
                 </a>
               </li>
-            </template>
+            </ng-template>
 
             <!-- show gallery category terms if on explore page -->
-            <template [ngIf]="parent.object_slug==='explore'">
+            <ng-template [ngIf]="parent.object_slug==='explore'">
               <li *ngFor="let term of menu.mediaCategoryTerms">
                 <a routerLink="{{ path(parent.object_slug, term) }}" routerLinkActive="active">
                   {{ term }}
                 </a>
               </li>
-            </template>
+            </ng-template>
 
           </ul>
 
@@ -69,9 +69,9 @@
              [ngClass]="{'col-sm-4':parent.children.length>2, 'col-sm-6':parent.children.length<=2}">
           <a class="menu-image-grid__project-link"
              (click)="navigate(path(parent.object_slug,child.object_slug))">
-            <template [ngIf]="!!child.gridImage">
+            <ng-template [ngIf]="!!child.gridImage">
               <img [src]="child.gridImage"/>
-            </template>
+            </ng-template>
             <div class="menu-image-grid__item-title">{{ child.title }}</div>
           </a>
         </div>
