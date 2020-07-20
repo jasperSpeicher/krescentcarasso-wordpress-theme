@@ -1,24 +1,20 @@
 <?php
 
-add_action( 'rest_api_init', 'slug_register_media_categories' );
-function slug_register_media_categories() {
-
-    register_rest_field( 'attachment',
-        'media_category_terms',
-        array(
-            'get_callback'    => 'slug_get_media_object_terms',
-            'update_callback' => null,
-            'schema'          => null,
+add_action( 'rest_api_init', 'slug_register_rest_routes' );
+function slug_register_rest_routes() {
+    // contact
+    register_rest_route(
+    'theme/v2',
+    '/contact_form/',
+    array(
+        'methods' => 'GET',
+        'callback' => 'get_contact_form'
         )
     );
+}
 
-    register_rest_route( 'theme/v2',
-        '/media_category_terms/',
-        array(
-            'methods' => 'GET',
-            'callback' => 'slug_get_media_category_terms'
-        )
-    );
+function get_contact_form() {
+    return do_shortcode('[contact-form-7 id="2107" title="Contact"]');
 }
 
 /**

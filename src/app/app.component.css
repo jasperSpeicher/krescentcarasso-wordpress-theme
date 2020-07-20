@@ -41,10 +41,12 @@
 }
 
 :host /deep/ .about .theme-hero,
+:host /deep/ .contact .theme-hero,
 :host /deep/ .clients .theme-hero {
   display: none;
 }
-:host /deep/ .about .theme-body-text__background {
+:host /deep/ .about .theme-body-text__background,
+:host /deep/ .contact .theme-body-text__background {
   position: absolute;
   top: 0;
   right: 0;
@@ -56,14 +58,16 @@
   opacity: 0.1;
 }
 
-:host /deep/ .about .theme-body-text {
+:host /deep/ .about .theme-body-text,
+:host /deep/ .contact .theme-body-text {
   position: relative;
   padding: 3rem 2rem;
   font-weight: 300;
   max-width: 1600px;
 }
 
-:host /deep/ .about .theme-body-text .content {
+:host /deep/ .about .theme-body-text .content,
+:host /deep/ .contact .theme-body-text .content {
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -78,7 +82,24 @@
 :host /deep/ .theme-body-text h2 {
   font-size: 1.5rem;
 }
-
+:host /deep/ .contact .theme-body-text .content,
+:host /deep/ .contact .theme-body-text .content input,
+:host /deep/ .contact .theme-body-text .content textarea {
+  width: 600px;
+  margin: 0 auto;
+  resize: none;
+}
+:host /deep/ .contact .theme-body-text .content input[type=submit] {
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 5px 20px;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  float: right;
+  width: auto;
+}
 
 @media (max-width: 1919px) {
   :host /deep/ .about .theme-body-text {

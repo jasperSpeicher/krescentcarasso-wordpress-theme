@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   ElementRef, HostListener
 } from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 import { Page } from '../page';
 import { PagesService } from '../pages.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -40,7 +41,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private pagesService: PagesService,
               private route: ActivatedRoute,
               private menuService: MenuService,
-              private elementRef: ElementRef) {
+              private elementRef: ElementRef,
+              private sanitizer: DomSanitizer) {
   }
 
   @HostListener('window:resize', ['$event']) // for window scroll events
@@ -59,6 +61,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(res => {
         this.page = res[0] as Page;
         console.log('parentSlug', parentSlug);
+        this.page.content.rendered = this.sanitizer.bypassSecurityTrustHtml(this.page.content.rendered);
         this.taggedImages = this.page.acf.tagged_gallery;
         this.images = this.taggedImages ?
           this.taggedImages
