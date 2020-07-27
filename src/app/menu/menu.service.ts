@@ -119,7 +119,11 @@ export class MenuService {
 
   public navigateToRouteInURL(fullUrl: string) {
     const url = new URL(fullUrl);
-    this.router.navigateByUrl(url.pathname);
+    if (url.pathname === '/projects') {
+      this.menu.activeParent = 'projects';
+    } else {
+      this.router.navigateByUrl(url.pathname);
+    }
   }
 
 }
