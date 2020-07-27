@@ -30,14 +30,27 @@
 .theme-image-grid__image {
   width: 8.333333333%;
   height: auto;
-  filter: grayscale(100%);
   opacity: 0.65;
-  transition: filter 2000ms 500ms ease;
   padding-top: 5.555555555%;
   background: #555;
 }
 
-/* uncomment this to make small portrait images vertical */
+.theme-image-grid .theme-image-grid__image > div {
+  background-blend-mode: luminosity;
+  transition: opacity 3000ms 500ms ease;
+  /*transition: background-blend-mode 2000ms 500ms ease;*/
+  /*filter: contrast(140%);*/
+}
+.theme-image-grid .theme-image-grid__image > .theme-image-grid__active-image {
+  background-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+.theme-image-grid .theme-image-grid__image.theme-image-grid__image--active > .theme-image-grid__active-image {
+  opacity: 1;
+}
+
+  /* uncomment this to make small portrait images vertical */
 /*.theme-image-grid__image--portrait {*/
 /*  padding-top: 11.111%;*/
 /*}*/
@@ -56,8 +69,11 @@
   width: 33.333333333%;
   height: auto;
   padding-top: 22.22222222%;
-  filter: grayscale(0);
   opacity: 1;
+}
+
+.theme-image-grid__image--active > div {
+  background-blend-mode: normal;
 }
 
 /*.theme-image-grid__image--clipped {*/

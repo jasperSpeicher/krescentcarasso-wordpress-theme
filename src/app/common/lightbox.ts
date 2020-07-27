@@ -29,7 +29,12 @@ export class LightBox {
   onHashChange() {
     if (location.hash !== '') {
       const url = decodeURIComponent(decodeURIComponent(location.hash.substr(1)));
-      const imageElement: HTMLDivElement = <HTMLDivElement>this._imageGridElement.querySelector(`[data-src-large*='${url}']`);
+      const matchingImages = Array.prototype.slice.call(
+        <NodeListOf<HTMLDivElement>>this._imageGridElement.querySelectorAll(`[data-src-large*='${url}']`)
+      );
+      const imageElement: HTMLDivElement =
+        matchingImages.find(i => i.classList.contains('theme-image-grid__image--active')) ||
+        matchingImages[0];
       if (imageElement) {
         this.enlargeImage(null, imageElement);
       }
@@ -54,8 +59,9 @@ export class LightBox {
 
   enlargeImage(event: UIEvent, image?: HTMLDivElement) {
     const element: HTMLDivElement = image || <HTMLDivElement>event.target;
-    const src = element.getAttribute('data-src');
-    debugger;
+    const src = element.classList.contains('theme-image-grid__image--active') ?
+      element.getAttribute('data-src-large') :
+      element.getAttribute('data-src');
     if (!!src) {
       this.activeRect = element.getBoundingClientRect();
       const largeImage = element.getAttribute('data-src-large');
@@ -78,14 +84,8 @@ export class LightBox {
           if (!!this._enlargedImageElementImage) {
             this._enlargedImageElementImage.style.display = 'block';
           }
-          const scale = this.getScale();
-          const width = this.activeRect.width * scale;
-          const height = this.activeRect.height * scale;
           this._enlargedImageElement.style.transition = 'top 800ms, left 800ms, width 800ms, height 800ms';
-          this._enlargedImageElement.style.width = width + 'px';
-          this._enlargedImageElement.style.height = height + 'px';
-          this._enlargedImageElement.style.top = (window.innerHeight - height) / 2 + 'px';
-          this._enlargedImageElement.style.left = (window.innerWidth - width) / 2 + 'px';
+          this.resize();
         }
       }, 100);
     }
@@ -117,8 +117,12 @@ export class LightBox {
   resize() {
     if (this.activeRect) {
       const scale = this.getScale();
-      this._enlargedImageElement.style.width = this.activeRect.width * scale + 'px';
-      this._enlargedImageElement.style.height = this.activeRect.height * scale + 'px';
+      const width = this.activeRect.width * scale;
+      const height = this.activeRect.height * scale;
+      this._enlargedImageElement.style.width = width + 'px';
+      this._enlargedImageElement.style.height = height + 'px';
+      this._enlargedImageElement.style.top = (window.innerHeight - height) / 2 + 'px';
+      this._enlargedImageElement.style.left = (window.innerWidth - width) / 2 + 'px';
     }
   }
 

@@ -23,7 +23,7 @@ import { chunkReducer } from '../../common/helpers';
 })
 export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
 
-  @ViewChild(PackeryComponent) imageGrid: PackeryComponent;
+  @ViewChild(PackeryComponent) packeryComponent: PackeryComponent;
   page: Page;
   menu: Menu = null;
   images: Array<any> = null;
@@ -34,6 +34,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   fadeInHero = false;
   fadeInPackery = false;
   showBackTopButton = false;
+  resizeTimeout;
 
   heroSrc = null;
   private lightbox: LightBox;
@@ -46,13 +47,18 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
 
   @HostListener('window:resize', ['$event']) // for window scroll events
-  resize(event) {
-    if (this.lightbox) {
-      this.lightbox.resize();
+  resize() {
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
     }
-    if (this.imagesByFours) {
-      this.positionImageRows();
-    }
+    this.resizeTimeout = setTimeout(() => {
+      if (this.lightbox) {
+        this.lightbox.resize();
+      }
+      if (this.imagesByFours) {
+        this.positionImageRows();
+      }
+    }, 1000);
   }
 
   get sanitizedContent() {
@@ -106,7 +112,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
           this.fadeInPackery = true;
           this.showBackTopButton = true;
         }, 2000);
-        if (this.taggedImages && termSlug !== undefined) {
+        if (this.taggedImages) {
           this.filterGallery(termSlug);
         }
       });
@@ -172,19 +178,16 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   filterGallery(termSlug: string) {
     this.termSlug = termSlug;
     if (this.taggedImages) {
-      if (termSlug === 'all') {
-        this.images.forEach((image) => {
-          image.hidden = true;
+      this.images.forEach((image) => {
+        image.hidden = true;
+      });
+      this.taggedImages.forEach((taggedGallery) => {
+        taggedGallery.images.forEach((image: any, i: number) => {
+          image.hidden = taggedGallery.tag_name !== this.termSlug;
         });
-      } else {
-        this.taggedImages.forEach((taggedGallery) => {
-          taggedGallery.images.forEach((image: any, i: number) => {
-            image.hidden = taggedGallery.tag_name !== this.termSlug;
-          });
-        });
-      }
-      if (this.imageGrid) {
-        this.imageGrid.updateVisibleImages();
+      });
+      if (this.packeryComponent) {
+        this.packeryComponent.updateVisibleImages();
       }
     }
   }

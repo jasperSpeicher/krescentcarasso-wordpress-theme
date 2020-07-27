@@ -23,11 +23,11 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   constructor(private elementRef: ElementRef) {
   }
 
-  setImageBackground(backgroundImageElement, url) {
+  setImageBackground(backgroundImageElement: HTMLDivElement, url) {
+    let color = (Math.random() * 0.3 + 0.7) * 250;
     backgroundImageElement.setAttribute(
       'style',
-      `background-color:rgba(250,250,250,${Math.random() * 0.3 + 0.7}); background-image: url(${url}); ` +
-      `transition: opacity ${Math.random() * 400}ms`
+      `background-image: url(${url}); background-color: rgb(${color},${color},${color});`
     );
   }
 
@@ -57,17 +57,18 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     this._images.forEach((image: any, index: number) => {
       const imageElement = document.createElement('div');
       const backgroundImageElement = document.createElement('div');
+      const activeBackgroundImageElement = document.createElement('div');
+      activeBackgroundImageElement.className = 'theme-image-grid__active-image';
       this.setImageBackground(backgroundImageElement, image.sizes.thumbnail);
+      this.setImageBackground(activeBackgroundImageElement, image.sizes.thumbnail);
       imageElement.setAttribute('data-src-large', image.sizes.large);
       imageElement.setAttribute('data-src', image.sizes.thumbnail);
       imageElement.classList.add('theme-image-grid__image');
       if (image.height > image.width) {
         imageElement.classList.add('theme-image-grid__image--portrait');
       }
-      // if (index === 0) {
-      //   imageElement.classList.add('theme-image-grid__sizer');
-      // }
       imageElement.appendChild(backgroundImageElement);
+      imageElement.appendChild(activeBackgroundImageElement);
       this._imageGridElement.appendChild(imageElement);
       image.element = imageElement;
     });
@@ -99,9 +100,11 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
         if (image.hidden) {
           image.element.classList.remove('theme-image-grid__image--active');
           this.setImageBackground(image.element.childNodes[0], image.sizes.thumbnail);
+          this.setImageBackground(image.element.childNodes[1], image.sizes.thumbnail);
         } else {
           image.element.classList.add('theme-image-grid__image--active');
           this.setImageBackground(image.element.childNodes[0], image.sizes.medium_large);
+          this.setImageBackground(image.element.childNodes[1], image.sizes.medium_large);
         }
       });
       setTimeout((function () {

@@ -1,6 +1,7 @@
 .theme-image-grid__enlarged-image {
   position: fixed;
-  background: #000;
+  background-color: transparent;
+  background-position: center;
 }
 
 .theme-image-grid__enlarged-image img {

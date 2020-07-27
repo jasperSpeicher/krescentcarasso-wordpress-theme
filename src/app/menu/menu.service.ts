@@ -91,7 +91,7 @@ export class MenuService {
         const menu = new Menu();
         const menuData = menuRes.json();
         Object.assign(menu, menuData);
-        menu.activeParent = null;
+        menu.parseUrl(this.router.url);
         return menu;
       })
       .flatMap((menu: Menu) => {
