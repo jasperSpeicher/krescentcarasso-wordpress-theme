@@ -14,8 +14,10 @@
       <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row"
            [ngStyle]="imageRowStyles[rowIndex].row">
         <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image"
-             [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]">
-          <img [src]="image.sizes.large" [attr.data-src-large]="image.url">
+             [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]"
+             [attr.data-src]="image.sizes.large"
+             [attr.data-src-large]="image.url">
+          <img [src]="image.sizes.large">
         </div>
       </div>
     </div>

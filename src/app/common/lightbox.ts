@@ -55,6 +55,7 @@ export class LightBox {
   enlargeImage(event: UIEvent, image?: HTMLDivElement) {
     const element: HTMLDivElement = image || <HTMLDivElement>event.target;
     const src = element.getAttribute('data-src');
+    debugger;
     if (!!src) {
       this.activeRect = element.getBoundingClientRect();
       const largeImage = element.getAttribute('data-src-large');
