@@ -18,47 +18,15 @@
   overflow: hidden;
 }
 
-/*:host /deep/ .about .theme-hero {*/
-  /*padding-top: 80vh;*/
-  /*max-width: 1000px;*/
-  /*margin: 0 auto;*/
-/*}*/
-/*:host /deep/ .about .theme-hero h2 {*/
-  /*display: none;*/
-/*}*/
-/*:host /deep/ .about .theme-hero .theme-hero__image::before {*/
-  /*display: none;*/
-/*}*/
-/*:host /deep/ .about .theme-body-text img {*/
-  /*float: right;*/
-  /*width: 50%;*/
-  /*height: auto;*/
-  /*margin-left: 40px;*/
-/*}*/
-
 :host /deep/ .explore.all .theme-image-grid__image {
-  opacity: 1;
+  opacity: 0.8;
 }
 
-:host /deep/ .about .theme-hero,
 :host /deep/ .contact .theme-hero,
 :host /deep/ .clients .theme-hero {
   display: none;
 }
-:host /deep/ .about .theme-body-text__background,
-:host /deep/ .contact .theme-body-text__background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  display: block;
-  background-size: cover;
-  background-position: center center;
-  opacity: 0.1;
-}
 
-:host /deep/ .about .theme-body-text,
 :host /deep/ .contact .theme-body-text {
   position: relative;
   padding: 3rem 2rem;
@@ -72,8 +40,39 @@
   margin: 0 auto;
 }
 
+:host /deep/ .about .theme-page-body {
+  max-width: 1000px;
+}
+
 :host /deep/ .about .theme-body-text .content p {
-  margin-bottom: 2rem;
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem;
+}
+
+:host /deep/ .about .theme-hero--cropped {
+  display: none;
+}
+
+:host /deep/ .about .theme-hero__image::before {
+  display: none !important;
+}
+
+:host /deep/ .about .theme-hero h2 {
+  display: none !important;
+}
+
+:host /deep/ .about .theme-hero--natural {
+  padding-left: 2rem;
+  display: block;
+  width: 40%;
+  float: left;
+}
+
+:host /deep/ .about .theme-body-text {
+  padding: 0 2rem;
+  font-weight: 300;
+  max-width: 60%;
+  float: left;
 }
 
 :host /deep/ .theme-body-text .has-text-align-center {
@@ -81,6 +80,12 @@
 }
 :host /deep/ .theme-body-text h2 {
   font-size: 1.5rem;
+}
+:host /deep/ .theme-body-text .content h3 {
+  margin-top: 50px;
+}
+:host /deep/ .theme-body-text .content h3:nth-of-type(1){
+  margin-top: 0;
 }
 :host /deep/ .contact .theme-body-text .content,
 :host /deep/ .contact .theme-body-text .content input,
@@ -101,21 +106,20 @@
   width: auto;
 }
 
-@media (max-width: 1919px) {
-  :host /deep/ .about .theme-body-text {
-    padding: 3rem 2rem;
-    max-width: 1000px;
-  }
-
-  :host /deep/ .about .theme-body-text .content {
-    max-width: 690px;
-  }
-}
 @media (max-width: 768px) {
   .app {
     padding-top: 0;
   }
   .app.app--menu-open {
     padding-top: 0;
+  }
+}
+@media (max-width:500px){
+  :host /deep/ .about .theme-hero--natural {
+    display: none;
+  }
+  :host /deep/ .about .theme-body-text {
+    max-width: none;
+    float: none;
   }
 }

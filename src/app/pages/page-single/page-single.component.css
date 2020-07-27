@@ -176,7 +176,18 @@ img {
   opacity: 1;
 }
 
+@media (max-width: 1064px) {
+  .theme-body-text {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .theme-body-text {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
   .theme-page-body {
     padding-top: 60px;
   }
