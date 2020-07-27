@@ -55,13 +55,16 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  get sanitizedContent() {
+    return this.sanitizer.bypassSecurityTrustHtml(this.page.content.rendered);
+  }
+
   getPage(parentSlug, termSlug?) {
     this.pagesService
       .getPage(parentSlug)
       .subscribe(res => {
         this.page = res[0] as Page;
         console.log('parentSlug', parentSlug);
-        this.page.content.rendered = this.sanitizer.bypassSecurityTrustHtml(this.page.content.rendered);
         this.taggedImages = this.page.acf.tagged_gallery;
         this.images = this.taggedImages ?
           this.taggedImages

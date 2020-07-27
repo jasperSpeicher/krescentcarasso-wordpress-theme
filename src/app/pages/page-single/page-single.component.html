@@ -48,7 +48,7 @@
 
     <div class="theme-body-text">
       <div class="theme-body-text__background" [style.background-image]="'url('+heroSrc+')'"></div>
-      <div [innerHTML]="page?.content.rendered" class="content"></div>
+      <div [innerHTML]="!!page? sanitizedContent : ''" class="content"></div>
     </div>
 
     <!-- collection fields -->
