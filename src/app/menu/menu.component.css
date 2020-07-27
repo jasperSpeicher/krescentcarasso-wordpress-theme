@@ -136,7 +136,7 @@
   }
 
   .theme-menu li ul a.active {
-    font-weight: 200;
+    font-weight: 300;
   }
 
   .theme-header.theme-header--menu-open .theme-menu li a.page-link.active {
@@ -317,7 +317,7 @@
   }
 
   .theme-header--mobile-menu-visible {
-    background: rgba(255, 255, 255, 0.9);
+    background: #fff;
   }
 
   .theme-header .theme-menu {
