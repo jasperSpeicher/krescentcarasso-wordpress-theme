@@ -4,7 +4,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
-  ElementRef, HostListener
+  ElementRef, HostListener, AfterViewChecked
 } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Page } from '../page';
@@ -21,7 +21,7 @@ import { chunkReducer } from '../../common/helpers';
   templateUrl: './page-single.component.html',
   styleUrls: ['./page-single.component.css'],
 })
-export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
 
   @ViewChild(PackeryComponent) imageGrid: PackeryComponent;
   page: Page;
@@ -94,17 +94,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => {
           console.log('init lightbox');
           this.lightbox.initialize();
-          // make Wordpress links work in angular
-          const links = document.querySelectorAll('.theme-body-text .content a');
-          Array.prototype.slice.call(links).forEach(link => {
-            const href = link.href;
-            if (href.indexOf(window.location.hostname) > -1) {
-              link.addEventListener('click', e => {
-                e.preventDefault();
-                this.menuService.navigateToRouteInURL(href);
-              });
-            }
-          });
         }, 1000);
         const preload = new Image();
         preload.addEventListener('load', () => {
@@ -238,6 +227,20 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit {
         return sum + (padding + ratio * widths[j] / heights[j]);
       }, 0) + 'px';
       styles.row.margin = '0 auto';
+    });
+  }
+
+  ngAfterViewChecked() {
+    // make Wordpress links work in angular
+    const links = document.querySelectorAll('.theme-body-text .content a');
+    Array.prototype.slice.call(links).forEach(link => {
+      const href = link.href;
+      if (href.indexOf(window.location.hostname) > -1) {
+        link.onclick = e => {
+          e.preventDefault();
+          this.menuService.navigateToRouteInURL(href);
+        };
+      }
     });
   }
 }
