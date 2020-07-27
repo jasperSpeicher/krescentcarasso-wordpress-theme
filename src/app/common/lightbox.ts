@@ -29,7 +29,7 @@ export class LightBox {
   onHashChange() {
     if (location.hash !== '') {
       const url = decodeURIComponent(decodeURIComponent(location.hash.substr(1)));
-      const imageElement: HTMLImageElement = <HTMLImageElement>this._imageGridElement.querySelector(`[src*='${url}']`);
+      const imageElement: HTMLDivElement = <HTMLDivElement>this._imageGridElement.querySelector(`[data-src-large*='${url}']`);
       if (imageElement) {
         this.enlargeImage(null, imageElement);
       }
@@ -40,9 +40,10 @@ export class LightBox {
   }
 
   setImageHash(event: UIEvent) {
-    const element: HTMLImageElement = <HTMLImageElement>event.target;
-    if (!!element.src) {
-      location.hash = encodeURIComponent((<HTMLImageElement>event.target).src);
+    const element: HTMLElement = <HTMLImageElement>event.target;
+    const src = element.parentElement.getAttribute('data-src-large');
+    if (!!src) {
+      location.hash = encodeURIComponent(src);
     }
   }
 
@@ -51,12 +52,13 @@ export class LightBox {
     this.reset();
   }
 
-  enlargeImage(event: UIEvent, image?: HTMLImageElement) {
-    const element: HTMLImageElement = image || <HTMLImageElement>event.target;
-    if (!!element.src) {
+  enlargeImage(event: UIEvent, image?: HTMLDivElement) {
+    const element: HTMLDivElement = image || <HTMLDivElement>event.target;
+    const src = element.getAttribute('data-src');
+    if (!!src) {
       this.activeRect = element.getBoundingClientRect();
       const largeImage = element.getAttribute('data-src-large');
-      if (largeImage !== element.src) {
+      if (largeImage !== src) {
         this._enlargedImageElementImage.src = largeImage;
       } else {
         this._enlargedImageElementImage.src = '';
@@ -64,7 +66,7 @@ export class LightBox {
       this._enlargedImageBackdropElement.classList.add('theme-image-grid__enlarged-image-backdrop--visible');
       this._enlargedImageElement.style['z-index'] = '101';
       this._enlargedImageElement.style.backgroundSize = 'cover';
-      this._enlargedImageElement.style.backgroundImage = `url('${element.src}')`;
+      this._enlargedImageElement.style.backgroundImage = `url('${src}')`;
       this._enlargedImageElement.style.transition = 'all 0s';
       ['top', 'left', 'width', 'height'].forEach((key) => {
         this._enlargedImageElement.style[key] = this.activeRect[key] + 'px';

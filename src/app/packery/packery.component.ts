@@ -59,6 +59,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
       const backgroundImageElement = document.createElement('div');
       this.setImageBackground(backgroundImageElement, image.sizes.thumbnail);
       imageElement.setAttribute('data-src-large', image.sizes.large);
+      imageElement.setAttribute('data-src', image.sizes.thumbnail);
       imageElement.classList.add('theme-image-grid__image');
       if (image.height > image.width) {
         imageElement.classList.add('theme-image-grid__image--portrait');
