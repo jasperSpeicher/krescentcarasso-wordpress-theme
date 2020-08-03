@@ -6,7 +6,7 @@ import {
   AfterViewInit,
   ElementRef, HostListener, AfterViewChecked
 } from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Page } from '../page';
 import { PagesService } from '../pages.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -65,6 +65,10 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     return this.sanitizer.bypassSecurityTrustHtml(this.page.content.rendered);
   }
 
+  get showPackery() {
+    return !!this.page && !!this.page.acf && this.page.acf.grid_type === 'columns';
+  }
+
   getPage(parentSlug, termSlug?) {
     this.pagesService
       .getPage(parentSlug)
@@ -75,9 +79,9 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         this.images = this.taggedImages ?
           this.taggedImages
             .reduce(
-            (images, taggedGallery) => {
-              return images.concat(taggedGallery.images);
-            }, [])
+              (images, taggedGallery) => {
+                return images.concat(taggedGallery.images);
+              }, [])
           : this.page.acf.gallery;
         if (!!this.taggedImages) {
           const fillerImages = this.page.acf.gallery
@@ -86,20 +90,24 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
             .concat(fillerImages)
             .concat(fillerImages.slice(0, fillerImages.length / 2));
         }
-        this.imagesByFours = this.getImagesByFours();
+        this.imagesByFours = !this.showPackery ? this.getImagesByFours() : null;
         this.fadeInHero = false;
         this.fadeInPackery = false;
         this.showBackTopButton = false;
         this.heroSrc = null;
+        if (this.lightbox) {
+          this.lightbox.destroy();
+          this.lightbox = null;
+        }
         if (this.imagesByFours) {
           this.positionImageRows();
         }
-        if (this.lightbox) {
-          this.lightbox.destroy();
-        }
         setTimeout(() => {
           console.log('init lightbox');
-          this.lightbox.initialize();
+          if (this.imagesByFours) {
+            this.createLightbox();
+            this.lightbox.initialize();
+          }
         }, 1000);
         const preload = new Image();
         preload.addEventListener('load', () => {
@@ -152,8 +160,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     });
   }
 
-  ngAfterViewInit(): void {
-    // Init lightbox
+  createLightbox() {
     if (this.lightbox) {
       this.lightbox.destroy();
     }
@@ -161,12 +168,24 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
       this.elementRef.nativeElement.querySelector('.image-grids'),
       this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
       this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop')
+      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
+      null
     );
+  }
+
+  ngAfterViewInit(): void {
+    // Init lightbox
+    if (this.images) {
+      this.createLightbox();
+    }
   }
 
   ngOnDestroy() {
     this.fadeInHero = false;
+    if (this.lightbox) {
+      this.lightbox.destroy();
+      this.lightbox = null;
+    }
   }
 
   scrollToTop() {

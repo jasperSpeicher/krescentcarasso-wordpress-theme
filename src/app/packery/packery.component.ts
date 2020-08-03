@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, Input, ElementRef, OnChanges, AfterViewInit } from '@angular/core';
+import { ViewEncapsulation, Component, Input, ElementRef, OnChanges, AfterViewInit, OnDestroy } from '@angular/core';
 import { LightBox } from '../common/lightbox';
 
 declare var Packery: any;
@@ -11,7 +11,7 @@ declare var Packery: any;
     '<div class="theme-image-grid__enlarged-image"><img src=""/></div>',
   encapsulation: ViewEncapsulation.None
 })
-export class PackeryComponent implements OnChanges, AfterViewInit {
+export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   private _images: Array<any> = null;
   private _packery;
@@ -34,20 +34,25 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
   @Input() set packery(images: Array<any>) {
 
     this._images = images.slice();
-    this._images.sort(function(){ return 0.5 - Math.random(); });
+    this._images.sort(function () {
+      return 0.5 - Math.random();
+    });
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
 
     // Init lightbox
     // TODO make this more angular
     if (this.lightbox) {
       this.lightbox.destroy();
+    } else {
+      this.lightbox = new LightBox(
+        this._imageGridElement,
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
+        'theme-image-grid__image--active'
+      );
     }
-    this.lightbox = new LightBox(
-      this._imageGridElement,
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop')
-    );
+    this.lightbox.initialize();
 
     while (this._imageGridElement.firstChild) {
       this._imageGridElement.removeChild(this._imageGridElement.firstChild);
@@ -90,6 +95,13 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     setTimeout(() => {
       this.initPackery();
     }, 1000);
+  }
+
+  ngOnDestroy() {
+    if (this.lightbox) {
+      this.lightbox.destroy();
+      this.lightbox = null;
+    }
   }
 
   updateVisibleImages() {
@@ -154,12 +166,12 @@ export class PackeryComponent implements OnChanges, AfterViewInit {
     }
 
     // add shuffler
-    Packery.prototype.shuffle = function(){
+    Packery.prototype.shuffle = function () {
       const stride = parseInt(`${Math.random() * 15 + 6}`, 10);
       const start = parseInt(`${stride / 2}`, 10);
       const activeItems = this.items.filter(item => item.element.classList.contains('theme-image-grid__image--active'));
       const inactiveItems = this.items.filter(item => !item.element.classList.contains('theme-image-grid__image--active'));
-        let cursor = 0;
+      let cursor = 0;
       this.items = [];
       while (!!activeItems.length || !!inactiveItems.length) {
         if (cursor++ % stride === start) {

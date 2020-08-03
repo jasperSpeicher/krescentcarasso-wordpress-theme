@@ -12,9 +12,9 @@ export class LightBox {
     private _imageGridElement: HTMLElement,
     private _enlargedImageElement,
     private _enlargedImageElementImage,
-    private _enlargedImageBackdropElement
-  ) {
-  }
+    private _enlargedImageBackdropElement,
+    private className,
+  ) {}
 
   initialize() {
     if (!this.initialized) {
@@ -30,7 +30,8 @@ export class LightBox {
     if (location.hash !== '') {
       const url = decodeURIComponent(decodeURIComponent(location.hash.substr(1)));
       const matchingImages = Array.prototype.slice.call(
-        <NodeListOf<HTMLDivElement>>this._imageGridElement.querySelectorAll(`[data-src-large*='${url}']`)
+        <NodeListOf<HTMLDivElement>>this._imageGridElement
+          .querySelectorAll(`[data-src-large*='${url}']${this.className ? '.' + this.className : ''}`)
       );
       const imageElement: HTMLDivElement =
         matchingImages.find(i => i.classList.contains('theme-image-grid__image--active')) ||
@@ -47,7 +48,8 @@ export class LightBox {
   setImageHash(event: UIEvent) {
     const element: HTMLElement = <HTMLImageElement>event.target;
     const src = element.parentElement.getAttribute('data-src-large');
-    if (!!src) {
+    const clickable = this.className ? element.parentElement.classList.contains(this.className) : true;
+    if (!!src && clickable) {
       location.hash = encodeURIComponent(src);
     }
   }
