@@ -103,7 +103,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
           this.positionImageRows();
         }
         setTimeout(() => {
-          console.log('init lightbox');
           if (this.imagesByFours) {
             this.createLightbox();
             this.lightbox.initialize();
