@@ -190,6 +190,15 @@ img {
   }
 }
 
+@media (max-width: 1024px) {
+  .theme-hero--cropped {
+    display: none;
+  }
+  .theme-hero--natural {
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   .theme-body-text {
     padding-left: 1rem;
@@ -197,12 +206,6 @@ img {
   }
   .theme-page-body {
     padding-top: 60px;
-  }
-  .theme-hero--cropped {
-    display: none;
-  }
-  .theme-hero--natural {
-    display: block;
   }
   .theme-hero h2 {
     font-size: 1.75rem;
