@@ -207,8 +207,8 @@
     bottom:0;
     padding: 0 15px 0 15px;
     height: 0;
-    width: 65%;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 1050px;
     font-size: 1.5rem;
     line-height: 1;
     list-style: none;
@@ -498,5 +498,11 @@
 @media (max-width: 420px) {
   .theme-header h1 {
     font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .menu-image-grid {
+    max-width: 1200px;
   }
 }
