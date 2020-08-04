@@ -78,6 +78,9 @@
 :host /deep/ .theme-body-text .has-text-align-center {
   text-align: center;
 }
+:host /deep/ .theme-body-text .link-large {
+  font-size: 1.5rem;
+}
 :host /deep/ .theme-body-text h2 {
   font-size: 1.5rem;
 }
