@@ -35,6 +35,10 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   fadeInPackery = false;
   showBackTopButton = false;
   resizeTimeout;
+  contactForm: HTMLFormElement;
+  contactFormId: string;
+  contactFormErrorMessage: string;
+  contactFormData: FormData;
 
   heroSrc = null;
   private lightbox: LightBox;
@@ -67,6 +71,11 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
 
   get showPackery() {
     return !!this.page && !!this.page.acf && this.page.acf.grid_type === 'columns';
+  }
+
+  getContactFormId(content: string) {
+    const match = content.match(/id="wpcf7-f([^-]+)-\S+"/);
+    return match ? match[1] : null;
   }
 
   getPage(parentSlug, termSlug?) {
@@ -107,6 +116,8 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
             this.createLightbox();
             this.lightbox.initialize();
           }
+          this.contactFormId = this.getContactFormId(this.page.content.rendered);
+          this.contactFormErrorMessage = null;
         }, 1000);
         const preload = new Image();
         preload.addEventListener('load', () => {
@@ -114,7 +125,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         });
         preload.src = this.page.acf.hero_image.url;
         setTimeout(() => {
-          console.log('fade in hero')
+          console.log('fade in hero');
           this.fadeInHero = true;
           this.fadeInPackery = true;
           this.showBackTopButton = true;
@@ -263,6 +274,38 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         };
       }
     });
+    if (!!this.contactFormId) {
+      this.contactForm = this.elementRef.nativeElement.querySelector('form');
+      this.contactForm.action = null;
+      if (this.contactFormData) {
+        for (let i = 0; i < this.contactForm.elements.length; i++) {
+          const type = this.contactForm[i].getAttribute('type');
+          if (type !== 'submit') {
+            const fieldValue = this.contactFormData.get(this.contactForm[i].name);
+            this.contactForm[i].value = fieldValue;
+          }
+        }
+      }
+      if (!this.contactForm.onsubmit) {
+        this.contactForm
+          .onsubmit = (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          this.contactFormData = new FormData((this.contactForm));
+          this.pagesService.submitContactForm(this.contactFormData, this.contactFormId)
+            .then((responseBody) => {
+              this.scrollToTop();
+              if (responseBody.status === 'validation_failed') {
+                this.contactFormErrorMessage = responseBody.message;
+              }
+              if (responseBody.status === 'mail_sent') {
+                this.contactFormId = null;
+                this.contactFormErrorMessage = 'Your message has been sent. Thank you for getting in touch.';
+              }
+            });
+        };
+      }
+    }
   }
 }
 

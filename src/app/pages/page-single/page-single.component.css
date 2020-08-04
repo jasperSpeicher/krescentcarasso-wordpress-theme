@@ -176,6 +176,13 @@ img {
   opacity: 1;
 }
 
+.theme-body-text__contact-form-error-message {
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+
 @media (max-width: 1064px) {
   .theme-body-text {
     padding-left: 2rem;

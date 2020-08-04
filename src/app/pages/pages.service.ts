@@ -33,39 +33,14 @@ export class PagesService {
       .map(pages => pages.filter(p => p.slug === slug));
   }
 
-  makePagedRequest(reqUrl): Observable<any> {
-    const pageSize = 100;
-    let objects = [];
-    let makeReq = (url, page?) => {
-      let urlObj: URL = new URL(url);
-      const params = {per_page: pageSize};
-      if (page) {
-        params['page'] = page;
-      }
-      return this.http
-        .get(`${urlObj.protocol}//${urlObj.host}${urlObj.pathname}`, {params})
-        .flatMap((res: Response) => {
-          objects = objects.concat(res.json());
-          let pages = parseInt(res.headers.get('x-wp-totalpages'), 10);
-          if (!page && pages > 1) {
-            const reqs = [];
-            while (pages > 1) {
-              reqs.push(makeReq(url, pages--));
-            }
-            let reqsObs = Observable.forkJoin(reqs).map(r => objects);
-            // reqsObs.subscribe();
-            return reqsObs;
-          } else {
-            return objects;
-          }
-        });
-    };
-    return makeReq(reqUrl).map(r => {
-      return r;
-    });
+  submitContactForm(formData: FormData, formId): Promise<any> {
+    return this.http
+          .post(
+            this._wpBase + `contact-form-7/v1/contact-forms/${formId}/feedback`,
+            formData
+            )
+          .map((res: Response) => res.json())
+          .toPromise();
   }
 
-  getMediaObjects(): Observable<any> {
-    return this.makePagedRequest(this._wpBase + 'wp/v2/media');
-  }
 }

@@ -48,8 +48,11 @@
       <h2>{{ page?.title.rendered }}</h2>
     </div>
 
-    <div class="theme-body-text">
+    <div [ngClass]="{'theme-body-text': true, 'contact-form-visible': !!contactFormId}">
       <div class="theme-body-text__background" [style.background-image]="'url('+heroSrc+')'"></div>
+      <div *ngIf="!!contactFormErrorMessage" class="theme-body-text__contact-form-error-message">
+        {{contactFormErrorMessage}}
+      </div>
       <div [innerHTML]="!!page? sanitizedContent : ''" class="content"></div>
     </div>
 
