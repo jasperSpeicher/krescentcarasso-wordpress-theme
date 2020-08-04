@@ -16,6 +16,10 @@
   opacity: 1;
 }
 
+.theme-menu li.theme-menu__item.explore {
+  display: none;
+}
+
 /**
 * Desktop styles
  */
@@ -277,6 +281,10 @@
 
   .menu-image-grid__project-link:hover .menu-image-grid__item-title {
     opacity: 1;
+  }
+
+  .theme-menu li.theme-menu__item.explore {
+    display: inline-block;
   }
 }
 

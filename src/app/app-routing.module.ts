@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, Router } from '@angular/router';
+import { Routes, RouterModule, Router, CanActivate } from '@angular/router';
 import { PageSingleComponent } from './pages/page-single/page-single.component';
 import { PageHomeComponent } from './pages/page-home/page-home.component';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router/src/router_state';
 
 @Injectable()
 export class DelayResolve implements Resolve<Observable<any>> {
@@ -25,12 +26,26 @@ export class DelayResolve implements Resolve<Observable<any>> {
   }
 }
 
+@Injectable()
+export class WidthGuardService implements CanActivate {
+  constructor(public router: Router) {}
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    if (window.innerWidth < 768 && !!route.url.find(s => s.path === 'explore')) {
+      this.router.navigate(['']);
+      return false;
+    }
+    return true;
+  }
+}
+
+
 const routes: Routes = [
 
   {
     path: ':parent/:slug',
     component: PageSingleComponent,
     resolve: [DelayResolve],
+    canActivate: [WidthGuardService],
   },
   {
     path: 'explore',
@@ -69,7 +84,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [DelayResolve]
+  providers: [DelayResolve, WidthGuardService]
 })
 export class Wpng2RoutingModule {
 }
