@@ -73,6 +73,15 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     return !!this.page && !!this.page.acf && this.page.acf.grid_type === 'columns';
   }
 
+  get showImageRows() {
+    return !!this.page &&
+      !!this.imagesByFours &&
+      this.imagesByFours.length > 0 &&
+      !!this.imageRowStyles &&
+      this.imageRowStyles.length > 0 &&
+      this.page.acf.grid_type === 'rows';
+  }
+
   getContactFormId(content: string) {
     const match = content.match(/id="wpcf7-f([^-]+)-\S+"/);
     return match ? match[1] : null;

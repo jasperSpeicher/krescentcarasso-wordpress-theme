@@ -207,6 +207,10 @@ img {
   .theme-page-body {
     padding-top: 60px;
   }
+  /* so images are not under fixed header */
+  .theme-page .image-grids {
+    padding-top: 50px;
+  }
   .theme-hero h2 {
     font-size: 1.75rem;
   }

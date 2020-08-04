@@ -4,12 +4,12 @@
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
   <!--imageGrid-->
-  <div class="image-grids container-fluid">
+  <div [ngStyle]="{ display: showImageRows || showPackery? 'block' : 'none'}" class="image-grids container-fluid">
     <div *ngIf="showPackery" [ngClass]="{ 'packery-container': true, 'packery-container--fade-in': fadeInPackery }">
       <div [packery]="images">
       </div>
     </div>
-    <div *ngIf="!!page && !!imagesByFours && imagesByFours.length > 0 && !!imageRowStyles && imageRowStyles.length > 0 && page.acf.grid_type==='rows'"
+    <div *ngIf="showImageROws"
          class="image-rows">
       <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row"
            [ngStyle]="imageRowStyles[rowIndex].row">
