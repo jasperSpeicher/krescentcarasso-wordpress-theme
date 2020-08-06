@@ -60,7 +60,7 @@ export class Menu {
     };
     return !!this.activeParent
       && (
-        (this.items.filter(itemActiveWithChildren).length > 0)
+        !!this.items.find(itemActiveWithChildren)
         || this.activeParent === 'explore'
       );
   }
