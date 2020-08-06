@@ -14,7 +14,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _images: Array<any> = null;
   private _packery;
   private _imageGridElement; // fixme don't init twice
-  private lightbox: LightBox;
+  public lightbox: LightBox;
   private clippingInterval;
   private gridBottom: number;
 
