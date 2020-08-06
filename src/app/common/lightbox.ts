@@ -33,6 +33,7 @@ export class LightBox {
       this.addEventListener(this._nextButton, 'click', this.showNext.bind(this));
       this.addEventListener(this._previousButton, 'click', this.showPrevious.bind(this));
       this.addEventListener(window, 'hashchange', this.onHashChange.bind(this));
+      this.addEventListener(window, 'resize', this.resize.bind(this));
       this.onHashChange();
     }
   }
