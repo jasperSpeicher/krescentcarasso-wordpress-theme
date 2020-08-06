@@ -34,9 +34,14 @@ export class MenuService {
       .filter(event => event instanceof NavigationStart && this.menu !== null)
       .forEach((event: NavigationStart) => {
         if (this.menu) {
-          const hasOpenMenu = !!['explore', 'collections', 'projects']
-            .find(slug => slug === event.url.split('/')[1] && slug === this.menu.activeParent);
-          const suppressActiveParentChange = this.menu.activeParent === null || !hasOpenMenu;
+          const hasOpenMenu =
+            this.menu.activeParent === 'explore' ||
+            !!['collections', 'projects']
+              .find(slug => {
+                const segs = event.url.split('/');
+                return slug === segs[1] && segs.length === 2;
+              });
+          const suppressActiveParentChange = this.menu.activeParent === null || hasOpenMenu;
           if (!suppressActiveParentChange) {
             this.navigating = true;
             setTimeout(() => this.menu.activeParent = null, 400);

@@ -70,8 +70,8 @@ export class Menu {
     let segments = url.split('/');
     this.activeParent =
       (segments[1] === 'explore' && 'explore') ||
-      (segments[1] === 'collections' && 'collections') ||
-      (segments[1] === 'projects' && 'projects');
+      (segments.length === 2 && segments[1] === 'collections' && 'collections') ||
+      (segments.length === 2 && segments[1] === 'projects' && 'projects');
   }
 
 }
