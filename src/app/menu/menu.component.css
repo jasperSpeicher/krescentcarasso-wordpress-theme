@@ -143,10 +143,6 @@
     font-weight: 300;
   }
 
-  .theme-header.theme-header--menu-open .theme-menu li a.page-link.active {
-    font-weight: inherit;
-  }
-
   .theme-menu li > div {
     /*overflow: hidden;*/
     pointer-events: none;

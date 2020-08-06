@@ -6,14 +6,13 @@
     <ul [ngClass]="{ 'theme-menu': true, 'theme-menu--show': !!menu}">
       <li *ngFor="let parent of menu?.items" class="theme-menu__item {{parent.object_slug}}">
 
-        <a *ngIf="parent.object==='custom'"
-           (click)="showChildren(parent)"
-           [class.active]="menu.activeParent === parent.object_slug"
-           [class.child-active]="menu.activeParent === parent.object_slug">
-          {{ parent.title }}
-        </a>
-        <a *ngIf="parent.object==='page'"
-           class="page-link"
+<!--        <a *ngIf="parent.object==='custom'"-->
+<!--           (click)="showChildren(parent)"-->
+<!--           [class.active]="menu.activeParent === parent.object_slug"-->
+<!--           [class.child-active]="menu.activeParent === parent.object_slug">-->
+<!--          {{ parent.title }}-->
+<!--        </a>-->
+        <a class="page-link"
            (click)="navigate(path(parent.object_slug))" [class.active]="linkActive(path(parent.object_slug))">
           {{ parent.title }}
         </a>
