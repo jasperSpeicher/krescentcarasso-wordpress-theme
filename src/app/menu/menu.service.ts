@@ -122,19 +122,7 @@ export class MenuService {
 
   public navigateToRouteInURL(fullUrl: string) {
     const url = new URL(fullUrl);
-    if (url.pathname === '/projects') {
-      this._menu.filter(m => m !== null).take(1).subscribe(() => {
-        console.log('Got menu');
-        this.menu.activeParent = 'projects';
-      });
-    } else if (url.pathname === '/collections') {
-      this._menu.filter(m => m !== null).take(1).subscribe(() => {
-        console.log('Got menu');
-        this.menu.activeParent = 'collections';
-      });
-    } else {
-      this.router.navigateByUrl(url.pathname);
-    }
+    this.router.navigateByUrl(url.pathname);
   }
 
 }
