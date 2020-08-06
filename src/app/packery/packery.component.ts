@@ -159,7 +159,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   initPackery() {
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
-    let transitionDuration = 100;
+    let transitionDuration = 0;
 
     if (this._packery) {
       this._packery.destroy();
