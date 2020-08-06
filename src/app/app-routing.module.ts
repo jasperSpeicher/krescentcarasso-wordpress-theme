@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { ActivatedRouteSnapshot } from '@angular/router/src/router_state';
+import { MenuService } from './menu/menu.service';
 
 @Injectable()
 export class DelayResolve implements Resolve<Observable<any>> {
@@ -38,7 +39,6 @@ export class WidthGuardService implements CanActivate {
   }
 }
 
-
 const routes: Routes = [
 
   {
@@ -66,6 +66,14 @@ const routes: Routes = [
     path: 'contact',
     component: PageSingleComponent,
     resolve: [DelayResolve],
+  },
+  {
+    path: 'projects',
+    component: PageSingleComponent,
+  },
+  {
+    path: 'collections',
+    component: PageSingleComponent,
   },
   {
     path: '',

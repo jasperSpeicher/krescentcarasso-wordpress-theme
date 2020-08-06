@@ -34,9 +34,9 @@ export class MenuService {
       .filter(event => event instanceof NavigationStart && this.menu !== null)
       .forEach((event: NavigationStart) => {
         if (this.menu) {
-          const suppressActiveParentChange =
-            this.menu.activeParent === null ||
-            (event.url.split('/')[1] === 'explore' && this.menu.activeParent === 'explore');
+          const hasOpenMenu = !!['explore', 'collections', 'projects']
+            .find(slug => slug === event.url.split('/')[1] && slug === this.menu.activeParent);
+          const suppressActiveParentChange = this.menu.activeParent === null || !hasOpenMenu;
           if (!suppressActiveParentChange) {
             this.navigating = true;
             setTimeout(() => this.menu.activeParent = null, 400);
@@ -118,7 +118,15 @@ export class MenuService {
   public navigateToRouteInURL(fullUrl: string) {
     const url = new URL(fullUrl);
     if (url.pathname === '/projects') {
-      this.menu.activeParent = 'projects';
+      this._menu.filter(m => m !== null).take(1).subscribe(() => {
+        console.log('Got menu');
+        this.menu.activeParent = 'projects';
+      });
+    } else if (url.pathname === '/collections') {
+      this._menu.filter(m => m !== null).take(1).subscribe(() => {
+        console.log('Got menu');
+        this.menu.activeParent = 'collections';
+      });
     } else {
       this.router.navigateByUrl(url.pathname);
     }

@@ -91,6 +91,9 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     this.pagesService
       .getPage(parentSlug)
       .subscribe(res => {
+        if (!res[0]){
+          return;
+        }
         this.page = res[0] as Page;
         this.taggedImages = this.page.acf.tagged_gallery;
         this.images = this.taggedImages ?

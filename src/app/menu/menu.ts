@@ -58,17 +58,20 @@ export class Menu {
     const itemActiveWithChildren = i => {
       return i.object_slug === this.activeParent && i.children;
     };
-    return !!this.activeParent
+    const open = !!this.activeParent
       && (
         !!this.items.find(itemActiveWithChildren)
         || this.activeParent === 'explore'
       );
+    return open;
   }
 
   public parseUrl(url) {
     let segments = url.split('/');
-    this.activeParent = segments[1] === 'explore' && 'explore';
+    this.activeParent =
+      (segments[1] === 'explore' && 'explore') ||
+      (segments[1] === 'collections' && 'collections') ||
+      (segments[1] === 'projects' && 'projects');
   }
-
 
 }

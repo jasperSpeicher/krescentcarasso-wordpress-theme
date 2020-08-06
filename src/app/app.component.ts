@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { AppService } from './app.service';
 import { MenuService } from './menu/menu.service';
 import { fadeAnimation } from './common/fade.animation';
 import { Menu } from './menu/menu';
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [AppService, MenuService],
   animations: [fadeAnimation]
 })
 export class AppComponent {
@@ -21,7 +19,6 @@ export class AppComponent {
   subscriptions = new Subscription();
 
   constructor(
-    private appService: AppService,
     private router: Router,
     private menuService: MenuService,
   ) {
