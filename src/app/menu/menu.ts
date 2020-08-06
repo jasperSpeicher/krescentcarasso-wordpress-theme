@@ -58,7 +58,6 @@ export class Menu {
     const itemActiveWithChildren = i => {
       return i.object_slug === this.activeParent && i.children;
     };
-    console.log('ap', this.activeParent);
     return !!this.activeParent
       && (
         (this.items.filter(itemActiveWithChildren).length > 0)
@@ -67,7 +66,6 @@ export class Menu {
   }
 
   public parseUrl(url) {
-    console.log('parseurl', url);
     let segments = url.split('/');
     this.activeParent = segments[1] === 'explore' && 'explore';
   }

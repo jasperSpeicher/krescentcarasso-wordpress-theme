@@ -136,7 +136,6 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.clippingInterval = null;
       }
       this.clippingInterval = setInterval((function () {
-        console.log('clipping');
         const activeImages = Array.prototype.slice.apply(
           document.getElementsByClassName('theme-image-grid__image--active'));
         if (!activeImages.length) {

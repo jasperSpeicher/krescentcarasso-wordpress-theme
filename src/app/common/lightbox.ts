@@ -39,7 +39,6 @@ export class LightBox {
   }
 
   setImageSet(sources: { src: string, width: number, height: number }[]) {
-    console.log({sources});
     this.imageSet = sources;
   }
 
@@ -56,7 +55,6 @@ export class LightBox {
   }
 
   setImage(imageData: { width: number, height: number, src: string }) {
-    console.log(imageData);
     this._enlargedImageElementImage.src = imageData.src;
     this._enlargedImageElement.style.backgroundImage = `url('${imageData.src}')`;
     this.activeRect = imageData;

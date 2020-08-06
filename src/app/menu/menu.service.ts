@@ -34,8 +34,6 @@ export class MenuService {
       .filter(event => event instanceof NavigationStart && this.menu !== null)
       .forEach((event: NavigationStart) => {
         if (this.menu) {
-          console.log('NavigationStart', event.url.split('/')[1], this.menu.activeParent);
-
           const suppressActiveParentChange =
             this.menu.activeParent === null ||
             (event.url.split('/')[1] === 'explore' && this.menu.activeParent === 'explore');

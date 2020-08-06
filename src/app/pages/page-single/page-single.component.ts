@@ -92,7 +92,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
       .getPage(parentSlug)
       .subscribe(res => {
         this.page = res[0] as Page;
-        console.log('parentSlug', parentSlug);
         this.taggedImages = this.page.acf.tagged_gallery;
         this.images = this.taggedImages ?
           this.taggedImages
@@ -134,7 +133,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         });
         preload.src = this.page.acf.hero_image.url;
         setTimeout(() => {
-          console.log('fade in hero');
           this.fadeInHero = true;
           this.fadeInPackery = true;
           this.showBackTopButton = true;
@@ -155,8 +153,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
 
       // if the parent is 'explore' then show the explore page...
       if (parent === 'explore') {
-        console.log({slug, page: this.page});
-
         if (!this.page || this.page.slug !== 'explore') {
           this.page = null;
           this.getPage('explore', slug);
