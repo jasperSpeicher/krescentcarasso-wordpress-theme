@@ -68,6 +68,7 @@ export class Menu {
 
   public parseUrl(url) {
     let segments = url.split('/');
+    this.slug = segments[1];
     this.activeParent =
       (segments[1] === 'explore' && 'explore') ||
       (segments.length === 2 && segments[1] === 'collections' && 'collections') ||

@@ -15,6 +15,7 @@ import { Menu } from '../../menu/menu';
 import { PackeryComponent } from '../../packery/packery.component';
 import { LightBox } from '../../common/lightbox';
 import { chunkReducer } from '../../common/helpers';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-page-single',
@@ -39,6 +40,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   contactFormId: string;
   contactFormErrorMessage: string;
   contactFormData: FormData;
+  subscription = new Subscription();
 
   heroSrc = null;
   public lightbox: LightBox;
@@ -115,18 +117,10 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         this.fadeInPackery = false;
         this.showBackTopButton = false;
         this.heroSrc = null;
-        if (this.lightbox) {
-          this.lightbox.destroy();
-          this.lightbox = null;
-        }
         if (this.imagesByFours) {
           this.positionImageRows();
         }
         setTimeout(() => {
-          if (this.imagesByFours) {
-            this.createLightbox();
-            this.lightbox.initialize();
-          }
           this.contactFormId = this.getContactFormId(this.page.content.rendered);
           this.contactFormErrorMessage = null;
         }, 1000);
@@ -148,7 +142,6 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
 
   ngOnInit() {
-
     this.route.params.forEach((params: Params) => {
 
       let parent = params['parent'];
@@ -179,23 +172,48 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
 
   createLightbox() {
-    if (this.lightbox) {
-      this.lightbox.destroy();
-    }
-    this.lightbox = new LightBox(
-      this.elementRef.nativeElement.querySelector('.image-grids'),
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
-      this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
-      null
+    if (!this.lightbox) {
+      this.lightbox = new LightBox(
+        this.elementRef.nativeElement.querySelector('.image-grids'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__lightbox-previous'),
+        this.elementRef.nativeElement.querySelector('.theme-image-grid__lightbox-next'),
     );
+      this.lightbox.initialize();
+    }
+    this.subscription.add(
+      this.menuService.getMenuObservable().subscribe((menu) => {
+        this.subscription.add(menu.getActiveParentObservable().subscribe((activeParent) => {
+          this.lightbox.setClassName(menu.slug === 'explore' ? 'theme-image-grid__image--active' : null);
+          let images;
+          if (menu.slug === 'collections' || menu.slug === 'projects') {
+            images = this.images;
+          }
+          if (menu.slug === 'explore') {
+            images = this.images.filter(i => !i.hidden);
+          }
+          const imageSet = !!images && images
+            .filter(i => !i.hidden)
+            .map(i => ({
+              src: i.sizes.large,
+              width: i.width,
+              height: i.height,
+            }));
+          if (imageSet) {
+            this.lightbox.setImageSet(imageSet);
+          }
+        }));
+      }));
   }
 
   ngAfterViewInit(): void {
+    this.createLightbox();
     // Init lightbox
-    if (this.images) {
-      this.createLightbox();
-    }
+    // if (this.images) {
+    //   this.createLightbox();
+    // }
   }
 
   ngOnDestroy() {
@@ -204,6 +222,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
       this.lightbox.destroy();
       this.lightbox = null;
     }
+    this.subscription.unsubscribe();
   }
 
   scrollToTop() {

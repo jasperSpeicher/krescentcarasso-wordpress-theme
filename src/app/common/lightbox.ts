@@ -7,26 +7,28 @@ export class LightBox {
   private initialized = false;
   private imageSet: { width: number, height: number, src: string }[] = [];
   private currentSetIndex = 0;
-  private _previousButton: HTMLElement;
-  private _nextButton: HTMLElement;
+  private className: string;
 
   constructor(
     private _imageGridElement: HTMLElement,
     private _enlargedImageElement: HTMLDivElement,
     private _enlargedImageElementImage: HTMLImageElement,
     private _enlargedImageBackdropElement: HTMLElement,
-    private className: string,
-  ) {}
+    private _previousButton: HTMLElement,
+    private _nextButton: HTMLElement,
+) {}
 
   addEventListener(element: HTMLElement | Window, event: string, listener: EventListenerObject) {
     this.listeners.push({element, listener});
     element.addEventListener(event, listener);
   }
 
+  setClassName(name: string) {
+    this.className = name;
+  }
+
   initialize() {
     if (!this.initialized) {
-      this._previousButton = <HTMLElement>document.querySelector('.theme-image-grid__lightbox-previous');
-      this._nextButton = <HTMLElement>document.querySelector('.theme-image-grid__lightbox-next');
       this.addEventListener(this._enlargedImageElement, 'click', this.onReset.bind(this));
       this.addEventListener(this._enlargedImageBackdropElement, 'click', this.onReset.bind(this));
       this.addEventListener(this._imageGridElement, 'click', this.onClick.bind(this));

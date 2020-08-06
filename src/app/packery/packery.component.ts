@@ -14,7 +14,7 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _images: Array<any> = null;
   private _packery;
   private _imageGridElement; // fixme don't init twice
-  public lightbox: LightBox;
+  @Input() public lightbox: LightBox;
   private clippingInterval;
   private gridBottom: number;
 
@@ -36,21 +36,6 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
       return 0.5 - Math.random();
     });
     this._imageGridElement = this.elementRef.nativeElement.querySelector('.theme-image-grid');
-
-    // Init lightbox
-    // TODO make this more angular
-    if (this.lightbox) {
-      this.lightbox.destroy();
-    } else {
-      this.lightbox = new LightBox(
-        this._imageGridElement,
-        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
-        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
-        this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
-        'theme-image-grid__image--active'
-      );
-    }
-    this.lightbox.initialize();
 
     while (this._imageGridElement.firstChild) {
       this._imageGridElement.removeChild(this._imageGridElement.firstChild);
@@ -92,22 +77,19 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     setTimeout(() => {
       this.initPackery();
-      const imageSet = this._images
-        .filter(i => !i.hidden)
-        .map(i => ({
-          src: i.sizes.large,
-          width: i.width,
-          height: i.height,
-        }));
-      this.lightbox.setImageSet(imageSet);
+      // const imageSet = this._images
+      //   .filter(i => !i.hidden)
+      //   .map(i => ({
+      //     src: i.sizes.large,
+      //     width: i.width,
+      //     height: i.height,
+      //   }));
+      // console.log({imageSet});
+      // this.lightbox.setImageSet(imageSet);
     }, 1000);
   }
 
   ngOnDestroy() {
-    if (this.lightbox) {
-      this.lightbox.destroy();
-      this.lightbox = null;
-    }
   }
 
   updateVisibleImages() {
