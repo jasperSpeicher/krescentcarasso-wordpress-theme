@@ -6,9 +6,7 @@ declare var Packery: any;
 @Component({
   selector: '[packery]',
   styleUrls: ['./packery.component.css'],
-  template: '<div class="theme-image-grid"></div>' +
-    '<div class="theme-image-grid__enlarged-image-backdrop"></div>' +
-    '<div class="theme-image-grid__enlarged-image"><img src=""/></div>',
+  templateUrl: './packery.component.html',
   encapsulation: ViewEncapsulation.None
 })
 export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
@@ -94,6 +92,14 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     setTimeout(() => {
       this.initPackery();
+      const imageSet = this._images
+        .filter(i => !i.hidden)
+        .map(i => ({
+          src: i.sizes.large,
+          width: i.width,
+          height: i.height,
+        }));
+      this.lightbox.setImageSet(imageSet);
     }, 1000);
   }
 

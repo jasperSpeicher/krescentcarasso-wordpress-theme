@@ -41,7 +41,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   contactFormData: FormData;
 
   heroSrc = null;
-  private lightbox: LightBox;
+  public lightbox: LightBox;
 
   constructor(private pagesService: PagesService,
               private route: ActivatedRoute,

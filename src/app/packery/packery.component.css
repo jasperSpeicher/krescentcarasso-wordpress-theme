@@ -76,10 +76,6 @@
   background-blend-mode: normal;
 }
 
-/*.theme-image-grid__image--clipped {*/
-/*  visibility: hidden !important;*/
-/*}*/
-
 .theme-image-grid__image--active.theme-image-grid__image--portrait {
   padding-top: 44.4444444444%;
 }
@@ -94,16 +90,3 @@
   display: block;
   float: left;
 }
-
-/*[data-index] {*/
-/*  text-align: center;*/
-/*}*/
-/*[data-index]:after {*/
-/*  content: attr(data-index);*/
-/*  font-size: 3rem;*/
-/*  color: #000;*/
-/*}*/
-/*.theme-image-grid--transitioning-on .theme-image-grid__image {*/
-  /*transition: all 0.8s;*/
-/*}*/
-
