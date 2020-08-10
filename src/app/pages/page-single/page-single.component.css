@@ -60,6 +60,9 @@
   position: relative;
   display: none;
 }
+.theme-hero__image--alt {
+  display: none;
+}
 
 .theme-page-body, .image-grids {
   max-width: 1600px;

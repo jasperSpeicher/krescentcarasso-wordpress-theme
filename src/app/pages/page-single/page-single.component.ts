@@ -43,6 +43,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   subscription = new Subscription();
 
   heroSrc = null;
+  altHeroSrc = null;
   public lightbox: LightBox;
 
   constructor(private pagesService: PagesService,
@@ -129,6 +130,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
           this.heroSrc = preload.src;
         });
         preload.src = this.page.acf.hero_image.url;
+        this.altHeroSrc = this.page.slug === 'about' ? this.page.acf.grid_image.sizes.medium_large : null;
         setTimeout(() => {
           this.fadeInHero = true;
           this.fadeInPackery = true;

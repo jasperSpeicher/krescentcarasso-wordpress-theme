@@ -46,6 +46,11 @@
              [class.theme-hero__image--loaded]="!!heroSrc"
              [src]="heroSrc">
       </div>
+      <div class="theme-hero__image--alt">
+        <img *ngIf="page && page.acf?.grid_image && altHeroSrc"
+             [class.theme-hero__image--loaded]="!!altHeroSrc"
+             [src]="altHeroSrc">
+      </div>
       <h2>{{ page?.title.rendered }}</h2>
     </div>
 
@@ -66,10 +71,10 @@
           </div>
         </div>
         <div *ngIf="layout.acf_fc_layout == 'two_images'" class="theme-collection__two-images row">
-          <div class="col-sm-6">
+          <div class="col-xs-6">
             <img src="{{ layout.image_one.url }}">
           </div>
-          <div class="col-sm-6">
+          <div class="col-xs-6">
             <img src="{{ layout.image_two.url }}">
           </div>
         </div>

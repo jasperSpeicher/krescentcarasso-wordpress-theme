@@ -129,7 +129,15 @@
 }
 @media (max-width:500px){
   :host /deep/ .about .theme-hero--natural {
+    padding: 30px;
+    width: auto;
+    float: none;
+  }
+  :host /deep/ .about .theme-hero--natural .theme-hero__image {
     display: none;
+  }
+  :host /deep/ .about .theme-hero--natural .theme-hero__image--alt {
+    display: block;
   }
   :host /deep/ .about .theme-body-text {
     max-width: none;
