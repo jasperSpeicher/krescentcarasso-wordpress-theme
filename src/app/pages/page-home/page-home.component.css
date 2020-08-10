@@ -44,7 +44,7 @@ h2{
 
 @media(max-width: 768px) {
   .theme-hero__image {
-    top: 60px;
+    top: 50px;
     bottom: 0px;
     left: 0px;
     right: 0px;
