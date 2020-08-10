@@ -318,6 +318,8 @@
     left: 0;
     bottom: 0;
     padding: 60px 0 0 0;
+    overflow: auto;
+    pointer-events: auto;
   }
 
   .theme-header--mobile-menu-visible {
@@ -328,9 +330,7 @@
     opacity: 0;
     transition: opacity 400ms 0ms ease;
     padding-right: 30px;
-    overflow: auto;
     pointer-events: auto;
-
   }
 
   .theme-header--mobile-menu-visible .theme-menu {
@@ -353,7 +353,7 @@
     right: 0;
     left: 0;
     height: 50px;
-    padding-top: 10px;
+    padding-top: 7px;
     margin: 0;
     font-size: 1.5rem;
     /*transition: font-size .4s ease-out, bottom .4s ease-out;*/
@@ -393,7 +393,7 @@
     user-select: none;
     position: absolute;
     right: 0;
-    top: 12px;
+    top: 10px;
     margin-right: 0;
   }
 

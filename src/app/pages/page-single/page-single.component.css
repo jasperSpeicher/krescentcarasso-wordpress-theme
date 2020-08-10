@@ -204,9 +204,6 @@ img {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  .theme-page-body {
-    padding-top: 60px;
-  }
   /* so images are not under fixed header */
   .theme-page .image-grids {
     padding-top: 50px;

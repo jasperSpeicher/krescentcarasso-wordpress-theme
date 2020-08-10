@@ -53,6 +53,12 @@ export class MenuComponent implements OnInit {
   }
 
   toggleMobile() {
+    if (this.menu.mobileVisible &&
+      (!!this.router.url.match(/projects$/) ||
+      !!this.router.url.match(/collections$/))) {
+      // navigate back so that the blank page is not showing when the menu closes
+      history.back();
+    }
     this.menu.mobileVisible = !this.menu.mobileVisible;
   }
 
