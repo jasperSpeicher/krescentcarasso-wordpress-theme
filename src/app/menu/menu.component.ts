@@ -28,20 +28,7 @@ export class MenuComponent implements OnInit {
   }
 
   navigate(path: string) {
-    this.router.navigate(path.split('/')).then(
-      routeChanged => {
-        // if the route did not change, then set navigationCancelled
-        if (!routeChanged) {
-          this.menuService.navigating = true;
-          setTimeout(() => {
-            this.menuService.navigating = false;
-            this.menu.activeParent = null;
-            // hide mobile menu on nav
-            this.menu.mobileVisible = false;
-          }, 400);
-        }
-      }
-    );
+    this.router.navigate(path.split('/'));
   }
 
   linkActive(url: string) {
