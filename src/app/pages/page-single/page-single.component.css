@@ -110,10 +110,6 @@
   padding: 0;
 }
 
-.theme-collection {
-
-}
-
 .theme-collection img {
   width: 100%;
   height: auto;
@@ -203,6 +199,10 @@ img {
 }
 
 @media (max-width: 768px) {
+  .theme-collection {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
   .theme-body-text {
     padding-left: 1rem;
     padding-right: 1rem;
