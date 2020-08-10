@@ -8,6 +8,7 @@ export class LightBox {
   private imageSet: { width: number, height: number, src: string }[] = [];
   private currentSetIndex = 0;
   private className: string;
+  private open = false;
 
   constructor(
     private _imageGridElement: HTMLElement,
@@ -39,6 +40,7 @@ export class LightBox {
       this.addEventListener(window, 'resize', this.resize.bind(this));
       this.onHashChange();
       this.initialized = true;
+      this.open = false;
     }
   }
 
@@ -80,28 +82,23 @@ export class LightBox {
     this.activeRect = imageData;
     this.toggleDimensionTransitions(false);
     this.resize();
+  }
 
-    // remove and add back listener so that listener list is not altered
-    const hashChangeListener = this.listeners.find(l => l.event === 'hashchange');
-    hashChangeListener.element.removeEventListener(hashChangeListener.event, hashChangeListener.listener);
-    location.hash = encodeURIComponent(imageData.src);
-    setTimeout(() => {
-        hashChangeListener.element.addEventListener(hashChangeListener.event, hashChangeListener.listener);
-      }, 10
-    );
+  navigateToImage(src: string) {
+    location.hash = encodeURIComponent(src);
   }
 
   showNext(e) {
     e.stopImmediatePropagation();
     this.currentSetIndex = this.nextImageIndex;
-    this.setImage(this.imageSet[this.currentSetIndex]);
+    this.navigateToImage(this.imageSet[this.currentSetIndex].src);
   }
 
   showPrevious(e) {
     e.stopImmediatePropagation();
     this.currentSetIndex = this.previousImageIndex;
     this._enlargedImageElement.style.backgroundImage = '';
-    this.setImage(this.imageSet[this.currentSetIndex]);
+    this.navigateToImage(this.imageSet[this.currentSetIndex].src);
   }
 
   onHashChange() {
@@ -117,9 +114,11 @@ export class LightBox {
         matchingImages.find(i => i.classList.contains('theme-image-grid__image--active')) ||
         matchingImages[0];
       if (imageElement) {
-        this.enlargeImage(null, imageElement);
-      }else {
-        this.resize();
+        if (!this.open) {
+          this.enlargeImage(null, imageElement);
+        } else {
+          this.setImage(this.imageSet.find(data => data.src === url));
+        }
       }
     } else {
       this.reset();
@@ -137,8 +136,9 @@ export class LightBox {
   }
 
   onReset() {
-    history.replaceState(null, null, window.location.href.split('#')[0]);
-    this.reset();
+    // history.replaceState(null, null, window.location.href.split('#')[0]);
+    // this.reset();
+    location.hash = '';
   }
 
   enlargeImage(event: UIEvent, image?: HTMLDivElement) {
@@ -179,6 +179,7 @@ export class LightBox {
           }
           this.toggleDimensionTransitions(true);
           this.resize();
+          this.open = true;
         }
       }, 100);
     }
@@ -214,6 +215,7 @@ export class LightBox {
     this._enlargedImageElement.setAttribute('style', '');
     this._enlargedImageBackdropElement.classList.remove('theme-image-grid__enlarged-image-backdrop--visible');
     this._enlargedImageElementImage.setAttribute('style', '');
+    this.open = false;
   }
 
   resize() {
