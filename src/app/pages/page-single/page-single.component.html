@@ -14,6 +14,8 @@
            [ngStyle]="imageRowStyles[rowIndex].row">
         <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image"
              [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]"
+             [attr.data-width]="image.width"
+             [attr.data-height]="image.height"
              [attr.data-src]="image.sizes.large"
              [attr.data-src-large]="image.url">
           <img [src]="image.sizes.large">

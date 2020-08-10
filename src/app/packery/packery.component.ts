@@ -49,8 +49,11 @@ export class PackeryComponent implements OnChanges, AfterViewInit, OnDestroy {
       activeBackgroundImageElement.className = 'theme-image-grid__active-image';
       this.setImageBackground(backgroundImageElement, image.sizes.thumbnail);
       this.setImageBackground(activeBackgroundImageElement, image.sizes.thumbnail);
-      imageElement.setAttribute('data-src-large', image.sizes.large);
-      imageElement.setAttribute('data-src', image.sizes.thumbnail);
+      imageElement.setAttribute('data-width', image.width);
+      imageElement.setAttribute('data-height', image.height);
+      imageElement.setAttribute('data-src', image.sizes.large);
+      imageElement.setAttribute('data-src-thumb', image.sizes.thumbnail);
+      imageElement.setAttribute('data-src-large', image.url);
       imageElement.classList.add('theme-image-grid__image');
       if (image.height > image.width) {
         imageElement.classList.add('theme-image-grid__image--portrait');

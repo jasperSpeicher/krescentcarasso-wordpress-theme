@@ -93,7 +93,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     this.pagesService
       .getPage(parentSlug)
       .subscribe(res => {
-        if (!res[0]){
+        if (!res[0]) {
           return;
         }
         this.page = res[0] as Page;
@@ -180,8 +180,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
         this.elementRef.nativeElement.querySelector('.theme-image-grid__lightbox-previous'),
         this.elementRef.nativeElement.querySelector('.theme-image-grid__lightbox-next'),
-    );
-      this.lightbox.initialize();
+      );
     }
     this.subscription.add(
       this.menuService.getMenuObservable().subscribe((menu) => {
@@ -197,7 +196,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
           const imageSet = !!images && images
             .filter(i => !i.hidden)
             .map(i => ({
-              src: i.sizes.large,
+              src: i.url,
               width: i.width,
               height: i.height,
             }));
@@ -290,6 +289,9 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
 
   ngAfterViewChecked() {
+    if (!this.lightbox.initialized && this.images) {
+      this.lightbox.initialize();
+    }
     // make Wordpress links work in angular
     const links = document.querySelectorAll('.theme-body-text .content a');
     Array.prototype.slice.call(links).forEach(link => {

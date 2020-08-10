@@ -3,8 +3,8 @@ const MIN_PADDING = 80;
 
 export class LightBox {
   private listeners = [];
-  private activeRect;
-  private initialized = false;
+  private activeRect: { top?: number, left?: number, width: number, height: number };
+  public initialized = false;
   private imageSet: { width: number, height: number, src: string }[] = [];
   private currentSetIndex = 0;
   private className: string;
@@ -16,10 +16,11 @@ export class LightBox {
     private _enlargedImageBackdropElement: HTMLElement,
     private _previousButton: HTMLElement,
     private _nextButton: HTMLElement,
-) {}
+  ) {
+  }
 
   addEventListener(element: HTMLElement | Window, event: string, listener: EventListenerObject) {
-    this.listeners.push({element, listener});
+    this.listeners.push({element, event, listener});
     element.addEventListener(event, listener);
   }
 
@@ -37,6 +38,7 @@ export class LightBox {
       this.addEventListener(window, 'hashchange', this.onHashChange.bind(this));
       this.addEventListener(window, 'resize', this.resize.bind(this));
       this.onHashChange();
+      this.initialized = true;
     }
   }
 
@@ -57,11 +59,36 @@ export class LightBox {
   }
 
   setImage(imageData: { width: number, height: number, src: string }) {
+
+    // switch image
     this._enlargedImageElementImage.src = imageData.src;
+    const newImage = new Image();
+    newImage.src = imageData.src;
+    this._enlargedImageElementImage.src = '';
+    if (newImage.complete) {
+      setTimeout(() => {
+        this._enlargedImageElementImage.src = newImage.src;
+      });
+    } else {
+      newImage.onload = () => {
+        // this._enlargedImageElement.removeChild(this._enlargedImageElementImage);
+        // this._enlargedImageElement.appendChild(this._enlargedImageElementImage);
+        this._enlargedImageElementImage.src = newImage.src;
+      };
+    }
     this._enlargedImageElement.style.backgroundImage = `url('${imageData.src}')`;
     this.activeRect = imageData;
     this.toggleDimensionTransitions(false);
     this.resize();
+
+    // remove and add back listener so that listener list is not altered
+    const hashChangeListener = this.listeners.find(l => l.event === 'hashchange');
+    hashChangeListener.element.removeEventListener(hashChangeListener.event, hashChangeListener.listener);
+    location.hash = encodeURIComponent(imageData.src);
+    setTimeout(() => {
+        hashChangeListener.element.addEventListener(hashChangeListener.event, hashChangeListener.listener);
+      }, 10
+    );
   }
 
   showNext(e) {
@@ -73,6 +100,7 @@ export class LightBox {
   showPrevious(e) {
     e.stopImmediatePropagation();
     this.currentSetIndex = this.previousImageIndex;
+    this._enlargedImageElement.style.backgroundImage = '';
     this.setImage(this.imageSet[this.currentSetIndex]);
   }
 
@@ -81,13 +109,17 @@ export class LightBox {
       const url = decodeURIComponent(decodeURIComponent(location.hash.substr(1)));
       const matchingImages = Array.prototype.slice.call(
         <NodeListOf<HTMLDivElement>>this._imageGridElement
-          .querySelectorAll(`[data-src-large*='${url}']${this.className ? '.' + this.className : ''}`)
+          .querySelectorAll(
+            `[data-src-large*='${url}']${this.className ? '.' + this.className : ''}, ` +
+            `[data-src*='${url}']${this.className ? '.' + this.className : ''}`)
       );
       const imageElement: HTMLDivElement =
         matchingImages.find(i => i.classList.contains('theme-image-grid__image--active')) ||
         matchingImages[0];
       if (imageElement) {
         this.enlargeImage(null, imageElement);
+      }else {
+        this.resize();
       }
     } else {
       this.reset();
@@ -117,19 +149,25 @@ export class LightBox {
       element.getAttribute('data-src-large') :
       element.getAttribute('data-src');
     if (!!src) {
-      this.activeRect = element.getBoundingClientRect();
+      const bounds = element.getBoundingClientRect();
+      const naturalRatio =
+        parseInt(element.getAttribute('data-height'), 10) /
+        parseInt(element.getAttribute('data-width'), 10);
+      this.activeRect = {
+        top: bounds.top,
+        left: bounds.left,
+        width: bounds.width,
+        height: bounds.width * naturalRatio,
+      };
       const largeImage = element.getAttribute('data-src-large');
-      // if (largeImage !== src) {
       this._enlargedImageElementImage.src = largeImage;
-      // } else {
-      //   this._enlargedImageElementImage.src = '';
-      // }
-      this.currentSetIndex = this.imageSet.findIndex((i: { src: string }) => i.src === this._enlargedImageElementImage.src);
+      this.currentSetIndex = this.imageSet.findIndex((i: { src: string }) => i.src === src || i.src === largeImage);
       this._enlargedImageBackdropElement.classList.add('theme-image-grid__enlarged-image-backdrop--visible');
       this._enlargedImageElement.style['z-index'] = '101';
       this._enlargedImageElement.style.backgroundSize = 'cover';
       this._enlargedImageElement.style.backgroundImage = `url('${src}')`;
-      this._enlargedImageElement.style.transition = 'all 0s';
+      // this._enlargedImageElement.style.transition = 'all 0s';
+      this.toggleDimensionTransitions(true);
       ['top', 'left', 'width', 'height'].forEach((key) => {
         this._enlargedImageElement.style[key] = this.activeRect[key] + 'px';
       });
@@ -140,7 +178,6 @@ export class LightBox {
             this._enlargedImageElementImage.style.display = 'block';
           }
           this.toggleDimensionTransitions(true);
-          this._enlargedImageElement.style.transition = 'top 800ms, left 800ms, width 800ms, height 800ms';
           this.resize();
         }
       }, 100);

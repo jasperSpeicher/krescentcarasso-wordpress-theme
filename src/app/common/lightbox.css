@@ -43,36 +43,33 @@
 .theme-image-grid__enlarged-image-backdrop--visible .theme-image-grid__lightbox-previous,
 .theme-image-grid__enlarged-image-backdrop--visible .theme-image-grid__lightbox-next {
   display: block;
+  width: 50px;
+  height: 72px;
 }
 
 .theme-image-grid__lightbox-previous {
   left: 50px;
-  width: 50px;
-  height: 50px;
-}
-.theme-image-grid__lightbox-previous img {
-  width: 100%;
-  height: auto;
 }
 .theme-image-grid__lightbox-next {
   right: 50px;
-  width: 50px;
-  height: 50px;
 }
-.theme-image-grid__lightbox-next img {
+.theme-image-grid__lightbox-previous svg,
+.theme-image-grid__lightbox-next svg{
   width: 100%;
   height: auto;
+  display: block;
 }
 
-@media(max-width: 1060px){
+@media(max-width: 1121px){
+  .theme-image-grid__enlarged-image-backdrop--visible .theme-image-grid__lightbox-previous,
+  .theme-image-grid__enlarged-image-backdrop--visible .theme-image-grid__lightbox-next {
+    width: 30px;
+    height: 34px;
+  }
   .theme-image-grid__lightbox-previous {
     left: 5px;
-    width: 30px;
-    height: 30px;
   }
   .theme-image-grid__lightbox-next {
     right: 5px;
-    width: 30px;
-    height: 30px;
   }
 }
