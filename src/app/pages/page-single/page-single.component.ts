@@ -285,7 +285,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
       styles.row.height = padding + ratio + 'px';
       styles.row.width = widths.reduce(function (sum, w, j) {
         return sum + (padding + ratio * widths[j] / heights[j]);
-      }, 0) + 'px';
+      }, 0) - padding + 'px';
       styles.row.margin = '0 auto';
     });
   }

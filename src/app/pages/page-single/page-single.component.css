@@ -210,6 +210,8 @@ img {
   /* so images are not under fixed header */
   .theme-page .image-grids {
     padding-top: 80px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
   .theme-hero h2 {
     font-size: 1.75rem;
@@ -232,6 +234,9 @@ img {
   }
   .image-grids__flat-list {
     display: block;
+  }
+  .image-grids__flat-list > div {
+    padding-bottom: 10px;
   }
   .image-grids .image-rows, .image-grids .packery-container {
     display: none;
