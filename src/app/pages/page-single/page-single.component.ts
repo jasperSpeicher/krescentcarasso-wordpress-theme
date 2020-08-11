@@ -141,6 +141,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
         if (this.taggedImages) {
           this.filterGallery(termSlug);
         }
+        this.scrollToTop();
       });
 
   }
