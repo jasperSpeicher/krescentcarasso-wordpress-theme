@@ -64,13 +64,11 @@
          [class.active]="menu.activeParent === parent.object_slug">
       <div class="row d-none d-sm-block" [class.active]="menu.activeParent === parent.object_slug">
 
-        <div class="menu-image-grid__item" *ngFor="let child of parent.children"
-             [ngClass]="{'col-xs-4':parent.children.length>2, 'col-xs-6':parent.children.length<=2}">
+        <div class="menu-image-grid__item" *ngFor="let child of parent.children; index as i"
+             [ngClass]="{'col-sm-4':parent.children.length>2, 'col-xs-6':true }">
           <a class="menu-image-grid__project-link"
+             [ngStyle]="{backgroundImage: 'url(\''+child.gridImage+'\')' }"
              (click)="navigate(path(parent.object_slug,child.object_slug))">
-            <ng-template [ngIf]="!!child.gridImage">
-              <img [src]="child.gridImage"/>
-            </ng-template>
             <div class="menu-image-grid__item-title">{{ child.title }}</div>
           </a>
         </div>

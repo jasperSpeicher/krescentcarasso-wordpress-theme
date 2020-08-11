@@ -225,6 +225,11 @@
   width: 100%;
   display: block;
   cursor: pointer;
+  padding-top: 66.66%;
+  background-size: cover;
+}
+.collections .menu-image-grid__project-link {
+  padding-top: 150%;
 }
 
 .menu-image-grid__item img {
@@ -279,6 +284,9 @@
   .theme-header {
     height: 7.25rem;
   }
+  .theme-header h1 {
+    font-size: 1.75rem;
+  }
   .menu-image-grid {
     top: 7.25rem;
   }
@@ -301,14 +309,23 @@
 }
 
 @media (max-width: 500px) {
-  .theme-header h1 {
-    font-size: 1.75rem;
+  .menu-image-grid__project-link:hover::after {
+    opacity: 0;
+  }
+  .menu-image-grid__project-link:hover .menu-image-grid__item-title {
+    opacity: 0;
   }
 }
 
 @media (max-width: 420px) {
   .theme-header h1 {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .theme-menu li {
+    font-size: 1.125rem;
   }
 }
 
