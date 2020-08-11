@@ -93,7 +93,8 @@
 :host /deep/ .contact .theme-body-text .content,
 :host /deep/ .contact .theme-body-text .content input,
 :host /deep/ .contact .theme-body-text .content textarea {
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
   resize: none;
 }
