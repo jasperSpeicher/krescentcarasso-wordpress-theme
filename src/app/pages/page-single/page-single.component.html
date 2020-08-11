@@ -4,7 +4,7 @@
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
   <!--imageGrid-->
-  <div [ngStyle]="{ height: showImageRows || showPackery? '0' : null }" class="image-grids container-fluid">
+  <div [ngStyle]="{ height: showImageRows || showPackery? imageGridHeight+'px' : null }" class="image-grids container-fluid">
     <div *ngIf="showPackery" [ngClass]="{ 'packery-container': true, 'packery-container--fade-in': fadeInPackery }">
       <div [packery]="images" [lightbox]="lightbox" >
       </div>

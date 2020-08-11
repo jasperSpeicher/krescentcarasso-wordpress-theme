@@ -31,6 +31,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   taggedImages: Array<{ tag_name: string, images: any[] }> = null;
   imagesByFours = [];
   imageRowStyles = [];
+  imageGridHeight = 0;
   termSlug: string = null;
   fadeInHero = false;
   fadeInPackery = false;
@@ -113,6 +114,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
             .concat(fillerImages)
             .concat(fillerImages.slice(0, fillerImages.length / 2));
         }
+        this.imageGridHeight = 0;
         this.imagesByFours = !this.showPackery ? this.getImagesByFours() : null;
         this.fadeInHero = false;
         this.fadeInPackery = false;
@@ -288,6 +290,9 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
       }, 0) - padding + 'px';
       styles.row.margin = '0 auto';
     });
+    this.imageGridHeight = this.imageRowStyles.reduce((sum, row) => {
+      return sum + parseInt(row.height, 10);
+    }, 0);
   }
 
   ngAfterViewChecked() {
