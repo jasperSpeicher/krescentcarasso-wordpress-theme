@@ -182,6 +182,10 @@ img {
   margin-bottom: 3rem;
 }
 
+.theme-collection {
+  pointer-events: none;
+}
+
 @media (max-width: 1064px) {
   .theme-body-text {
     padding-left: 2rem;
@@ -202,6 +206,7 @@ img {
   .theme-collection {
     padding-right: 10px;
     padding-left: 10px;
+    pointer-events: auto;
   }
   .theme-body-text {
     padding-left: 1rem;

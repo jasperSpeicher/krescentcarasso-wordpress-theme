@@ -8,7 +8,7 @@ export class LightBox {
   private imageSet: { width: number, height: number, src: string }[] = [];
   private currentSetIndex = 0;
   private className: string;
-  private open = false;
+  private _open = false;
 
   constructor(
     private _imageGridElement: HTMLElement,
@@ -18,6 +18,10 @@ export class LightBox {
     private _previousButton: HTMLElement,
     private _nextButton: HTMLElement,
   ) {
+  }
+
+  public get open() {
+    return this._open;
   }
 
   addEventListener(element: HTMLElement | Window, event: string, listener: EventListenerObject) {
@@ -32,7 +36,11 @@ export class LightBox {
   initialize() {
     if (!this.initialized) {
       this.addEventListener(this._enlargedImageElement, 'click', this.onReset.bind(this));
+      this.addEventListener(this._enlargedImageElement, 'wheel', this.onReset.bind(this));
+      this.addEventListener(this._enlargedImageElement, 'touchmove', this.onReset.bind(this));
       this.addEventListener(this._enlargedImageBackdropElement, 'click', this.onReset.bind(this));
+      this.addEventListener(this._enlargedImageBackdropElement, 'wheel', this.onReset.bind(this));
+      this.addEventListener(this._enlargedImageBackdropElement, 'touchmove', this.onReset.bind(this));
       this.addEventListener(this._imageGridElement, 'click', this.onClick.bind(this));
       this.addEventListener(this._nextButton, 'click', this.showNext.bind(this));
       this.addEventListener(this._previousButton, 'click', this.showPrevious.bind(this));
@@ -40,7 +48,7 @@ export class LightBox {
       this.addEventListener(window, 'resize', this.resize.bind(this));
       this.onHashChange();
       this.initialized = true;
-      this.open = false;
+      this._open = false;
     }
   }
 
@@ -57,7 +65,7 @@ export class LightBox {
   }
 
   get imageSetEnabled() {
-    return this.currentSetIndex >= 0;
+    return !!this.imageSet && !!this.imageSet.length;
   }
 
   setImage(imageData: { width: number, height: number, src: string }) {
@@ -114,7 +122,7 @@ export class LightBox {
         matchingImages.find(i => i.classList.contains('theme-image-grid__image--active')) ||
         matchingImages[0];
       if (imageElement) {
-        if (!this.open) {
+        if (!this._open) {
           this.enlargeImage(null, imageElement);
         } else {
           this.setImage(this.imageSet.find(data => data.src === url));
@@ -179,7 +187,7 @@ export class LightBox {
           }
           this.toggleDimensionTransitions(true);
           this.resize();
-          this.open = true;
+          this._open = true;
         }
       }, 100);
     }
@@ -215,7 +223,7 @@ export class LightBox {
     this._enlargedImageElement.setAttribute('style', '');
     this._enlargedImageBackdropElement.classList.remove('theme-image-grid__enlarged-image-backdrop--visible');
     this._enlargedImageElementImage.setAttribute('style', '');
-    this.open = false;
+    this._open = false;
   }
 
   resize() {

@@ -176,10 +176,13 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     });
   }
 
-  createLightbox() {
+  async createLightbox() {
     if (!this.lightbox) {
+      const menu = await this.menuService.getMenuObservable().toPromise();
+      const gridSelector = menu.slug === 'projects' ? '.theme-collection__lightbox-area' : '.image-grids';
+      const gridElement = this.elementRef.nativeElement.querySelectorAll(gridSelector);
       this.lightbox = new LightBox(
-        this.elementRef.nativeElement.querySelector('.image-grids'),
+        gridElement[gridElement.length - 1],
         this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image'),
         this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image img'),
         this.elementRef.nativeElement.querySelector('.theme-image-grid__enlarged-image-backdrop'),
@@ -219,6 +222,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
     //   this.createLightbox();
     // }
   }
+
 
   ngOnDestroy() {
     this.fadeInHero = false;
@@ -297,7 +301,7 @@ export class PageSingleComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
 
   ngAfterViewChecked() {
-    if (!this.lightbox.initialized && this.images) {
+    if (this.lightbox && !this.lightbox.initialized) {
       this.lightbox.initialize();
     }
     // make Wordpress links work in angular

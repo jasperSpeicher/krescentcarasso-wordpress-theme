@@ -63,24 +63,37 @@
     </div>
 
     <!-- collection fields -->
-    <div *ngIf="page && page.acf.collection" class="theme-collection">
-      <ng-template ngFor let-layout [ngForOf]="page.acf.collection">
-        <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
-          <div class="col-sm-12">
-            <img src="{{ layout.image.url }}">
+    <div class="theme-collection__lightbox-area">
+      <div *ngIf="page && page.acf.collection" class="theme-collection">
+        <ng-template ngFor let-layout [ngForOf]="page.acf.collection">
+          <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
+            <div class="col-sm-12"
+                 [attr.data-height]="layout.image.height"
+                 [attr.data-width]="layout.image.width"
+                 [attr.data-src-large]="layout.image.url"
+                 [attr.data-src]="layout.image.url">
+              <img src="{{ layout.image.url }}">
+            </div>
           </div>
-        </div>
-        <div *ngIf="layout.acf_fc_layout == 'two_images'" class="theme-collection__two-images row">
-          <div class="col-xs-6">
-            <img src="{{ layout.image_one.url }}">
+          <div *ngIf="layout.acf_fc_layout == 'two_images'" class="theme-collection__two-images row">
+            <div class="col-xs-6"
+                 [attr.data-height]="layout.image_one.height"
+                 [attr.data-width]="layout.image_one.width"
+                 [attr.data-src-large]="layout.image_one.url"
+                 [attr.data-src]="layout.image_one.url">
+              <img src="{{ layout.image_one.url }}">
+            </div>
+            <div class="col-xs-6"
+                 [attr.data-height]="layout.image_two.height"
+                 [attr.data-width]="layout.image_two.width"
+                 [attr.data-src-large]="layout.image_two.url"
+                 [attr.data-src]="layout.image_two.url">
+              <img src="{{ layout.image_two.url }}">
+            </div>
           </div>
-          <div class="col-xs-6">
-            <img src="{{ layout.image_two.url }}">
-          </div>
-        </div>
-      </ng-template>
+        </ng-template>
+      </div>
     </div>
-
   </div>
 
   <button *ngIf="showBackTopButton" class="back-to-top" (click)="scrollToTop()">Back to Top</button>
@@ -88,7 +101,7 @@
 </div>
 
 <div class="theme-image-grid__enlarged-image-backdrop">
-  <button class="theme-image-grid__lightbox-previous" (click)="lightbox.showPrevious">
+  <button [style.display]="lightbox?.imageSetEnabled && lightbox.open ? 'block' : 'none'" class="theme-image-grid__lightbox-previous" (click)="lightbox.showPrevious">
     <svg viewBox="0 0 50 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
       <title>Path</title>
@@ -99,7 +112,7 @@
       </g>
     </svg>
   </button>
-  <button class="theme-image-grid__lightbox-next" (click)="lightbox.showNext">
+  <button [style.display]="lightbox?.imageSetEnabled && lightbox.open? 'block' : 'none'" class="theme-image-grid__lightbox-next" (click)="lightbox.showNext">
     <svg viewBox="0 0 51 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
       <title>Path Copy</title>
