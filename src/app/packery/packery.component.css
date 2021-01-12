@@ -1,0 +1,93 @@
+@import "../common/lightbox.css";
+
+/* ---- grid ---- */
+
+.theme-image-grid {
+  width: 100%;
+  background-color: #eee;
+  overflow: hidden;
+  position: relative;
+}
+.theme-image-grid .theme-image-grid__image > div {
+  opacity: 1;
+}
+.theme-image-grid--transitioning-on .theme-image-grid__image > div {
+  /*background-image: none !important;*/
+  opacity: 0.6;
+}
+
+/* clear fix */
+.theme-image-grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+/* height of 1 row */
+.theme-image-grid__sizer,
+.theme-image-grid__image {
+  width: 8.333333333%;
+  height: auto;
+  opacity: 0.65;
+  padding-top: 5.555555555%;
+  background: #555;
+}
+
+.theme-image-grid .theme-image-grid__image > div {
+  background-blend-mode: luminosity;
+  transition: opacity 3000ms 500ms ease;
+  /*transition: background-blend-mode 2000ms 500ms ease;*/
+  /*filter: contrast(140%);*/
+}
+.theme-image-grid .theme-image-grid__image > .theme-image-grid__active-image {
+  background-blend-mode: normal;
+  filter: none;
+  opacity: 0;
+}
+.theme-image-grid .theme-image-grid__image.theme-image-grid__image--active > .theme-image-grid__active-image {
+  opacity: 1;
+}
+
+  /* uncomment this to make small portrait images vertical */
+/*.theme-image-grid__image--portrait {*/
+/*  padding-top: 11.111%;*/
+/*}*/
+
+.theme-image-grid__image > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.theme-image-grid__image--active {
+  width: 33.333333333%;
+  height: auto;
+  padding-top: 22.22222222%;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.theme-image-grid__image--active > div {
+  background-blend-mode: normal;
+}
+
+.theme-image-grid__image--active.theme-image-grid__image--portrait {
+  padding-top: 44.4444444444%;
+}
+
+.theme-image-grid__gutter-sizer {
+  width: 1%;
+  height: 1%;
+}
+
+.theme-image-grid__image,
+.theme-image-grid__gutter-sizer {
+  display: block;
+  float: left;
+}

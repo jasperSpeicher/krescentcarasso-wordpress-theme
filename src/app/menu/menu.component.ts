@@ -1,62 +1,87 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MenuService } from './menu.service';
-import { Menu } from './menu';
-import { Router, ActivatedRoute, Params, NavigationStart, Event as NavigationEvent } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'theme-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
-  providers: [MenuService]
+  styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
 
-  @Input() slug:string;
+  @Input() pageClasses: string;
 
-  menu:Menu = {
-    activeParent: null
-  };
-  belowContent = false;
-
-  constructor(private menuService:MenuService, private router:Router) {
+  constructor(private menuService: MenuService, private router: Router) {
   }
 
-  getMenu(slug:string) {
-
-    this.menuService
-      .getMenu(slug)
-      .subscribe(res => {
-        Object.assign(this.menu, res);
-      });
-
-    this.menuService
-      .getMediaCategoryTerms()
-      .subscribe(res => {
-        this.menu.mediaCategoryTerms = res;
-        console.log(this.menu.mediaCategoryTerms);
-      });
-
+  get menu() {
+    return this.menuService.menu;
   }
 
-  path(parent:any, child:any) {
-    return parent.object_slug + (child !== undefined ? '/' + child.object_slug : '');
+  get fadeOut() {
+    return this.menuService.navigating;
   }
 
-  showChildren(parent:any) {
+  path(parentSlug: string, childSlug?: string) {
+    return parentSlug + (childSlug !== undefined ? '/' + childSlug : '');
+  }
+
+  navigate(path: string) {
+    this.router.navigate(path.split('/'));
+  }
+
+  linkActive(url: string) {
+    return this.router.url === `/${url}`;
+  }
+
+  showChildren(parent: any) {
     this.menu.activeParent = parent.object_slug;
   }
 
+  toggleMobile() {
+    if (this.menu.mobileVisible &&
+      (!!this.router.url.match(/projects$/) ||
+      !!this.router.url.match(/collections$/))) {
+      // navigate back so that the blank page is not showing when the menu closes
+      history.back();
+    }
+    this.menu.mobileVisible = !this.menu.mobileVisible;
+  }
+
+  showCategoryTerm(term: any) {
+    this.menu.activeTerm = term.slug;
+  }
+
+  get menuOpen() {
+    return this.menu && this.menu.open;
+  }
+
+  get mobileVisible() {
+    return this.menu && this.menu.mobileVisible;
+  }
+
+  get showingGrid() {
+    return this.menu && this.menu.showingGrid;
+  }
+
+  get headerClasses() {
+    const pageClasses = this.pageClasses.split(' ');
+    const classes = pageClasses.reduce((obj, c) => {
+      obj[c] = true;
+      return obj;
+    }, {});
+    Object.assign(classes, {
+      'theme-header': true,
+      'theme-header--mobile-menu-visible': this.mobileVisible,
+      'theme-header--menu-open': this.menuOpen,
+      'theme-header--show-grid': this.showingGrid,
+      'theme-header--menu-fade-out': this.fadeOut,
+    });
+    return classes;
+  }
+
   ngOnInit() {
-
-    this.getMenu(this.slug);
-
-    this.router.events
-      .filter(event => event instanceof NavigationStart && this.menu !== undefined)
-      .forEach((event:NavigationEvent) => {
-        this.menu.activeParent = event.url.split('/')[1];
-        this.belowContent = event.url === '/';
-      });
   }
 
 }

@@ -1,8 +1,9 @@
+<div [class]="classes">
+  <main>
+    <router-outlet #o="outlet"></router-outlet>
+  </main>
 
-<ng2-page-transition>
-  <router-outlet></router-outlet>
-</ng2-page-transition>
-
-<theme-menu slug="main-navigation">
-  {{ title }}
-</theme-menu>
+  <theme-menu [pageClasses]="pageClasses">
+    {{ title }}
+  </theme-menu>
+</div>

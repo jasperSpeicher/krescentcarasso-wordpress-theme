@@ -3,14 +3,30 @@
 
 
 body {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  width:100%;
 }
 
 html {
+  font-size: 16px;
   overflow-y: scroll;
+  transition: opacity 1s ease;
+  opacity: 1;
+}
+
+html.scrolling {
+  transition: none;
+  opacity: 0.25;
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 24px;
+  }
 }
 
 .container-fluid {
-  padding-left: 40px;
-  padding-right: 40px;
+  position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
 }

@@ -1,19 +1,20 @@
 h2{
   margin-bottom: 0.2em;
-  font-size: 52px;
+  font-size: 3.25rem;
   line-height: 1em;
   font-weight: normal;
 }
 
-.theme-hero-image {
+.theme-hero__image {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 120px;
+  bottom: 40px;
+  left: 40px;
+  right: 40px;
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
+  background-color: #777;
 }
 
 .theme-page-body{
@@ -23,7 +24,7 @@ h2{
 
 .theme-body-text {
   padding-bottom: 40px;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-family: Muli;
 }
 
@@ -39,4 +40,13 @@ h2{
 .theme-collection__one-image div,
 .theme-collection__two-images div {
   padding-bottom: 10px;
+}
+
+@media(max-width: 768px) {
+  .theme-hero__image {
+    top: 50px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+  }
 }

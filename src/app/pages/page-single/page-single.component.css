@@ -1,34 +1,113 @@
-h2 {
-  margin-bottom: 0.2em;
-  font-size: 52px;
-  line-height: 1em;
-  font-weight: normal;
-}
+@import "../../common/lightbox.css";
 
-.theme-hero-image {
-  padding-top: 45.5%;
+.theme-hero--cropped {
+  position: relative;
+  padding-top: 100vh;
   background-size: cover;
   background-position-x: center;
   background-position-y: center;
 }
-
-.theme-page {
-  padding-top: 100px;
+.theme-hero h2 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  font-size: 4rem;
+  text-align: center;
+  font-weight: 100;
+  color: #fff;
+  opacity: 1;
+  transition: opacity 2s ease;
+  padding: 0 10px;
+}
+.theme-hero--cropped .theme-hero__image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 60px;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  background-color: #777;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+.theme-hero--cropped .theme-hero__image--loaded {
+  opacity: 1;
+}
+.theme-hero .theme-hero__image::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  transition: background-color 0s;
+}
+.theme-hero--fade-in .theme-hero__image::before {
+  background: rgba(0,0,0,0);
+  transition: background-color 2s ease;
+}
+.theme-hero--fade-in h2 {
+  opacity: 0;
+}
+.theme-hero--natural {
+  position: relative;
+  display: none;
+}
+.theme-hero__image--alt {
+  display: none;
 }
 
-.theme-page-body {
+.theme-page-body, .image-grids {
   max-width: 1600px;
-  padding-top: 40px;
+  padding: 0;
+}
+.image-grids__flat-list {
+  display: none;
+}
+
+:host /deep/ .theme-meta-text {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+  line-height: 1.5;
+  font-size: 1.4rem;
+  font-weight: 200;
+}
+
+:host /deep/ .theme-meta-text span {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  margin-right: 8px;
 }
 
 .theme-body-text {
-  padding-bottom: 40px;
-  font-size: 20px;
-  font-family: Muli;
+  position: relative;
+  padding-top: 30px;
+  padding-bottom: 100px;
+  font-size: 1.25rem;
+  font-weight: 200;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.theme-collection {
+.theme-body-text .content {
+  position: relative;
+}
 
+/deep/ .theme-body-text .content p a {
+  color: #000;
+}
+/deep/ .theme-body-text .content ul {
+  text-align: center;
+  list-style-type: none;
+  padding: 0;
 }
 
 .theme-collection img {
@@ -41,44 +120,134 @@ h2 {
   padding-bottom: 10px;
 }
 
-/* gallery */
+.image-rows__row {
+  position: relative;
+  box-sizing: border-box;
+}
 
-/* ---- grid ---- */
+.image-rows__image{
+  display: block;
+  position: absolute;
+}
 
-.theme-gallery {
+img {
+  display: block;
   width: 100%;
-  background-color: #000;
 }
 
-/* clear fix */
-.theme-gallery:after {
-  content: '';
+.back-to-top {
+  font: inherit;
+  font-size: 1rem;
+  margin: 100px auto;
+  border: none !important;
+  padding: 0 !important;
+  width: auto;
+  overflow: visible;
+  text-align: inherit;
   display: block;
-  clear: both;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
 }
 
-/* ---- .grid-item ---- */
-
-/* height of 1 row */
-.theme-gallery__sizer,
-.theme-gallery__image {
-  width: 25%;
-  height: auto;
-  /*transition: width .4s;*/
+.back-to-top:hover {
+  border-bottom: 1px solid #000 !important;
 }
 
-.theme-gallery__image--large {
-  width: 50%;
-  height: auto;
+.packery-container {
+  opacity: 0;
+  transition: 800ms;
 }
 
-.theme-gallery__gutter-sizer {
-  width: 1%;
-  height: 1%;
+.packery-container--fade-in {
+  opacity: 1;
 }
 
-.theme-gallery__image,
-.theme-gallery__gutter-sizer {
-  display: block;
-  float: left;
+.theme-body-text__contact-form-error-message {
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+
+.theme-collection {
+  pointer-events: none;
+}
+
+@media (max-width: 1064px) {
+  .theme-body-text {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .theme-hero--cropped {
+    display: none;
+  }
+  .theme-hero--natural {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .theme-collection {
+    padding-right: 10px;
+    padding-left: 10px;
+    pointer-events: auto;
+  }
+  .theme-body-text {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  /* so images are not under fixed header */
+  .theme-page .image-grids {
+    padding-top: 80px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .theme-hero h2 {
+    font-size: 1.75rem;
+  }
+  .theme-body-text {
+    font-size: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  :host /deep/ .theme-meta-text {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    font-size: 1rem;
+    font-weight: 200;
+  }
+  :host /deep/ .theme-meta-text span {
+    font-size: 0.9rem;
+  }
+  .image-grids__flat-list {
+    display: block;
+  }
+  .image-grids__flat-list > div {
+    padding-bottom: 10px;
+  }
+  .image-grids .image-rows, .image-grids .packery-container {
+    display: none;
+  }
+}
+
+.theme-body-text__background {
+  display: none;
 }

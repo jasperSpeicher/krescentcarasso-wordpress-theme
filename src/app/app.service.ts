@@ -1,25 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-
-import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 
+const baseUrl = window ? window.location.origin : 'http://krescentcarasso.jasperspeicher.codes';
 
 @Injectable()
 export class AppService {
 
-  private _wpBase = "http://localhost:8888/krescentcarasso/wp-json/";
-
-  constructor(private http:Http) {
-  }
-
-  getApp():Observable<any> {
-
-    return this.http
-      .get(this._wpBase)
-      .map((res:Response) => res.json());
-
-  }
+  public static _wpBase = `${baseUrl}/wp-json/`;
 
 }

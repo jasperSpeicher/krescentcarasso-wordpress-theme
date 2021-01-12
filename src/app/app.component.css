@@ -1,3 +1,147 @@
+.app {
+  padding-top: 9.25rem;
+}
+
+.app.app--menu-open {
+  padding-top: 13rem;
+}
+
+.app main {
+  transition: opacity 400ms ease;
+}
+.app--navigating main {
+  opacity: 0;
+}
+.app--menu-showing-grid,
+.app--menu-mobile-visible {
+  height: 100vh;
+  overflow: hidden;
+}
+
+:host /deep/ .explore.all .theme-image-grid__image {
+  opacity: 0.8;
+}
+
+:host /deep/ .contact .theme-hero,
+:host /deep/ .clients .theme-hero {
+  display: none;
+}
+
+:host /deep/ .contact .theme-body-text {
+  position: relative;
+  padding: 3rem 2rem;
+  font-weight: 300;
+  max-width: 1600px;
+}
+
+:host /deep/ .about .theme-body-text .content,
+:host /deep/ .contact .theme-body-text .content {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+:host /deep/ .about .theme-page-body {
+  max-width: 1000px;
+}
+
+:host /deep/ .about .theme-body-text .content p {
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem;
+}
+
+:host /deep/ .about .theme-hero--cropped {
+  display: none;
+}
+
+:host /deep/ .about .theme-hero__image::before {
+  display: none !important;
+}
+
+:host /deep/ .about .theme-hero h2 {
+  display: none !important;
+}
+
+:host /deep/ .about .theme-hero--natural {
+  padding-left: 2rem;
+  display: block;
+  width: 40%;
+  float: left;
+}
+
+:host /deep/ .about .theme-body-text {
+  padding: 0 2rem;
+  font-weight: 300;
+  max-width: 60%;
+  float: left;
+}
+
+:host /deep/ .theme-body-text .has-text-align-center {
+  text-align: center;
+}
+:host /deep/ .theme-body-text .link-large {
+  font-size: 1.5rem;
+}
+:host /deep/ .theme-body-text h2 {
+  font-size: 1.5rem;
+}
+:host /deep/ .theme-body-text .content h3 {
+  margin-top: 50px;
+}
+:host /deep/ .theme-body-text .content h3:nth-of-type(1){
+  margin-top: 0;
+}
+:host /deep/ .contact .theme-body-text .content,
+:host /deep/ .contact .theme-body-text .content input,
+:host /deep/ .contact .theme-body-text .content textarea {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  resize: none;
+}
+:host /deep/ .contact .theme-body-text .content input[type=submit] {
+  background: black;
+  color: white;
+  font-weight: bold;
+  padding: 5px 20px;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  float: right;
+  width: auto;
+}
+
+:host /deep/ .contact form {
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+:host /deep/ .contact .contact-form-visible form {
+  opacity: 1;
+}
 
 
-
+@media (max-width: 768px) {
+  .app {
+    padding-top: 0;
+  }
+  .app.app--menu-open {
+    padding-top: 0;
+  }
+}
+@media (max-width:500px){
+  :host /deep/ .about .theme-hero--natural {
+    padding: 30px;
+    width: auto;
+    float: none;
+  }
+  :host /deep/ .about .theme-hero--natural .theme-hero__image {
+    display: none;
+  }
+  :host /deep/ .about .theme-hero--natural .theme-hero__image--alt {
+    display: block;
+  }
+  :host /deep/ .about .theme-body-text {
+    max-width: none;
+    float: none;
+  }
+}

@@ -7,11 +7,15 @@ import { AppComponent } from './app.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { Wpng2RoutingModule } from './app-routing.module';
 import { PostSingleComponent } from './posts/post-single/post-single.component';
-import { PageSingleComponent } from "./pages/page-single/page-single.component";
-import { PageHomeComponent } from "./pages/page-home/page-home.component";
+import { PageSingleComponent } from './pages/page-single/page-single.component';
+import { PageHomeComponent } from './pages/page-home/page-home.component';
 import { MenuComponent } from './menu/menu.component';
 
-import { Ng2PageTransition } from "ng2-page-transition";
+import { PackeryComponent } from './packery/packery.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PagesService } from './pages/pages.service';
+import { PageListComponent } from './pages/page-list/page-list.component';
+import { MenuService } from './menu/menu.service';
 
 
 @NgModule({
@@ -22,16 +26,19 @@ import { Ng2PageTransition } from "ng2-page-transition";
     PageSingleComponent,
     PageHomeComponent,
     MenuComponent,
-    Ng2PageTransition
+    PackeryComponent,
+    PageListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    Wpng2RoutingModule
+    Wpng2RoutingModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [PagesService, MenuService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

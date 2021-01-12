@@ -1,54 +1,131 @@
-<div *ngIf="page" class="theme-page">
-
-  <!--hero image-->
-  <div *ngIf="page.acf?.hero_image" class="theme-hero-image"
-       [style.background-image]="'url('+page.acf.hero_image?.url+')'">
-  </div>
+<div class="theme-page">
 
   <!--[style.width]="image.sizes['medium_large-width']"-->
   <!--[style.height]="image.sizes['medium_large-height']"-->
 
-  <!--gallery-->
-  <div *ngIf="page.acf?.gallery" class="theme-gallery">
-    <!--<div class="theme-gallery__gutter-sizer">-->
-    <!--</div>-->
-    <template ngFor let-image let-sizer="first" [ngForOf]="page.acf.gallery">
-      <img class="theme-gallery__image"
-           src="{{ image.sizes.medium_large }}"
-           [ngClass]="{ 'theme-gallery__sizer': sizer }">
-    </template>
+  <!--imageGrid-->
+  <div [ngStyle]="{ height: showImageRows || showPackery? imageGridHeight+'px' : null }" class="image-grids container-fluid">
+    <div *ngIf="showPackery" [ngClass]="{ 'packery-container': true, 'packery-container--fade-in': fadeInPackery }">
+      <div [packery]="images" [lightbox]="lightbox" >
+      </div>
+    </div>
+    <div *ngIf="showImageRows" class="image-rows">
+      <div *ngFor="let imageRow of imagesByFours; index as rowIndex" class="image-rows__row"
+           [ngStyle]="imageRowStyles[rowIndex].row">
+        <div *ngFor="let image of imageRow; index as imageIndex" class="image-rows__image"
+             [ngStyle]="imageRowStyles[rowIndex].images[imageIndex]"
+             [attr.data-width]="image.width"
+             [attr.data-height]="image.height"
+             [attr.data-src]="image.sizes.large"
+             [attr.data-src-large]="image.url">
+          <img [src]="image.sizes.large">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!!page && !!images && images.length > 0 "
+         class="image-grids__flat-list row">
+      <div *ngFor="let image of images" class="col-12">
+        <img [src]="image.sizes.large" [attr.data-src-large]="image.url">
+      </div>
+    </div>
   </div>
 
+  <div *ngIf="!images" class="theme-page-body container-fluid">
 
-  <div *ngIf="!page.acf?.gallery" class="theme-page-body container-fluid">
-
-    <h2>{{ page.title.rendered }}</h2>
-
-    <div [innerHTML]="page.content.rendered" class="theme-body-text">
+    <!--hero image-->
+    <div class="theme-hero theme-hero--cropped" [class.theme-hero--fade-in]="fadeInHero">
+      <div *ngIf="page && page.acf?.hero_image && heroSrc" class="theme-hero__image"
+           [class.theme-hero__image--loaded]="!!heroSrc"
+           [style.background-image]="'url('+heroSrc+')'">
+      </div>
+      <h2>{{ page?.title.rendered }}</h2>
+    </div>
+    <div class="theme-hero theme-hero--natural" [class.theme-hero--fade-in]="fadeInHero">
+      <div class="theme-hero__image">
+        <img *ngIf="page && page.acf?.hero_image && heroSrc"
+             [class.theme-hero__image--loaded]="!!heroSrc"
+             [src]="heroSrc">
+      </div>
+      <div class="theme-hero__image--alt">
+        <img *ngIf="page && page.acf?.grid_image && altHeroSrc"
+             [class.theme-hero__image--loaded]="!!altHeroSrc"
+             [src]="altHeroSrc">
+      </div>
+      <h2>{{ page?.title.rendered }}</h2>
     </div>
 
-    <!-- collection -->
-    <div *ngIf="page.acf.collection" class="theme-collection">
-      <template ngFor let-layout [ngForOf]="page.acf.collection">
-        <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
-          <div class="col-sm-12">
-            <img src="{{ layout.image.url }}">
-          </div>
-        </div>
-        <div *ngIf="layout.acf_fc_layout == 'two_images'" class="theme-collection__two-images row">
-          <div class="col-sm-6">
-            <img src="{{ layout.image_one.url }}">
-          </div>
-          <div class="col-sm-6">
-            <img src="{{ layout.image_two.url }}">
-          </div>
-        </div>
-      </template>
+    <div [ngClass]="{'theme-body-text': true, 'contact-form-visible': !!contactFormId}">
+      <div class="theme-body-text__background" [style.background-image]="'url('+heroSrc+')'"></div>
+      <div *ngIf="!!contactFormErrorMessage" class="theme-body-text__contact-form-error-message">
+        {{contactFormErrorMessage}}
+      </div>
+      <div [innerHTML]="!!page? sanitizedContent : ''" class="content"></div>
     </div>
 
-
+    <!-- collection fields -->
+    <div class="theme-collection__lightbox-area">
+      <div *ngIf="page && page.acf.collection" class="theme-collection">
+        <ng-template ngFor let-layout [ngForOf]="page.acf.collection">
+          <div *ngIf="layout.acf_fc_layout == 'one_image'" class="theme-collection__one-image row">
+            <div class="col-sm-12"
+                 [attr.data-height]="layout.image.height"
+                 [attr.data-width]="layout.image.width"
+                 [attr.data-src-large]="layout.image.url"
+                 [attr.data-src]="layout.image.url">
+              <img src="{{ layout.image.url }}">
+            </div>
+          </div>
+          <div *ngIf="layout.acf_fc_layout == 'two_images'" class="theme-collection__two-images row">
+            <div class="col-xs-6"
+                 [attr.data-height]="layout.image_one.height"
+                 [attr.data-width]="layout.image_one.width"
+                 [attr.data-src-large]="layout.image_one.url"
+                 [attr.data-src]="layout.image_one.url">
+              <img src="{{ layout.image_one.url }}">
+            </div>
+            <div class="col-xs-6"
+                 [attr.data-height]="layout.image_two.height"
+                 [attr.data-width]="layout.image_two.width"
+                 [attr.data-src-large]="layout.image_two.url"
+                 [attr.data-src]="layout.image_two.url">
+              <img src="{{ layout.image_two.url }}">
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
   </div>
 
+  <button *ngIf="showBackTopButton" class="back-to-top" (click)="scrollToTop()">Back to Top</button>
+
+</div>
+
+<div class="theme-image-grid__enlarged-image-backdrop">
+  <button [style.display]="lightbox?.imageSetEnabled && lightbox.open ? 'block' : 'none'" class="theme-image-grid__lightbox-previous" (click)="lightbox.showPrevious">
+    <svg viewBox="0 0 50 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+      <title>Path</title>
+      <desc>Created with Sketch.</desc>
+      <defs></defs>
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polyline id="Path" stroke="#646464" stroke-width="3" points="48.5495645 1.26953125 2.39616312 47.4229326 48.7541354 94"></polyline>
+      </g>
+    </svg>
+  </button>
+  <button [style.display]="lightbox?.imageSetEnabled && lightbox.open? 'block' : 'none'" class="theme-image-grid__lightbox-next" (click)="lightbox.showNext">
+    <svg viewBox="0 0 51 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+      <title>Path Copy</title>
+      <desc>Created with Sketch.</desc>
+      <defs></defs>
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polyline id="Path-Copy" stroke="#646464" stroke-width="3" transform="translate(25.178986, 47.365234) scale(-1, 1) translate(-25.178986, -47.365234) " points="48.1534014 1 2 47.1534014 48.3579723 93.7304688"></polyline>
+      </g>
+    </svg>
+  </button>
+</div>
+<div class="theme-image-grid__enlarged-image">
+  <img src=""/>
 </div>
 
 <div *ngIf="!page">

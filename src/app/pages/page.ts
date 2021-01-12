@@ -1,3 +1,7 @@
 export class Page {
-  acf:any;
+  acf: any;
+  slug: string;
+  parent: string;
+  content: { rendered: any };
+  title: string;
 }
